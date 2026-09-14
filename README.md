@@ -13,12 +13,21 @@ sirve, y desplegar es hacer push.
 ```
 index.html        castellano
 en/index.html     inglés
+privacidad.html   la política de privacidad. Página suelta, con sus estilos dentro
 404.html          la página de error, en los dos idiomas
-css/web.css       los estilos de las dos
+css/web.css       los estilos de las dos portadas
 img/              iconos, la imagen para redes y las capturas
 robots.txt  sitemap.xml
 CNAME             el dominio. Lo escribe GitHub al configurar Pages; no borrarlo
 ```
+
+> **`privacidad.html` está duplicado a propósito, y es temporal.** La misma
+> página está en el repositorio de la app, servida por Vercel, que es la URL a la
+> que apunta hoy la ficha de Google Play. Mientras las dos existan, un cambio en
+> una hay que hacerlo en la otra; `npm test` lo comprueba cuando los dos
+> repositorios están clonados uno al lado del otro. La duplicación se acaba en
+> cuanto Play Console apunte a `superstat.online/privacidad.html`: entonces se
+> borra la copia del repositorio de la app.
 
 Y lo que no es la web:
 

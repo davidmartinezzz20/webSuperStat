@@ -26,7 +26,7 @@ function check(nombre, ok, detalle){
   else { fallos++; console.log('  FALLA ' + nombre + (detalle ? '  → ' + detalle : '')); }
 }
 
-const PAGINAS = ['index.html', 'en/index.html', '404.html'];
+const PAGINAS = ['index.html', 'en/index.html', '404.html', 'privacidad.html'];
 const html = {};
 for(const p of PAGINAS) html[p] = leer(p);
 
@@ -188,6 +188,31 @@ for(const pagina of ['index.html', 'en/index.html']){
         imgs.slice(1).every(i => /loading="lazy"/.test(i)));
   check(`${pagina} describe todas las capturas`,
         imgs.every(i => /alt="[^"]+"/.test(i)));
+}
+
+// -------------------------------------------------------------------------
+console.log('\n6. La política de privacidad, que está duplicada');
+
+// privacidad.html vive aquí y, de momento, también en el repositorio de la app:
+// aquélla es la que sirve Vercel y a la que apunta hoy la ficha de Google Play.
+// Mientras las dos existan tienen que decir lo mismo, y no hay nada que avise si
+// se separan. La duplicación se acaba cuando Play Console apunte aquí.
+check('privacidad.html está en la raíz', fs.existsSync(path.join(RAIZ, 'privacidad.html')));
+
+// El ancla es la URL de eliminación de cuenta que se pega en Play Console.
+// Renombrarla rompe algo que está escrito en un formulario de Google.
+check('privacidad.html conserva el ancla #borrar', /id="borrar"/.test(html['privacidad.html']));
+
+const otraCopia = path.resolve(RAIZ, process.env.ORIGEN || '../superStat', 'privacidad.html');
+if(fs.existsSync(otraCopia)){
+  // El comentario de cabecera sí es distinto a propósito —el de aquí avisa de la
+  // duplicación—, así que se compara del <html> en adelante.
+  const cuerpo = t => t.slice(t.indexOf('<html'));
+  check('las dos copias dicen lo mismo',
+        cuerpo(html['privacidad.html']) === cuerpo(fs.readFileSync(otraCopia, 'utf8')),
+        'se han separado: cambia las dos o borra una');
+} else {
+  console.log('  --   el repositorio de la app no está al lado, no se comparan');
 }
 
 console.log(`\n${pasadas} comprobaciones pasadas, ${fallos} fallidas`);
