@@ -1,0 +1,14 @@
+{
+  "name": "websuperstat",
+  "version": "1.0.0",
+  "description": "La web de superstat.online: landing estática y bilingüe de SuperStat, la app de estadísticas de balonmano.",
+  "private": true,
+  "scripts": {
+    "start": "npx --yes serve . -l 4173",
+    "test": "node test/web.js",
+    "capturas": "node tools/optimizar-capturas.js"
+  },
+  "devDependencies": {
+    "playwright": "^1.49.0"
+  }
+}

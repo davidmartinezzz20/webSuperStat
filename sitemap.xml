@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Dos páginas, cada una declarando a la otra como su alternativa de idioma.
+     Si se añade una página hay que añadirla aquí: no se genera sola. -->
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:xhtml="http://www.w3.org/1999/xhtml">
+  <url>
+    <loc>https://superstat.online/</loc>
+    <xhtml:link rel="alternate" hreflang="es" href="https://superstat.online/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://superstat.online/en/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://superstat.online/"/>
+  </url>
+  <url>
+    <loc>https://superstat.online/en/</loc>
+    <xhtml:link rel="alternate" hreflang="es" href="https://superstat.online/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://superstat.online/en/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://superstat.online/"/>
+  </url>
+</urlset>

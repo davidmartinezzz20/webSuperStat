@@ -1,0 +1,40 @@
+<!doctype html>
+<!--
+  Página de error. La sirve Apache con la directiva ErrorDocument de .htaccess,
+  y por eso enlaza los estilos con ruta absoluta: se puede pedir desde
+  cualquier profundidad de la URL.
+
+  Es la única página de las tres que va en los dos idiomas a la vez: quien
+  llega aquí puede venir de /en/ o de /, y no hay forma de saberlo sin
+  JavaScript.
+-->
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#08090B">
+<title>Esta página no está · SuperStat</title>
+<meta name="robots" content="noindex">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='7' fill='%23D9182B'/><rect x='6.5' y='17' width='5' height='8' rx='1.4' fill='%23fff'/><rect x='13.5' y='12.5' width='5' height='12.5' rx='1.4' fill='%23fff'/><rect x='20.5' y='7' width='5' height='18' rx='1.4' fill='%23fff'/></svg>">
+<link rel="stylesheet" href="/css/web.css">
+</head>
+<body>
+<div class="centrada">
+  <a class="marca" href="/" aria-label="SuperStat">
+    <svg viewBox="0 0 32 32" aria-hidden="true">
+      <rect class="tile" x="0" y="0" width="32" height="32" rx="7"/>
+      <rect class="bar" x="6.5" y="17" width="5" height="8" rx="1.4"/>
+      <rect class="bar" x="13.5" y="12.5" width="5" height="12.5" rx="1.4"/>
+      <rect class="bar" x="20.5" y="7" width="5" height="18" rx="1.4"/>
+    </svg>
+    <span class="marca-texto">Super<i>Stat</i></span>
+  </a>
+  <h1>Esta página no está</h1>
+  <p>This page is not here.</p>
+  <div class="acciones">
+    <a class="boton primario" href="/">Ir al inicio</a>
+    <a class="boton secundario" href="/en/">Go to the English site</a>
+  </div>
+</div>
+</body>
+</html>

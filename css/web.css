@@ -1,0 +1,255 @@
+/* Los estilos de las dos páginas, la castellana y la inglesa.
+ *
+ * Los colores, el radio y la pila tipográfica son los mismos de la app
+ * (css/styles.css en el repositorio superStat) y se copian tal cual: la web y
+ * la app tienen que parecer la misma cosa. Lo que cambia es el ancho —la app
+ * se limita a 480 px porque es una pantalla de móvil, y una landing no— y que
+ * aquí no hay barra inferior ni cabecera de tres huecos.
+ *
+ * Sin fuentes de CDN, igual que en la app: la del sistema. */
+:root{
+  --bg: #08090B;
+  --panel: #141619;
+  --panel-2: #1C1F24;
+  --line: rgba(255,255,255,0.08);
+  --text: #F5F5F7;
+  --soft: #DCDEE3;
+  --muted: #8A8F98;
+  /* rojo de la marca, y el mismo aclarado para texto e iconos sobre negro,
+     donde el puro se queda corto de contraste */
+  --brand: #D9182B;
+  --brand-2: #FF5A68;
+  --goal: #33A17F;
+  --save: #4C8FD6;
+  --radius: 12px;
+  --radius-lg: 18px;
+  --radius-pill: 999px;
+  --font: -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'SF Pro Display',
+          'Segoe UI', Roboto, system-ui, sans-serif;
+  --ancho: 1080px;
+}
+
+*{box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+html,body{margin:0;padding:0;}
+body{
+  background:var(--bg);
+  color:var(--text);
+  font-family:var(--font);
+  -webkit-font-smoothing:antialiased;
+  line-height:1.6;
+  overflow-x:hidden;
+}
+img{max-width:100%;display:block;}
+a{color:var(--brand-2);text-decoration:none;}
+a:hover{text-decoration:underline;}
+
+/* Sin familia de titular: el aire sale del peso y del tracking negativo, como
+   en la app. */
+h1,h2,h3{font-weight:700;letter-spacing:-0.02em;margin:0;}
+
+.envoltura{width:100%;max-width:var(--ancho);margin:0 auto;padding:0 20px;}
+
+/* ------------------------------------------------------------------ marca */
+/* El mismo dibujo que brandLogo() en js/app.js: cuadro rojo y tres barras
+   crecientes. Va sin <defs>, así que se puede repetir en la página sin
+   sufijar ids. */
+.marca{display:inline-flex;align-items:center;gap:10px;color:var(--text);}
+.marca:hover{text-decoration:none;}
+.marca svg{width:30px;height:30px;display:block;flex:none;}
+.marca .tile{fill:var(--brand);}
+.marca .bar{fill:#fff;}
+.marca-texto{font-size:19px;font-weight:700;letter-spacing:-0.02em;}
+.marca-texto i{font-style:normal;color:var(--brand-2);}
+
+/* --------------------------------------------------------------- cabecera */
+header.barra{
+  position:sticky;top:0;z-index:10;
+  border-bottom:1px solid var(--line);
+  background:rgba(8,9,11,0.82);
+  backdrop-filter:saturate(180%) blur(20px);
+  -webkit-backdrop-filter:saturate(180%) blur(20px);
+}
+header.barra .envoltura{
+  display:flex;align-items:center;justify-content:space-between;
+  gap:12px;padding-block:12px;
+}
+.barra-acciones{display:flex;align-items:center;gap:10px;}
+
+/* Cambio de idioma: dos letras, la activa marcada. */
+.idiomas{
+  display:flex;align-items:center;
+  border:1px solid var(--line);border-radius:var(--radius-pill);
+  padding:2px;background:var(--panel);
+}
+.idiomas a{
+  color:var(--muted);font-size:13px;font-weight:600;
+  padding:4px 10px;border-radius:var(--radius-pill);line-height:1;
+}
+.idiomas a:hover{color:var(--text);text-decoration:none;}
+.idiomas a[aria-current="true"]{background:var(--panel-2);color:var(--text);}
+
+/* --------------------------------------------------------------- botones */
+.boton{
+  display:inline-flex;align-items:center;justify-content:center;gap:8px;
+  font-size:15px;font-weight:600;line-height:1;
+  padding:13px 20px;border-radius:var(--radius-pill);
+  border:1px solid transparent;white-space:nowrap;
+}
+.boton:hover{text-decoration:none;}
+.boton.primario{background:var(--brand);color:#fff;}
+.boton.primario:hover{background:#EC2035;}
+.boton.secundario{background:var(--panel);color:var(--text);border-color:var(--line);}
+.boton.secundario:hover{background:var(--panel-2);}
+.boton.pequeno{padding:9px 15px;font-size:14px;}
+.boton svg{width:17px;height:17px;flex:none;}
+/* La app todavía no está en Google Play: esto es una etiqueta, no un enlace
+   roto. Cuando se publique pasa a ser un <a class="boton secundario">. */
+.pendiente{
+  display:inline-flex;align-items:center;gap:8px;
+  font-size:14px;color:var(--muted);
+  padding:13px 18px;border:1px dashed var(--line);border-radius:var(--radius-pill);
+}
+.pendiente svg{width:16px;height:16px;flex:none;}
+
+/* ---------------------------------------------------------------- portada */
+.portada{position:relative;padding:76px 0 64px;overflow:hidden;}
+/* Un halo rojo muy bajo detrás del titular, para que el negro no sea plano.
+   Va en un pseudoelemento y no en una imagen: una petición menos. */
+.portada::before{
+  content:"";position:absolute;inset:auto 0 auto 50%;
+  top:-340px;width:900px;height:640px;transform:translateX(-50%);
+  background:radial-gradient(closest-side, rgba(217,24,43,0.30), transparent 72%);
+  pointer-events:none;
+}
+.portada .envoltura{position:relative;display:grid;grid-template-columns:1fr 300px;
+  gap:56px;align-items:center;}
+.portada h1{font-size:clamp(36px,5.4vw,60px);line-height:1.05;letter-spacing:-0.035em;}
+.portada h1 em{font-style:normal;color:var(--brand-2);}
+.entradilla{font-size:clamp(17px,2vw,20px);color:var(--soft);margin:18px 0 0;max-width:34em;}
+.acciones{display:flex;flex-wrap:wrap;gap:12px;margin-top:30px;}
+.sellos{display:flex;flex-wrap:wrap;gap:8px;margin-top:26px;padding:0;list-style:none;}
+.sellos li{
+  font-size:13px;color:var(--muted);
+  border:1px solid var(--line);border-radius:var(--radius-pill);
+  padding:5px 12px;background:var(--panel);
+}
+
+/* El móvil de la portada: la captura del partido en vivo dentro de un marco
+   dibujado con CSS, sin imagen de marco. */
+.telefono{
+  border:9px solid #212429;border-radius:34px;overflow:hidden;
+  box-shadow:0 26px 60px rgba(0,0,0,0.6);background:var(--bg);
+  aspect-ratio:540/960;max-width:100%;
+}
+.telefono img{width:100%;height:100%;object-fit:cover;}
+
+/* --------------------------------------------------------------- secciones */
+section{padding:64px 0;border-top:1px solid var(--line);}
+.titulo-seccion{font-size:clamp(25px,3.4vw,34px);letter-spacing:-0.03em;}
+.bajada{color:var(--muted);margin:10px 0 0;max-width:52ch;}
+
+.rejilla{
+  display:grid;grid-template-columns:repeat(auto-fit,minmax(255px,1fr));
+  gap:14px;margin-top:34px;
+}
+.tarjeta{
+  background:var(--panel);border:1px solid var(--line);
+  border-radius:var(--radius-lg);padding:20px;
+}
+.tarjeta h3{font-size:17px;margin-bottom:7px;}
+.tarjeta p{margin:0;color:var(--muted);font-size:15px;}
+/* Los iconos son los mismos SVG de trazo de la app: viewBox de 24, grosor
+   1,9 y remates redondos. El color lo manda esta regla, no el SVG. */
+.icono{
+  width:38px;height:38px;border-radius:11px;display:grid;place-items:center;
+  background:rgba(217,24,43,0.12);color:var(--brand-2);margin-bottom:14px;
+}
+.icono svg{width:21px;height:21px;}
+
+/* --------------------------------------------------------------- capturas */
+/* Tira que se desplaza sola en móvil y se queda centrada en escritorio. Es el
+   único sitio de la página que puede desbordar a lo ancho. */
+.tira{
+  display:flex;gap:16px;margin-top:34px;
+  overflow-x:auto;scroll-snap-type:x mandatory;
+  padding-bottom:14px;
+  scrollbar-width:thin;scrollbar-color:var(--panel-2) transparent;
+}
+.tira::-webkit-scrollbar{height:8px;}
+.tira::-webkit-scrollbar-thumb{background:var(--panel-2);border-radius:99px;}
+.tira figure{margin:0;flex:none;width:228px;scroll-snap-align:start;}
+.tira img{
+  /* height:auto no sobra: las capturas llevan width/height en el HTML para que
+     el navegador reserve el hueco antes de cargarlas, y sin esto el alto del
+     atributo (960) gana al ancho del CSS y salen estiradas. */
+  width:100%;height:auto;border-radius:18px;border:1px solid var(--line);
+  background:var(--panel);
+}
+.tira figcaption{
+  font-size:13px;color:var(--muted);margin-top:10px;text-align:center;
+}
+
+/* -------------------------------------------------------------- destacados */
+.destacado{
+  background:var(--panel);border:1px solid var(--line);
+  border-radius:var(--radius-lg);padding:30px;
+  display:grid;grid-template-columns:1fr 1fr;gap:34px;align-items:start;
+  margin-top:34px;
+}
+.destacado p{margin:0;color:var(--soft);}
+.destacado p + p{margin-top:12px;}
+.lista-limpia{margin:0;padding:0;list-style:none;}
+.lista-limpia li{
+  color:var(--muted);font-size:15px;padding-left:24px;position:relative;
+  margin-bottom:9px;
+}
+.lista-limpia li::before{
+  content:"";position:absolute;left:5px;top:9px;
+  width:7px;height:7px;border-radius:50%;background:var(--goal);
+}
+.lista-limpia li:last-child{margin-bottom:0;}
+
+/* ------------------------------------------------------------------- cierre */
+.cierre{text-align:center;}
+.cierre .acciones{justify-content:center;}
+
+/* --------------------------------------------------------------------- pie */
+footer.pie{border-top:1px solid var(--line);padding:34px 0 46px;}
+footer.pie .envoltura{
+  display:flex;flex-wrap:wrap;gap:16px;align-items:center;
+  justify-content:space-between;
+}
+.enlaces-pie{display:flex;flex-wrap:wrap;gap:18px;font-size:14px;}
+.enlaces-pie a{color:var(--muted);}
+.enlaces-pie a:hover{color:var(--text);}
+.nota-pie{color:var(--muted);font-size:13px;margin:18px 0 0;width:100%;}
+
+/* ------------------------------------------------------------------- 404 */
+.centrada{
+  min-height:100vh;display:flex;flex-direction:column;
+  align-items:center;justify-content:center;text-align:center;gap:18px;padding:30px;
+}
+.centrada h1{font-size:clamp(28px,5vw,44px);letter-spacing:-0.03em;}
+.centrada p{color:var(--muted);margin:0;}
+
+/* ------------------------------------------------------------- pantallas */
+@media (max-width:900px){
+  .portada{padding:52px 0 48px;}
+  .portada .envoltura{grid-template-columns:1fr;gap:38px;}
+  /* En una columna el móvil deja de ser la mitad de la portada y pasa a ser
+     una muestra: centrado y sin comerse la pantalla. */
+  .telefono{max-width:250px;margin:0 auto;}
+  .destacado{grid-template-columns:1fr;gap:22px;padding:24px;}
+  section{padding:52px 0;}
+}
+@media (max-width:480px){
+  .envoltura{padding:0 16px;}
+  .acciones .boton, .acciones .pendiente{width:100%;}
+  .tira figure{width:196px;}
+}
+
+/* Quien pide menos movimiento no ve el desplazamiento suave del ancla. */
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto;}
+}
