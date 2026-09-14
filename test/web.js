@@ -69,6 +69,28 @@ for(const pagina of PAGINAS){
 }
 
 // -------------------------------------------------------------------------
+console.log('\n1 bis. Las dos portadas enlazan en relativo');
+
+// Los enlaces de navegación van en relativo ('en/', '../') y no colgando de la
+// raíz ('/en/'). Con el dominio puesto da igual, pero GitHub Pages sirve el
+// repositorio también en davidmartinezzz20.github.io/webSuperStat/, que es la
+// URL con la que se comprueba la web ANTES de tocar el DNS. Ahí un '/en/'
+// apunta fuera del repositorio y el cambio de idioma lleva a un 404.
+//
+// 404.html se queda fuera a propósito: lo sirve el servidor ante una URL
+// cualquiera, así que no tiene una carpeta desde la que contar y necesita la
+// ruta absoluta. Solo queda bien en el dominio de verdad.
+for(const pagina of ['index.html', 'en/index.html']){
+  for(const url of destinos(pagina)){
+    if(FUERA.test(url) || !url.startsWith('/')) continue;
+    check(`${pagina} → ${url} no cuelga de la raíz`, false,
+          'escríbelo en relativo, o la URL de github.io se rompe');
+  }
+  check(`${pagina} no tiene enlaces a la raíz`,
+        !destinos(pagina).some(u => !FUERA.test(u) && u.startsWith('/')));
+}
+
+// -------------------------------------------------------------------------
 console.log('\n2. Las anclas internas llevan a un id que existe');
 
 for(const pagina of PAGINAS){

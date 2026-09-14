@@ -1,12 +1,18 @@
 <!doctype html>
 <!--
-  Página de error. La sirve Apache con la directiva ErrorDocument de .htaccess,
-  y por eso enlaza los estilos con ruta absoluta: se puede pedir desde
-  cualquier profundidad de la URL.
+  Página de error. GitHub Pages la sirve él solo, sin configurar nada, ante
+  cualquier URL del sitio que no exista: basta con que se llame así y esté en la
+  raíz.
 
-  Es la única página de las tres que va en los dos idiomas a la vez: quien
-  llega aquí puede venir de /en/ o de /, y no hay forma de saberlo sin
-  JavaScript.
+  Es la única página que enlaza con rutas absolutas, y es a propósito: se sirve
+  ante una URL cualquiera, a cualquier profundidad, así que no tiene una carpeta
+  desde la que contar. El precio es que solo queda bien en el dominio de verdad;
+  en davidmartinezzz20.github.io/webSuperStat/ se ve sin estilos, porque ahí el
+  sitio no cuelga de la raíz. Las otras dos páginas sí enlazan en relativo, y
+  test/web.js se encarga de que sigan así.
+
+  Es también la única que va en los dos idiomas a la vez: quien llega aquí puede
+  venir de /en/ o de /, y no hay forma de saberlo sin JavaScript.
 -->
 <html lang="es">
 <head>

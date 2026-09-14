@@ -6,8 +6,9 @@ abrirla. La app en sí vive en otro repositorio,
 [superStat](https://github.com/davidmartinezzz20/superStat).
 
 Dos páginas, castellano e inglés, y nada más: **HTML plano, sin build, sin
-framework y sin fuentes de CDN**, la misma regla que sigue la app. Lo que hay en
-el repositorio es exactamente lo que se sube al servidor.
+framework y sin fuentes de CDN**, la misma regla que sigue la app. Se publica
+con **GitHub Pages**: lo que hay en el repositorio es exactamente lo que se
+sirve, y desplegar es hacer push.
 
 ```
 index.html        castellano
@@ -15,17 +16,20 @@ en/index.html     inglés
 404.html          la página de error, en los dos idiomas
 css/web.css       los estilos de las dos
 img/              iconos, la imagen para redes y las capturas
-.htaccess         https forzado, caché y página de error, para el Apache del hosting
 robots.txt  sitemap.xml
+CNAME             el dominio. Lo escribe GitHub al configurar Pages; no borrarlo
 ```
 
-Y lo que no se sube:
+Y lo que no es la web:
 
 ```
 tools/optimizar-capturas.js   pasa las capturas de la app a WebP para la web
 test/web.js                   comprueba enlaces, anclas y paridad es/en
-.github/workflows/            el despliegue
 ```
+
+Esos dos se publican también —Pages sirve el repositorio entero—, pero no los
+enlaza nadie y no ocupan nada. Quitarlos costaría montar un workflow de
+compilación, que es justo lo que este proyecto no quiere.
 
 ## Verla
 
@@ -34,9 +38,8 @@ npm start          # npx serve en http://localhost:4173
 npm test           # enlaces, anclas, paridad es/en y metadatos
 ```
 
-Se puede abrir `index.html` a pelo con `file://`, pero los enlaces del pie y del
-cambio de idioma son absolutos (`/`, `/en/`) y desde `file://` no van a ningún
-sitio. Con `npm start` sí.
+Con `file://` no sirve: `npm start` levanta un servidor, y es lo que hace falta
+para que `en/` y las rutas de las imágenes se resuelvan como en producción.
 
 ## Al tocar la página
 
@@ -101,73 +104,81 @@ web.
 
 ## Publicar
 
-La web se sirve desde el hosting de **PiensaSolutions**, en la raíz web del
-dominio. El despliegue lo hace `.github/workflows/desplegar.yml` en cada push a
-`main`.
+La web la sirve **GitHub Pages** desde la rama `main`. No hay despliegue que
+mantener: se hace push y en un minuto está arriba.
 
-### Cuál es la raíz web
+Antes vivía en el hosting de PiensaSolutions, en un WordPress, y se subía por
+FTP. Se cambió porque una web estática no necesita nada de lo que da un hosting
+compartido —ni PHP, ni base de datos, ni panel—, y Pages hace gratis las tres
+cosas que hacía el `.htaccess`: forzar https, servir `404.html` ante una URL que
+no existe, y poner las cabeceras de caché. Por eso ese archivo ya no está.
 
-PiensaSolutions tiene panel propio, así que aquí no se nombra ningún menú: cada
-panel llama a las cosas a su manera y las instrucciones de otro solo despistan.
-Lo que sí hace falta saber es **en qué carpeta se sirve el dominio**, porque es
-el valor del secreto `FTP_DIR` y es lo único de todo esto que falla en silencio:
-si se pone la carpeta equivocada, el despliegue sale en verde y la web no
-cambia.
+### Las dos URL
 
-Se llama `public_html` en la mayoría de hostings, pero también `httpdocs`, `www`
-o `web`. No hay que adivinarlo, y no depende del panel: **conecta por FTP y mira
-dónde están el `index.php` y la carpeta `wp-admin` del WordPress de ahora**. Esa
-carpeta es la raíz, se llame como se llame.
+Pages sirve el repositorio en dos sitios a la vez:
 
-Y un aviso sobre el propio `FTP_DIR`: hay cuentas FTP que aterrizan ya **dentro**
-de la raíz web. Si nada más conectar ves el `index.php` y `wp-admin`, entonces
-`FTP_DIR` es `/`; si lo que ves es una carpeta que los contiene, `FTP_DIR` es el
-nombre de esa carpeta. Poner `public_html/` cuando la cuenta ya entra ahí crea un
-`public_html/public_html/` que no sirve nadie.
+```
+https://davidmartinezzz20.github.io/webSuperStat/   siempre disponible
+https://superstat.online/                           con el dominio configurado
+```
 
-### Antes del primer despliegue
+La primera es la de comprobación: con ella se ve la web **antes** de tocar el
+DNS, mientras el dominio sigue apuntando a donde apunte hoy. Por eso los enlaces
+de navegación van en relativo (`en/`, `../`) y no colgando de la raíz (`/en/`):
+en esa URL el sitio cuelga de `/webSuperStat/`, y un `/en/` se saldría del
+repositorio. `test/web.js` lo vigila.
 
-Aquí estaba WordPress, y hay un paso que no se puede saltar: **mientras sigan en
-la raíz web el `index.php` y el `.htaccess` de WordPress, el servidor manda
-todas las peticiones a WordPress** y el `index.html` nuevo no llega a verse
-nunca. No basta con subir los archivos encima.
+La excepción es `404.html`, que necesita rutas absolutas porque el servidor lo
+saca ante cualquier URL y no tiene una carpeta desde la que contar. En la URL de
+comprobación se verá sin estilos; en el dominio, bien. No es un fallo.
 
-En orden:
+### Montarlo
 
-1. **Copia de seguridad completa**: los archivos de la raíz web y un volcado de
-   la base de datos de WordPress. Es lo único que va a quedar del WordPress
-   cuando esto acabe, así que guárdala fuera del servidor. Si el panel no tiene
-   una copia de seguridad de un botón, los archivos se bajan por FTP y la base
-   de datos se exporta desde el gestor que ofrezca el panel.
-2. **Vaciar la raíz web**, el `.htaccess` incluido. Si prefieres no borrar,
-   mueve todo a una carpeta fuera de la raíz. Si el WordPress se instaló desde
-   el propio panel, mira antes si trae por dónde desinstalarlo: deja la raíz más
-   limpia que borrar archivos a mano.
-3. **Cargar los cuatro secretos** en *Settings → Secrets and variables →
-   Actions* del repositorio: `FTP_SERVER`, `FTP_USERNAME`, `FTP_PASSWORD` y
-   `FTP_DIR` (el del apartado anterior). Las credenciales FTP salen del panel
-   del hosting; si no hay una cuenta creada, se crea ahí.
-4. **Lanzar el despliegue**: un push a `main`, o *Actions → Desplegar → Run
-   workflow*.
-5. Comprobar `https://superstat.online/` y `https://superstat.online/en/` en una
-   ventana de incógnito, y que `http://superstat.online` salta a `https`.
+1. **Activar Pages**: *Settings → Pages → Source: Deploy from a branch*, rama
+   `main`, carpeta `/ (root)`. En un minuto responde la URL de `github.io`.
+2. **Comprobarla ahí**: la portada, `en/`, que las capturas cargan y que el
+   cambio de idioma va. Con el dominio aún sin tocar, así que no hay prisa ni
+   riesgo.
+3. **Poner el dominio**: en esa misma pantalla, *Custom domain* →
+   `superstat.online` → *Save*. GitHub escribe un archivo `CNAME` en la raíz del
+   repositorio con el dominio dentro. **No lo borres**: si desaparece, Pages
+   deja de servir en tu dominio.
+4. **Cambiar el DNS**, en el panel donde gestiones `superstat.online`. Cuatro
+   registros `A` para el dominio a secas, y opcionalmente un `CNAME` para el
+   `www`:
 
-Si prefieres no usar la Action, la alternativa es subir con cualquier cliente
-FTP el contenido del repositorio a la raíz web, **menos** `tools/`, `test/`,
-`.github/`, `package.json` y `README.md`. El `.htaccess` sí va, y muchos
-clientes ocultan los archivos que empiezan por punto.
+   | Tipo | Nombre | Valor |
+   |---|---|---|
+   | A | `@` | `185.199.108.153` |
+   | A | `@` | `185.199.109.153` |
+   | A | `@` | `185.199.110.153` |
+   | A | `@` | `185.199.111.153` |
+   | CNAME | `www` | `davidmartinezzz20.github.io` |
 
-> El `.htaccess` es de Apache, y LiteSpeed lo entiende igual; entre los dos
-> cubren casi todo el hosting compartido. Si resultara que el dominio se sirve
-> con **nginx**, el archivo se ignora sin decir nada: la web se vería bien, pero
-> sin https forzado, sin la página de error propia y sin caché, y eso habría que
-> configurarlo en el panel. Si algo de esas tres cosas no va, mira ahí antes de
-> buscar el fallo en el archivo.
+   Son las cuatro de GitHub y no cambian. Con el `CNAME` del `www`, GitHub
+   redirige `www.superstat.online` al dominio a secas él solo.
+5. **Esperar y marcar https.** El DNS tarda de minutos a un par de horas. Cuando
+   GitHub lo vea, saca el certificado solo (Let's Encrypt) y se habilita la
+   casilla *Enforce HTTPS* en esa misma pantalla: márcala, para que nadie entre
+   por `http`.
+6. **Comprobar** `https://superstat.online/` y `https://superstat.online/en/` en
+   una ventana de incógnito, y que `http://superstat.online` salta a `https`.
 
-### Una vez publicada
+A partir de ahí, publicar un cambio es `git push`.
 
-- La base de datos de WordPress se puede borrar cuando estés seguro de que la
-  web nueva funciona. Ya no la usa nadie.
+### El hosting viejo
+
+No hace falta tocarlo para nada de lo anterior, y conviene dejarlo en pie hasta
+que el dominio responda desde Pages: si algo saliera mal, se devuelve el DNS y
+la web vieja sigue ahí.
+
+Cuando lo nuevo funcione:
+
+- **Bájate una copia del WordPress antes de cancelar nada**: los archivos de la
+  raíz web y un volcado de la base de datos. Al cancelar el hosting se borra, y
+  es lo único que va a quedar de esa web.
+- El dominio **no** hay que moverlo de sitio. Solo se cambió a dónde apuntan sus
+  DNS; el registro sigue donde esté.
 - La ficha de Google Play sigue apuntando a `https://super-stat.vercel.app` como
   sitio web y como política de privacidad. Eso está decidido así y esta web solo
   enlaza allí; el día que se quiera mover, el archivo a tocar es `docs/play.md`
