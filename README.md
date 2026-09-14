@@ -101,36 +101,68 @@ web.
 
 ## Publicar
 
-La web se sirve desde el hosting de **PiensaSolutions**, en `public_html`. El
-despliegue lo hace `.github/workflows/desplegar.yml` en cada push a `main`.
+La web se sirve desde el hosting de **PiensaSolutions**, en la raíz web del
+dominio. El despliegue lo hace `.github/workflows/desplegar.yml` en cada push a
+`main`.
+
+### Cuál es la raíz web
+
+PiensaSolutions tiene panel propio, así que aquí no se nombra ningún menú: cada
+panel llama a las cosas a su manera y las instrucciones de otro solo despistan.
+Lo que sí hace falta saber es **en qué carpeta se sirve el dominio**, porque es
+el valor del secreto `FTP_DIR` y es lo único de todo esto que falla en silencio:
+si se pone la carpeta equivocada, el despliegue sale en verde y la web no
+cambia.
+
+Se llama `public_html` en la mayoría de hostings, pero también `httpdocs`, `www`
+o `web`. No hay que adivinarlo, y no depende del panel: **conecta por FTP y mira
+dónde están el `index.php` y la carpeta `wp-admin` del WordPress de ahora**. Esa
+carpeta es la raíz, se llame como se llame.
+
+Y un aviso sobre el propio `FTP_DIR`: hay cuentas FTP que aterrizan ya **dentro**
+de la raíz web. Si nada más conectar ves el `index.php` y `wp-admin`, entonces
+`FTP_DIR` es `/`; si lo que ves es una carpeta que los contiene, `FTP_DIR` es el
+nombre de esa carpeta. Poner `public_html/` cuando la cuenta ya entra ahí crea un
+`public_html/public_html/` que no sirve nadie.
 
 ### Antes del primer despliegue
 
 Aquí estaba WordPress, y hay un paso que no se puede saltar: **mientras sigan en
-`public_html` el `index.php` y el `.htaccess` de WordPress, Apache manda todas
-las peticiones a WordPress** y el `index.html` nuevo no llega a verse nunca. No
-basta con subir los archivos encima.
+la raíz web el `index.php` y el `.htaccess` de WordPress, el servidor manda
+todas las peticiones a WordPress** y el `index.html` nuevo no llega a verse
+nunca. No basta con subir los archivos encima.
 
 En orden:
 
-1. **Copia de seguridad completa**, desde cPanel: los archivos de `public_html`
-   y también la base de datos por phpMyAdmin. Es lo único que queda del
-   WordPress cuando esto acabe, así que guárdala fuera del servidor.
-2. **Vaciar `public_html`**, el `.htaccess` incluido. Si prefieres no borrar,
-   mueve todo a una carpeta `wordpress-viejo/` fuera de `public_html`.
+1. **Copia de seguridad completa**: los archivos de la raíz web y un volcado de
+   la base de datos de WordPress. Es lo único que va a quedar del WordPress
+   cuando esto acabe, así que guárdala fuera del servidor. Si el panel no tiene
+   una copia de seguridad de un botón, los archivos se bajan por FTP y la base
+   de datos se exporta desde el gestor que ofrezca el panel.
+2. **Vaciar la raíz web**, el `.htaccess` incluido. Si prefieres no borrar,
+   mueve todo a una carpeta fuera de la raíz. Si el WordPress se instaló desde
+   el propio panel, mira antes si trae por dónde desinstalarlo: deja la raíz más
+   limpia que borrar archivos a mano.
 3. **Cargar los cuatro secretos** en *Settings → Secrets and variables →
    Actions* del repositorio: `FTP_SERVER`, `FTP_USERNAME`, `FTP_PASSWORD` y
-   `FTP_DIR` (normalmente `public_html/`). Las credenciales FTP están en cPanel,
-   en *Cuentas FTP*.
+   `FTP_DIR` (el del apartado anterior). Las credenciales FTP salen del panel
+   del hosting; si no hay una cuenta creada, se crea ahí.
 4. **Lanzar el despliegue**: un push a `main`, o *Actions → Desplegar → Run
    workflow*.
 5. Comprobar `https://superstat.online/` y `https://superstat.online/en/` en una
    ventana de incógnito, y que `http://superstat.online` salta a `https`.
 
 Si prefieres no usar la Action, la alternativa es subir con cualquier cliente
-FTP el contenido del repositorio a `public_html`, **menos** `tools/`, `test/`,
+FTP el contenido del repositorio a la raíz web, **menos** `tools/`, `test/`,
 `.github/`, `package.json` y `README.md`. El `.htaccess` sí va, y muchos
 clientes ocultan los archivos que empiezan por punto.
+
+> El `.htaccess` es de Apache, y LiteSpeed lo entiende igual; entre los dos
+> cubren casi todo el hosting compartido. Si resultara que el dominio se sirve
+> con **nginx**, el archivo se ignora sin decir nada: la web se vería bien, pero
+> sin https forzado, sin la página de error propia y sin caché, y eso habría que
+> configurarlo en el panel. Si algo de esas tres cosas no va, mira ahí antes de
+> buscar el fallo en el archivo.
 
 ### Una vez publicada
 

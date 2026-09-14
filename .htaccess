@@ -1,8 +1,11 @@
-# Apache, que es lo que sirve PiensaSolutions. Este archivo tiene que subir con
-# el resto: sin él la web funciona, pero sin https forzado, sin caché y con la
-# página de error del hosting en vez de la nuestra.
+# Configuración para Apache, que es lo que sirve casi todo el hosting
+# compartido (y LiteSpeed lee este archivo igual). Tiene que subir con el resto:
+# sin él la web funciona, pero sin https forzado, sin caché y con la página de
+# error del hosting en vez de la nuestra. Si el dominio se sirviera con nginx,
+# este archivo se ignora sin avisar y esas tres cosas hay que configurarlas en
+# el panel del hosting.
 #
-# Ojo al sustituir el WordPress: el .htaccess que había en public_html era el
+# Ojo al sustituir el WordPress: el .htaccess que había en la raíz web era el
 # suyo y mandaba todas las peticiones a index.php. Hay que quitarlo, no
 # añadirle esto debajo.
 

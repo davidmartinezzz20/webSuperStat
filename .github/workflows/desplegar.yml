@@ -11,10 +11,16 @@
 #   FTP_SERVER     el host FTP de PiensaSolutions (p. ej. ftp.superstat.online)
 #   FTP_USERNAME   el usuario FTP
 #   FTP_PASSWORD   su contraseña
-#   FTP_DIR        la carpeta del sitio, casi siempre  public_html/
+#   FTP_DIR        la raíz web del dominio
 #
-# Antes del primer despliegue hay que haber quitado WordPress de public_html.
-# Mientras sigan ahí su index.php y su .htaccess, Apache manda todas las
+# FTP_DIR es el único de los cuatro que falla en silencio: con la carpeta
+# equivocada el despliegue sale en verde y la web no cambia. Suele llamarse
+# public_html, pero también httpdocs, www o web, y hay cuentas FTP que entran ya
+# dentro de la raíz, en cuyo caso el valor es «/». Cómo averiguarlo sin adivinar,
+# en el README.
+#
+# Antes del primer despliegue hay que haber quitado WordPress de la raíz web.
+# Mientras sigan ahí su index.php y su .htaccess, el servidor manda todas las
 # peticiones a WordPress y el index.html nuevo no llega a verse. El orden está
 # en el README.
 name: Desplegar
