@@ -136,13 +136,27 @@ header.barra .envoltura{
 }
 
 /* El móvil de la portada: la captura del partido en vivo dentro de un marco
-   dibujado con CSS, sin imagen de marco. */
+   dibujado con CSS, sin imagen de marco.
+
+   El marco toma su alto de la imagen, y no al revés. Antes llevaba
+   aspect-ratio:540/960 y la imagen iba con object-fit:cover, y eso recortaba
+   por los lados: la proporción se aplica a la caja de BORDE, pero la imagen
+   vive en la de contenido, que es 18 px más estrecha por el borde de 9. El
+   desajuste es de un 1,5 %, que parece nada y no lo es: la interfaz de la app
+   deja unos 12 px de margen en una captura de 540 de ancho, así que ese 1,5 %
+   se lo comía entero y cortaba lo que va pegado al borde —la «N» de «Nuestra
+   portería», el botón «Palo»—. Sin proporción impuesta y sin cover no hay
+   recorte posible a ningún ancho. */
 .telefono{
   border:9px solid #212429;border-radius:34px;overflow:hidden;
   box-shadow:0 26px 60px rgba(0,0,0,0.6);background:var(--bg);
-  aspect-ratio:540/960;max-width:100%;
+  max-width:100%;
 }
-.telefono img{width:100%;height:100%;object-fit:cover;}
+/* height:auto por lo mismo que en .tira img: la imagen lleva height="960" en el
+   HTML —para que el navegador reserve el hueco antes de cargarla— y sin esto
+   ese alto gana al ancho del CSS y sale estirada. Los atributos siguen dando la
+   proporción, así que el hueco se reserva igual. */
+.telefono img{width:100%;height:auto;display:block;}
 
 /* --------------------------------------------------------------- secciones */
 section{padding:64px 0;border-top:1px solid var(--line);}

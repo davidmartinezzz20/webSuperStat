@@ -156,9 +156,26 @@ console.log('\n5. La trampa del tamaño de las capturas');
 // regla, y buscar el texto a pelo encontraría la explicación en vez de la
 // declaración. La prueba pasaba con la regla rota por exactamente eso.
 const css = leer('css/web.css').replace(/\/\*[\s\S]*?\*\//g, '');
-const reglaTira = (css.match(/\.tira img\{[^}]*\}/) || [''])[0];
-check('.tira img fija height:auto', /height\s*:\s*auto/.test(reglaTira),
-      reglaTira ? 'la regla está pero sin height' : 'no se encontró la regla');
+
+// Las dos reglas que pintan una captura: la tira de la sección «Así se ve» y el
+// marco de móvil de la portada. Las dos tienen la misma trampa y las dos la han
+// tenido de verdad.
+for(const sel of ['.tira img', '.telefono img']){
+  const regla = (css.match(new RegExp(sel.replace('.', '\\.') + '\\{[^}]*\\}')) || [''])[0];
+  check(`${sel} fija height:auto`, /height\s*:\s*auto/.test(regla),
+        regla ? 'la regla está pero sin height:auto' : 'no se encontró la regla');
+  // object-fit:cover recorta para rellenar la caja, y una captura de pantalla
+  // es justo lo que no se puede recortar: la interfaz de la app deja unos 12 px
+  // de margen, así que un recorte de nada se lleva por delante lo que va pegado
+  // al borde. Pasó en el marco de la portada y en la web publicada.
+  check(`${sel} no recorta con object-fit:cover`,
+        !/object-fit\s*:\s*cover/.test(regla), regla);
+}
+// El marco tampoco puede imponerle una proporción a la imagen: con el borde de
+// por medio, la caja de contenido queda más estrecha que la proporción pedida y
+// vuelve a sobrar imagen que recortar.
+const reglaMarco = (css.match(/\.telefono\{[^}]*\}/) || [''])[0];
+check('.telefono no impone aspect-ratio', !/aspect-ratio/.test(reglaMarco), reglaMarco);
 for(const pagina of ['index.html', 'en/index.html']){
   const tira = (html[pagina].match(/<div class="tira">[\s\S]*?<\/div>/) || [''])[0];
   const imgs = tira.match(/<img[^>]*>/g) || [];
