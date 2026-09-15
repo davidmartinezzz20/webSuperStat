@@ -77,6 +77,11 @@ header.barra .envoltura{
 /* A la izquierda, la marca y el botón que baja a los planes; a la derecha, el
    idioma y el botón de abrir la app. */
 .barra-izquierda{display:flex;align-items:center;gap:12px;}
+/* El botón de los planes dice "Ver planes" donde cabe y "Planes" en un móvil.
+   Son dos textos y no uno recortado con CSS porque cada idioma parte por un
+   sitio distinto ("Voir les formules" → "Formules"), y el aria-label lleva
+   siempre el largo. */
+.ver-corto{display:none;}
 .barra-acciones{display:flex;align-items:center;gap:10px;}
 
 /* Cambio de idioma: dos letras, la activa marcada. */
@@ -312,8 +317,13 @@ footer.pie .envoltura{
   justify-content:space-between;
 }
 .enlaces-pie{display:flex;flex-wrap:wrap;gap:18px;font-size:14px;}
-.enlaces-pie a{color:var(--muted);}
+/* inline-flex y no inline: los dos últimos enlaces llevan icono delante, y sin
+   esto el SVG se sienta sobre la línea base y descuadra la fila entera. Los
+   que no tienen icono no se enteran. El tamaño lo fija aquí el contexto, como
+   en .icono y en .boton, no el propio SVG. */
+.enlaces-pie a{color:var(--muted);display:inline-flex;align-items:center;gap:6px;}
 .enlaces-pie a:hover{color:var(--text);}
+.enlaces-pie svg{width:16px;height:16px;flex:none;}
 .nota-pie{color:var(--muted);font-size:13px;margin:18px 0 0;width:100%;}
 
 /* ------------------------------------------------------------------- 404 */
@@ -343,6 +353,8 @@ footer.pie .envoltura{
      wordmark se va y se queda el cuadro, que es lo que hace de icono. Los dos
      botones se aprietan, pero siguen diciendo lo que son. */
   .marca-texto{display:none;}
+  .ver-largo{display:none;}
+  .ver-corto{display:inline;}
   .barra-izquierda{gap:8px;}
   header.barra .envoltura{gap:8px;}
   header.barra .boton.pequeno{padding:8px 11px;font-size:13px;}
@@ -350,7 +362,26 @@ footer.pie .envoltura{
      píldoras de idioma se aprietan, que es lo que menos se echa de menos. */
   .idiomas a{padding:4px 7px;font-size:12px;}
   .plan{padding:22px;}
-  .tabla-planes th,.tabla-planes td{padding:11px 13px;}
+  /* En un móvil la tabla deja de desplazarse a lo ancho y cabe entera: las dos
+     columnas de plan se estrechan a lo que ocupa una marca y la primera se
+     queda con el resto, partiendo el texto en dos líneas si hace falta. Vale
+     más leerla de un vistazo que conservar el ancho de escritorio detrás de un
+     desplazamiento que no se ve que está. */
+  .tabla-planes{min-width:0;font-size:14px;}
+  .tabla-planes th,.tabla-planes td{padding:11px 8px;}
+  .tabla-planes th:first-child,.tabla-planes tbody th{padding-left:14px;}
+  .tabla-planes td{width:66px;}
+  .tabla-planes thead th{font-size:11px;letter-spacing:0.05em;}
+  .si svg{width:17px;height:17px;}
+}
+
+/* En una pantalla de 320 px (un iPhone SE de los primeros) ni con las etiquetas
+   cortas caben las cuatro cosas de la cabecera. Lo que se va es el botón de
+   abrir la app, y no el de los planes ni el idioma: ése está además dos veces
+   más abajo en la página —en la portada y en el cierre—, y los otros dos solo
+   están aquí. */
+@media (max-width:360px){
+  header.barra .boton.primario{display:none;}
 }
 
 /* Quien pide menos movimiento no ve el desplazamiento suave del ancla. */

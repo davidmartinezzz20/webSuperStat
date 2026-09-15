@@ -41,8 +41,54 @@
 <meta property="og:description" content="Erfasse das Spiel, während es läuft: beim Schlusspfiff ist der Spielbericht schon fertig. Funktioniert ohne Empfang.">
 <meta property="og:image" content="https://superstat.online/img/og.png">
 <meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:site" content="@superstatapp">
 
-<link rel="stylesheet" href="../css/web.css">
+<!--
+  Strukturierte Daten. Über `sameAs` erfährt eine Suchmaschine, dass diese
+  Profile und diese Seite dieselbe Marke sind; ohne ihn lesen sich die Links
+  in der Fußzeile gut, hängen die Seite aber an nichts. Derselbe Block steht
+  auf allen vier Seiten.
+
+  Die URLs sind hier absolut, anders als die der Navigation: strukturierte
+  Daten werden außerhalb der Seite gelesen, wo ein relativer Pfad ins Leere
+  läuft.
+
+  Alle drei Konten stehen auf jeder Seite, auch wenn jede Fußzeile nur ihr
+  eigenes zeigt: sie gehören derselben Marke, und unter demselben @id hier die
+  einen und dort die anderen zu nennen hieße, sich selbst zu widersprechen.
+
+  Kein Preis hier. Er wird schon an sechs Stellen von Hand gepflegt (CLAUDE.md
+  im Repository der App); vier weitere Kopien, auf die keine Prüfung schaut,
+  sind genau der Anfang vom Auseinanderlaufen.
+-->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": "https://superstat.online/#org",
+      "name": "SuperStat",
+      "url": "https://superstat.online/",
+      "logo": "https://superstat.online/img/icon-512.png",
+      "sameAs": [
+        "https://www.instagram.com/superstat.es/",
+        "https://www.instagram.com/superstat.en/",
+        "https://x.com/superstatapp"
+      ]
+    },
+    {
+      "@type": "WebSite",
+      "name": "SuperStat",
+      "url": "https://superstat.online/de/",
+      "inLanguage": "de",
+      "publisher": { "@id": "https://superstat.online/#org" }
+    }
+  ]
+}
+</script>
+
+<link rel="stylesheet" href="../css/web.css?v=3">
 </head>
 <body>
 
@@ -58,7 +104,7 @@
         </svg>
         <span class="marca-texto">Super<i>Stat</i></span>
       </a>
-      <a class="boton secundario pequeno" href="#planes" aria-label="Tarife ansehen">Tarife ansehen</a>
+      <a class="boton secundario pequeno" href="#planes" aria-label="Tarife ansehen"><span class="ver-largo">Tarife ansehen</span><span class="ver-corto">Tarife</span></a>
     </div>
     <div class="barra-acciones">
       <nav class="idiomas" aria-label="Sprache">
@@ -602,6 +648,31 @@
       <a href="../" hreflang="es">Español</a>
       <a href="../en/" hreflang="en">English</a>
       <a href="../fr/" hreflang="fr">Français</a>
+      <!--
+        Die sozialen Netze. Es gibt zwei Instagram-Konten, eines auf Spanisch
+        und eines auf Englisch: diese Seite verlinkt das englische, genau wie
+        fr/, denn ein französisches oder deutsches Konto gibt es nicht. Auf X
+        ist es ein einziges Konto für alle vier Sprachen.
+
+        „Instagram" und „X" sind Markennamen und stehen auf allen vier Seiten
+        gleich da. Die Icons sind inline, wie alle anderen hier, und die Farbe
+        kommt aus ../css/web.css.
+      -->
+      <a href="https://www.instagram.com/superstat.en/" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"
+             stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <rect x="3.5" y="3.5" width="17" height="17" rx="5"/>
+          <circle cx="12" cy="12" r="4"/>
+          <circle cx="17.1" cy="6.9" r="1" fill="currentColor" stroke="none"/>
+        </svg>
+        Instagram
+      </a>
+      <a href="https://x.com/superstatapp" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <path fill="currentColor" d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+        </svg>
+        X
+      </a>
     </nav>
     <p class="nota-pie">
       SuperStat ist ein Notizbuch für Handballstatistik. Gemacht, um mit auf die

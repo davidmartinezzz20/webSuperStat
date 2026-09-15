@@ -26,14 +26,22 @@ function check(nombre, ok, detalle){
   else { fallos++; console.log('  FALLA ' + nombre + (detalle ? '  → ' + detalle : '')); }
 }
 
-// Las cuatro portadas, con su idioma y la carpeta de capturas que le toca a
-// cada una. Añadir un idioma es añadir una fila aquí y sus archivos: todo lo
-// demás de esta prueba sale de esta tabla.
+// Las cuatro portadas, con su idioma, la carpeta de capturas y la cuenta de
+// Instagram que le toca a cada una. Añadir un idioma es añadir una fila aquí y
+// sus archivos: todo lo demás de esta prueba sale de esta tabla.
+//
+// Solo hay dos cuentas de Instagram, la castellana y la inglesa, así que las
+// portadas francesa y alemana enlazan la inglesa. La de X es una sola y por eso
+// no es columna.
+const IG_ES = 'https://www.instagram.com/superstat.es/';
+const IG_EN = 'https://www.instagram.com/superstat.en/';
+const EQUIS = 'https://x.com/superstatapp';
+
 const PORTADAS = [
-  { pagina:'index.html',    lang:'es', capturas:'img/capturas',    privacidad:'privacidad.html' },
-  { pagina:'en/index.html', lang:'en', capturas:'img/capturas-en', privacidad:'privacidad-en.html' },
-  { pagina:'fr/index.html', lang:'fr', capturas:'img/capturas-fr', privacidad:'privacidad-fr.html' },
-  { pagina:'de/index.html', lang:'de', capturas:'img/capturas-de', privacidad:'privacidad-de.html' }
+  { pagina:'index.html',    lang:'es', capturas:'img/capturas',    privacidad:'privacidad.html',    instagram:IG_ES },
+  { pagina:'en/index.html', lang:'en', capturas:'img/capturas-en', privacidad:'privacidad-en.html', instagram:IG_EN },
+  { pagina:'fr/index.html', lang:'fr', capturas:'img/capturas-fr', privacidad:'privacidad-fr.html', instagram:IG_EN },
+  { pagina:'de/index.html', lang:'de', capturas:'img/capturas-de', privacidad:'privacidad-de.html', instagram:IG_EN }
 ];
 const PRIVACIDADES = PORTADAS.map(p => p.privacidad);
 const PAGINAS = [...PORTADAS.map(p => p.pagina), '404.html', ...PRIVACIDADES];
@@ -100,6 +108,28 @@ for(const { pagina } of PORTADAS){
   check(`${pagina} no tiene enlaces a la raíz`,
         !destinos(pagina).some(u => !FUERA.test(u) && u.startsWith('/')));
 }
+
+// -------------------------------------------------------------------------
+console.log('\n1 ter. La hoja de estilos lleva versión, y la misma en todas');
+
+// GitHub Pages sirve el CSS con caché, así que un cambio de estilos no llega a
+// quien ya ha entrado antes: el navegador se queda con el de ayer y pinta el
+// HTML nuevo con reglas viejas. Pasó, y no se ve como un fallo —la página no
+// está rota, está mal—, así que el enlace lleva ?v=N y se sube el número al
+// tocar css/web.css. Es lo mismo que VERSION en el sw.js de la app.
+//
+// Y tiene que ser el mismo número en las cinco páginas: si una se queda atrás,
+// vuelve a servir el CSS viejo a quien entre por ella.
+const versiones = new Map();
+for(const pagina of [...PORTADAS.map(p => p.pagina), '404.html']){
+  const m = html[pagina].match(/href="[^"]*css\/web\.css(\?v=(\d+))?"/);
+  check(`${pagina} pide el CSS con versión`, !!(m && m[2]),
+        m ? m[0] : 'no enlaza css/web.css');
+  if(m && m[2]) versiones.set(pagina, m[2]);
+}
+check('las cinco páginas piden la misma versión del CSS',
+      new Set(versiones.values()).size === 1,
+      [...versiones].map(([p, v]) => `${p}=${v}`).join(' · '));
 
 // -------------------------------------------------------------------------
 console.log('\n2. Las anclas internas llevan a un id que existe');
@@ -202,6 +232,70 @@ for(const { pagina } of PORTADAS){
 }
 check('las cuatro portadas dicen el mismo precio', precios.size === 1,
       [...precios].join(' · '));
+
+// -------------------------------------------------------------------------
+console.log('\n4 ter. Las redes, en el pie y en los datos estructurados');
+
+// Los enlaces del pie son la mitad visible de esto; la otra es el sameAs del
+// JSON-LD, que es por donde un buscador ata los perfiles a esta marca y la
+// razón de que los enlaces se añadieran. Las dos mitades tienen que decir lo
+// mismo y no hay nada más que las sujete: el bloque 3 compara <section id>, y
+// el pie no es una sección, así que una portada con la cuenta del idioma de al
+// lado —o sin cuenta— pasaría entera sin que fallara nada.
+const PERFILES = [IG_ES, IG_EN, EQUIS];
+const perfilesPorPagina = new Map();
+
+for(const { pagina, lang, instagram } of PORTADAS){
+  const f = html[pagina];
+  const pie = (f.match(/<nav class="enlaces-pie"[\s\S]*?<\/nav>/) || [''])[0];
+
+  const suyas = [...pie.matchAll(/href="(https:\/\/www\.instagram\.com\/[^"]+)"/g)].map(m => m[1]);
+  check(`${pagina} enlaza su Instagram y solo el suyo`,
+        suyas.length === 1 && suyas[0] === instagram,
+        suyas.join(', ') || 'no enlaza ninguno');
+  check(`${pagina} enlaza la cuenta de X`, pie.includes(`href="${EQUIS}"`));
+
+  // Las dos redes se abren en pestaña nueva para no sacar a nadie de la página,
+  // y un target="_blank" se escribe con rel="noopener" en todo el repositorio.
+  const nuevaPestana = pie.match(/<a[^>]*target="_blank"[^>]*>/g) || [];
+  check(`${pagina} abre las dos en pestaña nueva con rel="noopener"`,
+        nuevaPestana.length === 2 && nuevaPestana.every(a => /rel="noopener"/.test(a)),
+        `${nuevaPestana.length} enlaces con target="_blank"`);
+
+  check(`${pagina} declara twitter:site`,
+        new RegExp(`<meta name="twitter:site" content="@superstatapp">`).test(f));
+
+  // El JSON-LD. Que exista no basta: un bloque con una coma de más lo descarta
+  // el buscador entero y en silencio, así que aquí se parsea de verdad.
+  const bloque = (f.match(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/) || [])[1];
+  let datos = null;
+  try { datos = JSON.parse(bloque || ''); } catch(e){ datos = e; }
+  check(`${pagina} lleva datos estructurados que parsean`,
+        datos !== null && !(datos instanceof Error),
+        datos instanceof Error ? datos.message : 'no hay bloque application/ld+json');
+  if(!datos || datos instanceof Error) continue;
+
+  const grafo = datos['@graph'] || [];
+  const org = grafo.find(n => n['@type'] === 'Organization');
+  const sitio = grafo.find(n => n['@type'] === 'WebSite');
+
+  const declarados = (org && org.sameAs) || [];
+  check(`${pagina} nombra las tres cuentas en sameAs`,
+        declarados.length === PERFILES.length && PERFILES.every(u => declarados.includes(u)),
+        declarados.join(' · ') || 'sin Organization o sin sameAs');
+  perfilesPorPagina.set(pagina, [...declarados].sort().join(' · '));
+
+  const url = `https://superstat.online/${lang === 'es' ? '' : lang + '/'}`;
+  check(`${pagina} declara el WebSite de su idioma`,
+        !!sitio && sitio.inLanguage === lang && sitio.url === url,
+        sitio ? `${sitio.inLanguage} · ${sitio.url}` : 'no hay WebSite');
+}
+
+// Las cuatro hablan de la misma marca con el mismo @id: si una declarara otros
+// perfiles, estaría contradiciendo a las otras tres sobre la misma entidad.
+check('las cuatro portadas declaran los mismos perfiles',
+      new Set(perfilesPorPagina.values()).size === 1,
+      [...perfilesPorPagina].map(([p, s]) => `${p}: ${s}`).join(' | '));
 
 // -------------------------------------------------------------------------
 console.log('\n5. La trampa del tamaño de las capturas');
