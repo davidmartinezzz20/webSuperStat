@@ -1,55 +1,54 @@
 <!doctype html>
 <!--
-  superstat.online, en castellano. Las otras tres son en/index.html,
-  fr/index.html y de/index.html, y las cuatro comparten css/web.css.
+  superstat.online auf Deutsch. Die anderen Fassungen sind ../index.html
+  (Spanisch), ../en/index.html und ../fr/index.html, und alle teilen sich
+  ../css/web.css.
 
-  Sin build, sin framework y sin fuentes de CDN, igual que la app: es HTML
-  plano que GitHub Pages sirve tal cual. Los textos salen de la ficha de
-  Google Play (docs/play.md en el repositorio superStat), así que si allí se
-  reescribe la descripción, aquí hay que traerla.
+  Dieselben Regeln wie überall: einfaches HTML, ohne Build, ohne Framework und
+  ohne Schriften von einem CDN. Die Texte sind die deutsche Seite dessen, was im
+  Repository der App schon steht — der Play-Eintrag (docs/play.md) und die
+  Instagram-Biografien (docs/instagram.md) — und das Vokabular des deutschen
+  Wörterbuchs der App selbst (js/i18n.js): „Parade", „Plus/Minus", „Kader".
 
-  Al tocar una sección hay que tocar la misma en las otras tres: test/web.js
-  compara los id de las cuatro páginas y falla si una se queda corta.
+  Jeder Abschnitt behält hier dieselbe id wie auf den anderen Seiten.
+  test/web.js vergleicht sie und schlägt fehl, sobald eine abweicht.
 -->
-<html lang="es">
+<html lang="de">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="theme-color" content="#08090B">
-<title>SuperStat — Estadísticas de balonmano</title>
-<meta name="description" content="Estadísticas de balonmano en directo: tiros, paradas y mapa de la pista. Anota el partido desde la banda, sin cobertura. Gratis.">
-<link rel="canonical" href="https://superstat.online/">
+<title>SuperStat — Handballstatistik</title>
+<meta name="description" content="Handballstatistik in Echtzeit: Würfe, Paraden und Feldkarte. Erfasse das Spiel von der Bank aus, ganz ohne Empfang. Kostenlos.">
+<link rel="canonical" href="https://superstat.online/de/">
 <link rel="alternate" hreflang="es" href="https://superstat.online/">
 <link rel="alternate" hreflang="en" href="https://superstat.online/en/">
 <link rel="alternate" hreflang="fr" href="https://superstat.online/fr/">
 <link rel="alternate" hreflang="de" href="https://superstat.online/de/">
 <link rel="alternate" hreflang="x-default" href="https://superstat.online/">
 
-<!-- El mismo cuadro del logo en línea como data URI, copiado de index.html de
-     la app: sin una petición más. Si se toca el dibujo de la marca hay que
-     tocarlo en los dos sitios. -->
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='7' fill='%23D9182B'/><rect x='6.5' y='17' width='5' height='8' rx='1.4' fill='%23fff'/><rect x='13.5' y='12.5' width='5' height='12.5' rx='1.4' fill='%23fff'/><rect x='20.5' y='7' width='5' height='18' rx='1.4' fill='%23fff'/></svg>">
-<link rel="apple-touch-icon" href="img/apple-touch-icon.png">
+<link rel="apple-touch-icon" href="../img/apple-touch-icon.png">
 
 <meta property="og:type" content="website">
-<meta property="og:locale" content="es_ES">
+<meta property="og:locale" content="de_DE">
+<meta property="og:locale:alternate" content="es_ES">
 <meta property="og:locale:alternate" content="en_GB">
 <meta property="og:locale:alternate" content="fr_FR">
-<meta property="og:locale:alternate" content="de_DE">
-<meta property="og:url" content="https://superstat.online/">
+<meta property="og:url" content="https://superstat.online/de/">
 <meta property="og:site_name" content="SuperStat">
-<meta property="og:title" content="SuperStat — Estadísticas de balonmano">
-<meta property="og:description" content="Anota el partido mientras se juega y al pitido final la ficha ya está hecha. Funciona sin cobertura.">
+<meta property="og:title" content="SuperStat — Handballstatistik">
+<meta property="og:description" content="Erfasse das Spiel, während es läuft: beim Schlusspfiff ist der Spielbericht schon fertig. Funktioniert ohne Empfang.">
 <meta property="og:image" content="https://superstat.online/img/og.png">
 <meta name="twitter:card" content="summary_large_image">
 
-<link rel="stylesheet" href="css/web.css">
+<link rel="stylesheet" href="../css/web.css">
 </head>
 <body>
 
 <header class="barra">
   <div class="envoltura">
-    <a class="marca" href="./" aria-label="SuperStat, inicio">
+    <a class="marca" href="./" aria-label="SuperStat, Startseite">
       <svg viewBox="0 0 32 32" aria-hidden="true">
         <rect class="tile" x="0" y="0" width="32" height="32" rx="7"/>
         <rect class="bar" x="6.5" y="17" width="5" height="8" rx="1.4"/>
@@ -59,13 +58,13 @@
       <span class="marca-texto">Super<i>Stat</i></span>
     </a>
     <div class="barra-acciones">
-      <nav class="idiomas" aria-label="Idioma">
-        <a href="./" aria-current="true" hreflang="es">ES</a>
-        <a href="en/" hreflang="en">EN</a>
-        <a href="fr/" hreflang="fr">FR</a>
-        <a href="de/" hreflang="de">DE</a>
+      <nav class="idiomas" aria-label="Sprache">
+        <a href="../" hreflang="es">ES</a>
+        <a href="../en/" hreflang="en">EN</a>
+        <a href="../fr/" hreflang="fr">FR</a>
+        <a href="./" aria-current="true" hreflang="de">DE</a>
       </nav>
-      <a class="boton primario pequeno" href="https://super-stat.vercel.app">Abrir la app</a>
+      <a class="boton primario pequeno" href="https://super-stat.vercel.app/?lang=de">App öffnen</a>
     </div>
   </div>
 </header>
@@ -75,47 +74,47 @@
   <div class="portada">
     <div class="envoltura">
       <div>
-        <h1>Estadísticas de balonmano, <em>tiro a tiro</em>.</h1>
+        <h1>Handballstatistik, <em>Wurf für Wurf</em>.</h1>
         <p class="entradilla">
-          Anotas el partido mientras se juega, con el móvil en la mano, y al
-          pitido final la ficha ya está hecha.
+          Du erfasst das Spiel, während es läuft, mit dem Handy in der Hand, und
+          beim Schlusspfiff ist der Spielbericht schon fertig.
         </p>
         <div class="acciones">
-          <a class="boton primario" href="https://super-stat.vercel.app">
+          <a class="boton primario" href="https://super-stat.vercel.app/?lang=de">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"
                  stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
               <path d="M8 5.5 18.5 12 8 18.5z" fill="currentColor" stroke-linejoin="round"/>
             </svg>
-            Abrir la app
+            App öffnen
           </a>
           <span class="pendiente">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"
                  stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
               <circle cx="12" cy="12" r="8.2"/><path d="M12 7.4V12l3 1.8"/>
             </svg>
-            Próximamente en Google Play
+            Demnächst bei Google Play
           </span>
         </div>
         <ul class="sellos">
-          <li>Gratis</li>
-          <li>Sin compras dentro</li>
-          <li>Sin publicidad</li>
-          <li>Funciona sin cobertura</li>
+          <li>Kostenlos</li>
+          <li>Keine In-App-Käufe</li>
+          <li>Keine Werbung</li>
+          <li>Funktioniert ohne Empfang</li>
         </ul>
       </div>
       <div class="telefono">
-        <img src="img/capturas/01-partido-en-vivo.webp" width="540" height="960"
-             alt="La pantalla de partido en vivo de SuperStat, con las dos porterías divididas en nueve zonas y el marcador.">
+        <img src="../img/capturas-de/01-partido-en-vivo.webp" width="540" height="960"
+             alt="Der Live-Spielbildschirm von SuperStat, mit beiden Toren in neun Zonen und dem Spielstand.">
       </div>
     </div>
   </div>
 
   <section id="durante">
     <div class="envoltura">
-      <h2 class="titulo-seccion">Durante el partido</h2>
+      <h2 class="titulo-seccion">Während des Spiels</h2>
       <p class="bajada">
-        Todo lo que pasa en la pista cabe en una pantalla, para no perder de
-        vista el juego mientras anotas.
+        Alles, was auf dem Feld passiert, passt auf einen Bildschirm — damit du
+        das Spiel nicht aus den Augen verlierst, während du erfasst.
       </p>
 
       <div class="rejilla">
@@ -127,11 +126,11 @@
               <path d="M9 5.5v13M15 5.5v13M3 9.8h18M3 14.2h18"/>
             </svg>
           </div>
-          <h3>Las dos porterías</h3>
+          <h3>Beide Tore</h3>
           <p>
-            La tuya y la del rival, divididas en nueve zonas. Un toque en una
-            zona es gol, dos toques son parada, y hay botón aparte para fuera y
-            para palo.
+            Deins und das des Gegners, in neun Zonen aufgeteilt. Ein Tippen auf
+            eine Zone ist ein Tor, zwei Tipper sind eine Parade, und für Vorbei
+            und Pfosten gibt es eigene Tasten.
           </p>
         </article>
 
@@ -143,10 +142,11 @@
               <circle cx="12" cy="10.4" r="2.3"/>
             </svg>
           </div>
-          <h3>El punto de la pista</h3>
+          <h3>Der Punkt auf dem Feld</h3>
           <p>
-            Marca con un dedo el punto exacto desde el que se ha lanzado, sobre
-            una media pista a escala. Si prefieres ir más rápido, se apaga.
+            Markiere mit einem Finger die genaue Stelle, von der geworfen wurde,
+            auf einer maßstabsgetreuen Feldhälfte. Wer schneller sein will,
+            schaltet es ab.
           </p>
         </article>
 
@@ -157,11 +157,11 @@
               <circle cx="12" cy="12.5" r="8"/><path d="M12 8v4.5l3 1.8M9.4 3h5.2"/>
             </svg>
           </div>
-          <h3>Reloj de partido</h3>
+          <h3>Spieluhr</h3>
           <p>
-            Con pausa, y un botón para decidir tú cuándo acaba la primera parte.
-            Cada anotación se queda con su minuto y su parte, sin dar por hecho
-            que duren treinta minutos.
+            Mit Pause und einer Taste, mit der du selbst bestimmst, wann die erste
+            Halbzeit endet. Jede Eingabe behält ihre Minute und ihre Halbzeit,
+            ohne anzunehmen, dass eine Halbzeit dreißig Minuten dauert.
           </p>
         </article>
 
@@ -172,11 +172,10 @@
               <circle cx="12" cy="8.5" r="3.7"/><path d="M4.6 20a7.4 7.4 0 0 1 14.8 0"/>
             </svg>
           </div>
-          <h3>Portero en pista</h3>
+          <h3>Torwart im Tor</h3>
           <p>
-            Se pregunta una sola vez y se queda puesto, así que los goles
-            encajados también tienen dueño y el porcentaje de paradas significa
-            algo.
+            Einmal gefragt und dann beibehalten, damit auch Gegentore jemandem
+            zugeordnet sind und die Paradenquote wirklich etwas aussagt.
           </p>
         </article>
 
@@ -188,10 +187,10 @@
               <path d="M4 9.5h16M9 3.5v3M15 3.5v3M8 14h3"/>
             </svg>
           </div>
-          <h3>Lo que no es un tiro</h3>
+          <h3>Was kein Wurf ist</h3>
           <p>
-            Registro rápido de pérdida, robo, dos minutos y tarjetas, con el
-            mismo par de toques.
+            Schnelle Erfassung von Ballverlusten, Ballgewinnen, Zeitstrafen und
+            Karten — mit denselben zwei Tippern.
           </p>
         </article>
 
@@ -202,10 +201,10 @@
               <path d="M4 8h12l-2.6-2.6M20 16H8l2.6 2.6"/>
             </svg>
           </div>
-          <h3>Quién está en pista</h3>
+          <h3>Wer auf dem Feld steht</h3>
           <p>
-            Las altas y las bajas quedan anotadas, y de ahí sale el más/menos de
-            cada jugador: qué hace el marcador mientras está jugando.
+            Jeder Wechsel wird erfasst, und daraus entsteht das Plus/Minus jedes
+            Spielers: was der Spielstand macht, während er auf dem Feld steht.
           </p>
         </article>
 
@@ -216,8 +215,8 @@
               <path d="M4 10h10.5a4.5 4.5 0 0 1 0 9H9M4 10l4-4M4 10l4 4"/>
             </svg>
           </div>
-          <h3>Deshacer</h3>
-          <p>Por si se te va el dedo. La última anotación se quita y ya está.</p>
+          <h3>Rückgängig</h3>
+          <p>Falls der Finger verrutscht. Die letzte Eingabe fliegt raus, fertig.</p>
         </article>
       </div>
     </div>
@@ -225,10 +224,10 @@
 
   <section id="despues">
     <div class="envoltura">
-      <h2 class="titulo-seccion">Después del partido</h2>
+      <h2 class="titulo-seccion">Nach dem Spiel</h2>
       <p class="bajada">
-        La ficha sale sola de lo que has anotado. No hay que pasar nada a
-        limpio.
+        Der Spielbericht entsteht aus dem, was du erfasst hast. Hinterher ist
+        nichts mehr aufzuschreiben.
       </p>
 
       <div class="rejilla">
@@ -239,8 +238,8 @@
               <path d="M5 19V13M12 19V6M19 19v-9"/>
             </svg>
           </div>
-          <h3>Resultado y efectividad</h3>
-          <p>Con los goles repartidos por zona de portería.</p>
+          <h3>Ergebnis und Quote</h3>
+          <p>Mit der Verteilung der Tore auf die Zonen des Tores.</p>
         </article>
 
         <article class="tarjeta">
@@ -250,8 +249,8 @@
               <path d="M4 16.5 9 11l3.4 3.2L20 6.5"/><path d="M15.5 6.5H20V11"/>
             </svg>
           </div>
-          <h3>Evolución del marcador</h3>
-          <p>Cómo se fue el partido, con la mejor racha marcada.</p>
+          <h3>Wie sich der Spielstand entwickelt hat</h3>
+          <p>Der Verlauf des Spiels, mit der besten Serie hervorgehoben.</p>
         </article>
 
         <article class="tarjeta">
@@ -262,10 +261,10 @@
               <path d="M12 14v3.5M8.5 20h7"/>
             </svg>
           </div>
-          <h3>Goleadores, porteros y más/menos</h3>
+          <h3>Torschützen, Torhüter und Plus/Minus</h3>
           <p>
-            Quién marcó, quién paró, y qué hacía el marcador con cada jugador en
-            pista.
+            Wer getroffen hat, wer gehalten hat, und was der Spielstand mit jedem
+            Spieler auf dem Feld gemacht hat.
           </p>
         </article>
 
@@ -276,10 +275,8 @@
               <path d="M3 6.5 9 4.5l6 2 6-2v13l-6 2-6-2-6 2z"/><path d="M9 4.5v13M15 6.5v13"/>
             </svg>
           </div>
-          <h3>Mapa de tiros</h3>
-          <p>
-            Sobre la pista, con filtro por jugador y por parte, y mapa de calor.
-          </p>
+          <h3>Wurfkarte</h3>
+          <p>Über dem Feld, gefiltert nach Spieler und Halbzeit, mit Heatmap.</p>
         </article>
 
         <article class="tarjeta">
@@ -290,10 +287,10 @@
               <path d="M4 9.3h16M4 14.6h16M9.3 4v16M14.6 4v16"/>
             </svg>
           </div>
-          <h3>Desde dónde, contra dónde</h3>
+          <h3>Von wo, gegen welche Zone</h3>
           <p>
-            La zona de lanzamiento cruzada con la parte de la portería: el dato
-            que de verdad sirve para preparar a un portero.
+            Die Wurfzone gekreuzt mit der Zone des Tores: die Zahl, mit der sich
+            ein Torwart wirklich vorbereiten lässt.
           </p>
         </article>
 
@@ -305,8 +302,8 @@
               <path d="M5.5 13v5.5a1.5 1.5 0 0 0 1.5 1.5h10a1.5 1.5 0 0 0 1.5-1.5V13"/>
             </svg>
           </div>
-          <h3>Exportar y compartir</h3>
-          <p>El partido a CSV, o compartido como imagen desde el propio móvil.</p>
+          <h3>Exportieren und teilen</h3>
+          <p>Das Spiel als CSV, oder als Bild direkt vom Handy geteilt.</p>
         </article>
       </div>
     </div>
@@ -314,53 +311,53 @@
 
   <section id="capturas">
     <div class="envoltura">
-      <h2 class="titulo-seccion">Así se ve</h2>
+      <h2 class="titulo-seccion">So sieht es aus</h2>
       <p class="bajada">
-        Las ocho pantallas que más se usan, de un partido de verdad anotado con
-        la app.
+        Die acht Bildschirme, die du am meisten nutzen wirst, aus einem echten
+        mit der App erfassten Spiel.
       </p>
     </div>
     <div class="envoltura">
       <div class="tira">
         <figure>
-          <img src="img/capturas/01-partido-en-vivo.webp" width="540" height="960" loading="lazy"
-               alt="Partido en vivo: las dos porterías por zonas y el marcador.">
-          <figcaption>Partido en vivo</figcaption>
+          <img src="../img/capturas-de/01-partido-en-vivo.webp" width="540" height="960" loading="lazy"
+               alt="Live-Spiel: beide Tore nach Zonen und der Spielstand.">
+          <figcaption>Live-Spiel</figcaption>
         </figure>
         <figure>
-          <img src="img/capturas/02-zona-de-lanzamiento.webp" width="540" height="960" loading="lazy"
-               alt="Media pista a escala para marcar de dónde salió el tiro.">
-          <figcaption>Zona de lanzamiento</figcaption>
+          <img src="../img/capturas-de/02-zona-de-lanzamiento.webp" width="540" height="960" loading="lazy"
+               alt="Maßstabsgetreue Feldhälfte, um zu markieren, von wo geworfen wurde.">
+          <figcaption>Wurfzone</figcaption>
         </figure>
         <figure>
-          <img src="img/capturas/03-ficha-del-partido.webp" width="540" height="960" loading="lazy"
-               alt="Ficha del partido con el resultado y la evolución del marcador.">
-          <figcaption>Ficha del partido</figcaption>
+          <img src="../img/capturas-de/03-ficha-del-partido.webp" width="540" height="960" loading="lazy"
+               alt="Spielbericht mit dem Ergebnis und dem Verlauf des Spielstands.">
+          <figcaption>Spielbericht</figcaption>
         </figure>
         <figure>
-          <img src="img/capturas/04-mapa-de-tiros.webp" width="540" height="960" loading="lazy"
-               alt="Mapa de calor de los tiros sobre la pista.">
-          <figcaption>Mapa de tiros</figcaption>
+          <img src="../img/capturas-de/04-mapa-de-tiros.webp" width="540" height="960" loading="lazy"
+               alt="Heatmap der Würfe über dem Feld.">
+          <figcaption>Wurfkarte</figcaption>
         </figure>
         <figure>
-          <img src="img/capturas/05-goleadores.webp" width="540" height="960" loading="lazy"
-               alt="Goleadores del partido con sus porcentajes.">
-          <figcaption>Goleadores</figcaption>
+          <img src="../img/capturas-de/05-goleadores.webp" width="540" height="960" loading="lazy"
+               alt="Torschützen des Spiels mit ihren Quoten.">
+          <figcaption>Torschützen</figcaption>
         </figure>
         <figure>
-          <img src="img/capturas/06-temporada.webp" width="540" height="960" loading="lazy"
-               alt="Acumulado de la temporada con el balance del equipo.">
-          <figcaption>Temporada</figcaption>
+          <img src="../img/capturas-de/06-temporada.webp" width="540" height="960" loading="lazy"
+               alt="Saisonbilanz mit der Statistik der Mannschaft.">
+          <figcaption>Saison</figcaption>
         </figure>
         <figure>
-          <img src="img/capturas/07-partidos-anteriores.webp" width="540" height="960" loading="lazy"
-               alt="Lista de partidos anteriores con sus resultados.">
-          <figcaption>Partidos anteriores</figcaption>
+          <img src="../img/capturas-de/07-partidos-anteriores.webp" width="540" height="960" loading="lazy"
+               alt="Liste der bisherigen Spiele mit ihren Ergebnissen.">
+          <figcaption>Bisherige Spiele</figcaption>
         </figure>
         <figure>
-          <img src="img/capturas/08-plantilla.webp" width="540" height="960" loading="lazy"
-               alt="Plantilla del equipo con dorsales y posiciones.">
-          <figcaption>Plantilla</figcaption>
+          <img src="../img/capturas-de/08-plantilla.webp" width="540" height="960" loading="lazy"
+               alt="Kader der Mannschaft mit Nummern und Positionen.">
+          <figcaption>Kader</figcaption>
         </figure>
       </div>
     </div>
@@ -368,25 +365,25 @@
 
   <section id="temporada">
     <div class="envoltura">
-      <h2 class="titulo-seccion">Y la temporada entera</h2>
+      <h2 class="titulo-seccion">Und die ganze Saison</h2>
       <div class="destacado">
         <div>
           <p>
-            Cada partido que guardas suma. El equipo tiene su propio acumulado,
-            sin tener que abrir uno por uno los partidos de todo el año.
+            Jedes gespeicherte Spiel zählt mit. Die Mannschaft bekommt ihre eigene
+            Bilanz, ohne ein Jahr voller Spiele einzeln zu öffnen.
           </p>
           <p>
-            Varios equipos, cada uno con su plantilla, y los mismos datos en el
-            móvil y en el ordenador.
+            Mehrere Mannschaften, jede mit ihrem eigenen Kader, und dieselben Daten
+            auf dem Handy und auf dem Rechner.
           </p>
         </div>
         <ul class="lista-limpia">
-          <li>Balance de victorias, empates y derrotas</li>
-          <li>Goles a favor y en contra por partido</li>
-          <li>Goleadores de la temporada</li>
-          <li>Paradas por portero</li>
-          <li>Desde dónde lanzáis mejor</li>
-          <li>Más/menos acumulado por jugador</li>
+          <li>Siege, Unentschieden und Niederlagen</li>
+          <li>Tore und Gegentore pro Spiel</li>
+          <li>Torschützen der Saison</li>
+          <li>Paraden pro Torwart</li>
+          <li>Von wo ihr am besten trefft</li>
+          <li>Kumuliertes Plus/Minus pro Spieler</li>
         </ul>
       </div>
     </div>
@@ -394,23 +391,24 @@
 
   <section id="sin-cobertura">
     <div class="envoltura">
-      <h2 class="titulo-seccion">Los pabellones no tienen cobertura</h2>
+      <h2 class="titulo-seccion">In Sporthallen gibt es keinen Empfang</h2>
       <div class="destacado">
         <div>
           <p>
-            Así que la app no la necesita. Se abre y se anota igual, y lo que
-            quede pendiente se sube solo cuando vuelve la red.
+            Deshalb braucht die App keinen. Sie öffnet sich, du erfasst das Spiel
+            trotzdem, und was offen ist, lädt von selbst hoch, sobald das Netz
+            zurück ist.
           </p>
           <p>
-            Si el móvil cierra la app a mitad de partido, al volver a entrar te
-            ofrece seguir donde lo dejaste.
+            Wenn das Handy die App mitten im Spiel schließt, bietet sie an, dort
+            weiterzumachen, wo du aufgehört hast.
           </p>
         </div>
         <ul class="lista-limpia">
-          <li>Se abre sin conexión, también la primera vez del día</li>
-          <li>Lo anotado se guarda en el aparato al momento</li>
-          <li>Se sincroniza solo al volver la red</li>
-          <li>Se instala en la pantalla de inicio</li>
+          <li>Öffnet ohne Verbindung, auch beim ersten Mal am Tag</li>
+          <li>Erfasstes wird sofort auf dem Gerät gespeichert</li>
+          <li>Synchronisiert sich von selbst, sobald das Netz zurück ist</li>
+          <li>Lässt sich auf dem Startbildschirm installieren</li>
         </ul>
       </div>
     </div>
@@ -418,28 +416,28 @@
 
   <section id="datos">
     <div class="envoltura">
-      <h2 class="titulo-seccion">Tus datos son tuyos</h2>
+      <h2 class="titulo-seccion">Deine Daten gehören dir</h2>
       <div class="destacado">
         <div>
           <p>
-            Una cuenta, con Google o con correo y contraseña, y los mismos datos
-            en el móvil y en el ordenador.
+            Ein Konto, mit Google oder mit E-Mail und Passwort, und dieselben Daten
+            auf dem Handy und auf dem Rechner.
           </p>
           <p>
-            Sin publicidad, sin analítica y sin seguimiento: cada cuenta solo
-            puede ver lo suyo. Puedes exportar cualquier partido, o borrar lo
-            que quieras cuando quieras.
+            Keine Werbung, keine Analyse und kein Tracking: Jedes Konto sieht nur
+            das Eigene. Du kannst jedes Spiel exportieren oder löschen, was du
+            willst, wann du willst.
           </p>
           <p>
-            <a href="privacidad.html">Política de privacidad</a>
+            <a href="../privacidad-de.html">Datenschutzerklärung</a>
           </p>
         </div>
         <ul class="lista-limpia">
-          <li>Sin anuncios y sin compras dentro</li>
-          <li>Sin analítica ni seguimiento</li>
-          <li>Cada cuenta ve solo sus equipos</li>
-          <li>Exportar a CSV cuando quieras</li>
-          <li>Borrar la cuenta entera desde la app</li>
+          <li>Keine Werbung und keine In-App-Käufe</li>
+          <li>Keine Analyse, kein Tracking</li>
+          <li>Jedes Konto sieht nur seine eigenen Mannschaften</li>
+          <li>Export als CSV, wann du willst</li>
+          <li>Das ganze Konto lässt sich in der App löschen</li>
         </ul>
       </div>
     </div>
@@ -447,13 +445,14 @@
 
   <section id="empezar" class="cierre">
     <div class="envoltura">
-      <h2 class="titulo-seccion">Pruébala en el próximo partido</h2>
+      <h2 class="titulo-seccion">Probier sie im nächsten Spiel aus</h2>
       <p class="bajada" style="margin-inline:auto">
-        Se abre en el navegador, no hay nada que instalar y es gratis.
+        Sie öffnet sich im Browser, es gibt nichts zu installieren, und sie ist
+        kostenlos.
       </p>
       <div class="acciones">
-        <a class="boton primario" href="https://super-stat.vercel.app">Abrir la app</a>
-        <span class="pendiente">Próximamente en Google Play</span>
+        <a class="boton primario" href="https://super-stat.vercel.app/?lang=de">App öffnen</a>
+        <span class="pendiente">Demnächst bei Google Play</span>
       </div>
     </div>
   </section>
@@ -462,7 +461,7 @@
 
 <footer class="pie">
   <div class="envoltura">
-    <a class="marca" href="./" aria-label="SuperStat, inicio">
+    <a class="marca" href="./" aria-label="SuperStat, Startseite">
       <svg viewBox="0 0 32 32" aria-hidden="true">
         <rect class="tile" x="0" y="0" width="32" height="32" rx="7"/>
         <rect class="bar" x="6.5" y="17" width="5" height="8" rx="1.4"/>
@@ -471,17 +470,17 @@
       </svg>
       <span class="marca-texto">Super<i>Stat</i></span>
     </a>
-    <nav class="enlaces-pie" aria-label="Pie">
-      <a href="https://super-stat.vercel.app">Abrir la app</a>
-      <a href="privacidad.html">Privacidad</a>
-      <a href="mailto:opt1a.david.martinez@gmail.com">Contacto</a>
-      <a href="en/" hreflang="en">English</a>
-      <a href="fr/" hreflang="fr">Français</a>
-      <a href="de/" hreflang="de">Deutsch</a>
+    <nav class="enlaces-pie" aria-label="Fußzeile">
+      <a href="https://super-stat.vercel.app/?lang=de">App öffnen</a>
+      <a href="../privacidad-de.html">Datenschutz</a>
+      <a href="mailto:opt1a.david.martinez@gmail.com">Kontakt</a>
+      <a href="../" hreflang="es">Español</a>
+      <a href="../en/" hreflang="en">English</a>
+      <a href="../fr/" hreflang="fr">Français</a>
     </nav>
     <p class="nota-pie">
-      SuperStat es una libreta de estadísticas de balonmano. Hecha para llevarla
-      a la banda.
+      SuperStat ist ein Notizbuch für Handballstatistik. Gemacht, um mit auf die
+      Bank zu kommen.
     </p>
   </div>
 </footer>

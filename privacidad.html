@@ -26,6 +26,11 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Política de privacidad · SuperStat</title>
 <meta name="description" content="Qué datos guarda SuperStat, dónde se guardan y cómo borrarlos.">
+<link rel="alternate" hreflang="es" href="privacidad.html">
+<link rel="alternate" hreflang="en" href="privacidad-en.html">
+<link rel="alternate" hreflang="fr" href="privacidad-fr.html">
+<link rel="alternate" hreflang="de" href="privacidad-de.html">
+<link rel="alternate" hreflang="x-default" href="privacidad.html">
 <style>
   :root{
     --bg:#08090B; --panel:#141619; --line:rgba(255,255,255,0.08);
@@ -46,7 +51,16 @@
   .brand-word{font-size:20px; font-weight:700; letter-spacing:-0.02em;}
   .brand-word i{font-style:normal; color:var(--brand-2);}
   h1{font-size:30px; line-height:1.2; letter-spacing:-0.03em; margin:0 0 6px;}
-  .updated{color:var(--muted); font-size:14px; margin:0 0 30px;}
+  .updated{color:var(--muted); font-size:14px; margin:0 0 18px;}
+  /* La fila de idiomas. Es la única forma de llegar a las otras versiones: esta
+     página no la enlaza nadie desde la app, se abre desde la ficha de la tienda
+     o desde un correo, y quien cae en la que no entiende no tiene dónde ir. */
+  .langs{display:flex; flex-wrap:wrap; gap:8px; margin:0 0 30px;}
+  .langs a{
+    text-decoration:none; color:var(--muted); font-size:14px;
+    border:1px solid var(--line); border-radius:999px; padding:4px 12px;
+  }
+  .langs a[aria-current]{color:var(--text); border-color:var(--brand-2);}
   h2{font-size:19px; letter-spacing:-0.02em; margin:34px 0 10px; scroll-margin-top:20px;}
   p, li{color:#DCDEE3;}
   p{margin:0 0 12px;}
@@ -86,6 +100,13 @@
   <h1>Política de privacidad</h1>
   <p class="updated">Última actualización: 13 de septiembre de 2026</p>
 
+  <nav class="langs" aria-label="Idioma de la página">
+    <a href="privacidad.html" hreflang="es" aria-current="page">Español</a>
+    <a href="privacidad-en.html" hreflang="en">English</a>
+    <a href="privacidad-fr.html" hreflang="fr">Français</a>
+    <a href="privacidad-de.html" hreflang="de">Deutsch</a>
+  </nav>
+
   <p>SuperStat es una aplicación para llevar las estadísticas de un equipo de
   balonmano: plantilla, partidos, tiros y eventos. Esta página explica qué datos
   guarda, dónde los guarda y cómo borrarlos. Vale igual para la web y para la
@@ -98,9 +119,10 @@
   </div>
 
   <h2>Quién es el responsable</h2>
-  <p>SuperStat es un proyecto personal, sin ánimo de lucro y sin empresa detrás.
-  El responsable del tratamiento es su autor, y la vía de contacto para
-  cualquier cosa relacionada con tus datos es
+  <p>SuperStat es un proyecto personal y sin empresa detrás. La app se puede
+  usar gratis, y tiene además un plan de pago opcional (SuperStat Pro) que se
+  contrata en la web. El responsable del tratamiento es su autor, y la vía de
+  contacto para cualquier cosa relacionada con tus datos es
   <a href="mailto:opt1a.david.martinez@gmail.com">opt1a.david.martinez@gmail.com</a>.</p>
 
   <h2>Qué datos se recogen</h2>
@@ -124,6 +146,16 @@
     <li>Lo anotado durante el partido: tiros (zona de portería, punto de
       lanzamiento, minuto y parte), paradas, pérdidas, robos, exclusiones,
       tarjetas y quién estaba en pista.</li>
+  </ul>
+
+  <p><strong>Si contratas SuperStat Pro</strong>, y solo en ese caso:</p>
+  <ul>
+    <li>El <strong>estado de tu suscripción</strong>: si está activa o en
+      periodo de prueba y hasta qué fecha. Es lo único que se guarda en la base
+      de datos de SuperStat sobre el pago.</li>
+    <li>Los <strong>datos de pago</strong> los recoge y los guarda
+      <strong>Stripe</strong>, que es quien cobra. SuperStat <strong>no ve, no
+      recibe y no guarda el número de tu tarjeta</strong> en ningún momento.</li>
   </ul>
 
   <p><strong>Lo que NO se recoge:</strong> ubicación, agenda de contactos,
@@ -167,7 +199,7 @@
   </ul>
 
   <h2>Con quién se comparten</h2>
-  <p>Con nadie más que con los dos proveedores necesarios para que la app
+  <p>Con nadie más que con los proveedores necesarios para que la app
   funcione:</p>
   <ul>
     <li><strong>Supabase Inc.</strong> — alojamiento de la base de datos y del
@@ -176,10 +208,33 @@
     <li><strong>Google LLC</strong> — solo si eliges entrar con Google, y solo
       para comprobar que esa cuenta es tuya.
       <a href="https://policies.google.com/privacy" target="_blank" rel="noopener">Su política</a>.</li>
+    <li><strong>Stripe, Inc.</strong> — solo si contratas SuperStat Pro. Recibe
+      tu correo y los datos de pago, y es quien cobra y guarda la tarjeta.
+      <a href="https://stripe.com/privacy" target="_blank" rel="noopener">Su política</a>.</li>
+    <li><strong>Resend (Plus Five Five, Inc.)</strong> — solo para enviarte los
+      avisos por correo de los que se habla más abajo. Recibe tu dirección y el
+      texto del aviso.
+      <a href="https://resend.com/legal/privacy-policy" target="_blank" rel="noopener">Su política</a>.</li>
   </ul>
   <p>No se venden datos, no se ceden con fines publicitarios y no se comparten
   con terceros para sus propios fines. Solo se entregarían datos si lo exigiera
   una obligación legal.</p>
+
+  <h2>Avisos por correo</h2>
+  <p>SuperStat te escribe muy de vez en cuando, y solo por dos motivos: cuando
+  llegas al límite de equipos del plan gratuito, y cuando tu periodo de prueba
+  de SuperStat Pro está a punto de acabarse (para que no te lleves la sorpresa
+  del primer cobro). El primero se manda <strong>como mucho una vez cada 30
+  días</strong>.</p>
+  <p>No hay boletines, ni promociones de terceros, ni seguimiento de aperturas o
+  de clics: los correos no llevan imágenes ni píxeles de rastreo, así que no se
+  sabe si los has abierto.</p>
+  <p><strong>Puedes desactivarlos cuando quieras</strong>, de dos formas: con el
+  interruptor <em>Avisos por correo</em> de la pantalla de <em>Cuenta</em>, o
+  con el enlace de baja que lleva cada correo al pie, que funciona sin
+  necesidad de iniciar sesión. Los correos imprescindibles del funcionamiento de
+  la cuenta (confirmar el correo o recuperar la contraseña) no se ven afectados,
+  porque sin ellos no se puede entrar.</p>
 
   <h2>Cuánto tiempo se conservan</h2>
   <p>Mientras tengas la cuenta abierta. Cuando borras un equipo o un partido
@@ -200,6 +255,12 @@
     jugadores, partidos, tiros y eventos—, tanto en el dispositivo como en la
     nube, y se cierra la sesión. Es inmediato y no hace falta pedir nada a
     nadie.</p>
+    <p><strong>Si tenías SuperStat Pro</strong>, el borrado <strong>cancela
+    antes la suscripción</strong> y borra también tu ficha de cliente en Stripe,
+    para que no quede ningún cobro pendiente ni ningún dato tuyo allí. Stripe
+    conserva por su cuenta el registro de las facturas ya emitidas el tiempo que
+    le exige la normativa contable, que es una obligación legal y no una
+    decisión de SuperStat.</p>
     <p><strong>O por correo, si lo prefieres:</strong> escribe a
     <a href="mailto:opt1a.david.martinez@gmail.com?subject=Borrar%20mi%20cuenta%20de%20SuperStat">opt1a.david.martinez@gmail.com</a>
     desde la misma dirección con la que entras en la app, con el asunto

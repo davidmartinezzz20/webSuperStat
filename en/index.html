@@ -1,7 +1,7 @@
 <!doctype html>
 <!--
-  superstat.online in English. The Spanish page is ../index.html and both share
-  ../css/web.css.
+  superstat.online in English. The other three are ../index.html (Spanish),
+  ../fr/index.html and ../de/index.html, and all four share ../css/web.css.
 
   Same rules as the Spanish one: plain HTML, no build, no framework, no CDN
   fonts. The copy is the English side of what is already written in the app
@@ -9,7 +9,7 @@
   (docs/instagram.md) — and the wording of the app's own English dictionary
   (js/i18n.js): "save", "plus/minus", "heat map", "squad".
 
-  Every section here must keep the same id as the Spanish page. test/web.js
+  Every section here must keep the same id as the other pages. test/web.js
   compares them and fails if one drifts.
 -->
 <html lang="en">
@@ -22,6 +22,8 @@
 <link rel="canonical" href="https://superstat.online/en/">
 <link rel="alternate" hreflang="es" href="https://superstat.online/">
 <link rel="alternate" hreflang="en" href="https://superstat.online/en/">
+<link rel="alternate" hreflang="fr" href="https://superstat.online/fr/">
+<link rel="alternate" hreflang="de" href="https://superstat.online/de/">
 <link rel="alternate" hreflang="x-default" href="https://superstat.online/">
 
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='7' fill='%23D9182B'/><rect x='6.5' y='17' width='5' height='8' rx='1.4' fill='%23fff'/><rect x='13.5' y='12.5' width='5' height='12.5' rx='1.4' fill='%23fff'/><rect x='20.5' y='7' width='5' height='18' rx='1.4' fill='%23fff'/></svg>">
@@ -30,6 +32,8 @@
 <meta property="og:type" content="website">
 <meta property="og:locale" content="en_GB">
 <meta property="og:locale:alternate" content="es_ES">
+<meta property="og:locale:alternate" content="fr_FR">
+<meta property="og:locale:alternate" content="de_DE">
 <meta property="og:url" content="https://superstat.online/en/">
 <meta property="og:site_name" content="SuperStat">
 <meta property="og:title" content="SuperStat — Handball stats">
@@ -56,6 +60,8 @@
       <nav class="idiomas" aria-label="Language">
         <a href="../" hreflang="es">ES</a>
         <a href="./" aria-current="true" hreflang="en">EN</a>
+        <a href="../fr/" hreflang="fr">FR</a>
+        <a href="../de/" hreflang="de">DE</a>
       </nav>
       <a class="boton primario pequeno" href="https://super-stat.vercel.app/?lang=en">Open the app</a>
     </div>
@@ -421,8 +427,7 @@
             you want.
           </p>
           <p>
-            <a href="../privacidad.html">Privacy policy</a>
-            <span style="color:var(--muted)"> (in Spanish)</span>
+            <a href="../privacidad-en.html">Privacy policy</a>
           </p>
         </div>
         <ul class="lista-limpia">
@@ -464,9 +469,11 @@
     </a>
     <nav class="enlaces-pie" aria-label="Footer">
       <a href="https://super-stat.vercel.app/?lang=en">Open the app</a>
-      <a href="../privacidad.html">Privacy</a>
+      <a href="../privacidad-en.html">Privacy</a>
       <a href="mailto:opt1a.david.martinez@gmail.com">Contact</a>
       <a href="../" hreflang="es">Español</a>
+      <a href="../fr/" hreflang="fr">Français</a>
+      <a href="../de/" hreflang="de">Deutsch</a>
     </nav>
     <p class="nota-pie">
       SuperStat is a handball stats notebook. Built to be taken to the bench.

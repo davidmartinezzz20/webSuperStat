@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Las dos portadas, cada una declarando a la otra como su alternativa de
-     idioma, y la política de privacidad, que de momento solo está en castellano
-     y por eso va sin alternativas.
+<!-- Las cuatro portadas, cada una declarando a las otras tres como alternativa
+     de idioma, y las cuatro políticas de privacidad.
      Si se añade una página hay que añadirla aquí: no se genera sola. -->
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
         xmlns:xhtml="http://www.w3.org/1999/xhtml">
@@ -9,15 +8,64 @@
     <loc>https://superstat.online/</loc>
     <xhtml:link rel="alternate" hreflang="es" href="https://superstat.online/"/>
     <xhtml:link rel="alternate" hreflang="en" href="https://superstat.online/en/"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://superstat.online/fr/"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://superstat.online/de/"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://superstat.online/"/>
   </url>
   <url>
     <loc>https://superstat.online/en/</loc>
     <xhtml:link rel="alternate" hreflang="es" href="https://superstat.online/"/>
     <xhtml:link rel="alternate" hreflang="en" href="https://superstat.online/en/"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://superstat.online/fr/"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://superstat.online/de/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://superstat.online/"/>
+  </url>
+  <url>
+    <loc>https://superstat.online/fr/</loc>
+    <xhtml:link rel="alternate" hreflang="es" href="https://superstat.online/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://superstat.online/en/"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://superstat.online/fr/"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://superstat.online/de/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://superstat.online/"/>
+  </url>
+  <url>
+    <loc>https://superstat.online/de/</loc>
+    <xhtml:link rel="alternate" hreflang="es" href="https://superstat.online/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://superstat.online/en/"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://superstat.online/fr/"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://superstat.online/de/"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://superstat.online/"/>
   </url>
   <url>
     <loc>https://superstat.online/privacidad.html</loc>
+    <xhtml:link rel="alternate" hreflang="es" href="https://superstat.online/privacidad.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://superstat.online/privacidad-en.html"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://superstat.online/privacidad-fr.html"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://superstat.online/privacidad-de.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://superstat.online/privacidad.html"/>
+  </url>
+  <url>
+    <loc>https://superstat.online/privacidad-en.html</loc>
+    <xhtml:link rel="alternate" hreflang="es" href="https://superstat.online/privacidad.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://superstat.online/privacidad-en.html"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://superstat.online/privacidad-fr.html"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://superstat.online/privacidad-de.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://superstat.online/privacidad.html"/>
+  </url>
+  <url>
+    <loc>https://superstat.online/privacidad-fr.html</loc>
+    <xhtml:link rel="alternate" hreflang="es" href="https://superstat.online/privacidad.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://superstat.online/privacidad-en.html"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://superstat.online/privacidad-fr.html"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://superstat.online/privacidad-de.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://superstat.online/privacidad.html"/>
+  </url>
+  <url>
+    <loc>https://superstat.online/privacidad-de.html</loc>
+    <xhtml:link rel="alternate" hreflang="es" href="https://superstat.online/privacidad.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://superstat.online/privacidad-en.html"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://superstat.online/privacidad-fr.html"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://superstat.online/privacidad-de.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://superstat.online/privacidad.html"/>
   </url>
 </urlset>
