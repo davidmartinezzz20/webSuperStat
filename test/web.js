@@ -1,17 +1,17 @@
-// Que las dos páginas no se rompan por lo silencioso.
+// Que las cuatro páginas no se rompan por lo silencioso.
 //
 // Esta web tiene dos modos de fallo que nadie ve hasta que es tarde:
 //
 //   1. Un enlace o una imagen que apunta a un archivo que no está. En una SPA
 //      salta a la primera; aquí es una imagen rota en una sección a la que hay
 //      que bajar, o un 404 al pulsar el pie.
-//   2. Que castellano e inglés se separen. Al añadir una sección a index.html
-//      es fácil olvidarse de en/index.html, y entonces media web dice una cosa
-//      y la otra media dice otra. Es el mismo problema que test/i18n.js vigila
-//      en la app, con la diferencia de que aquí no hay diccionario: hay dos
-//      archivos escritos a mano.
+//   2. Que los cuatro idiomas se separen. Al añadir una sección a index.html
+//      es fácil olvidarse de en/, fr/ o de/, y entonces una parte de la web
+//      dice una cosa y otra dice otra. Es el mismo problema que test/i18n.js
+//      vigila en la app, con la diferencia de que aquí no hay diccionario: hay
+//      cuatro archivos escritos a mano.
 //
-// Sin dependencias y sin navegador: es leer tres archivos y mirar.
+// Sin dependencias y sin navegador: es leer los archivos y mirar.
 //
 //   node test/web.js
 const fs = require('fs');
@@ -26,7 +26,17 @@ function check(nombre, ok, detalle){
   else { fallos++; console.log('  FALLA ' + nombre + (detalle ? '  → ' + detalle : '')); }
 }
 
-const PAGINAS = ['index.html', 'en/index.html', '404.html', 'privacidad.html'];
+// Las cuatro portadas, con su idioma y la carpeta de capturas que le toca a
+// cada una. Añadir un idioma es añadir una fila aquí y sus archivos: todo lo
+// demás de esta prueba sale de esta tabla.
+const PORTADAS = [
+  { pagina:'index.html',    lang:'es', capturas:'img/capturas',    privacidad:'privacidad.html' },
+  { pagina:'en/index.html', lang:'en', capturas:'img/capturas-en', privacidad:'privacidad-en.html' },
+  { pagina:'fr/index.html', lang:'fr', capturas:'img/capturas-fr', privacidad:'privacidad-fr.html' },
+  { pagina:'de/index.html', lang:'de', capturas:'img/capturas-de', privacidad:'privacidad-de.html' }
+];
+const PRIVACIDADES = PORTADAS.map(p => p.privacidad);
+const PAGINAS = [...PORTADAS.map(p => p.pagina), '404.html', ...PRIVACIDADES];
 const html = {};
 for(const p of PAGINAS) html[p] = leer(p);
 
@@ -79,8 +89,9 @@ console.log('\n1 bis. Las dos portadas enlazan en relativo');
 //
 // 404.html se queda fuera a propósito: lo sirve el servidor ante una URL
 // cualquiera, así que no tiene una carpeta desde la que contar y necesita la
-// ruta absoluta. Solo queda bien en el dominio de verdad.
-for(const pagina of ['index.html', 'en/index.html']){
+// ruta absoluta. Solo queda bien en el dominio de verdad. Las privacidad*.html
+// también: son páginas sueltas de la raíz y solo se enlazan entre ellas.
+for(const { pagina } of PORTADAS){
   for(const url of destinos(pagina)){
     if(FUERA.test(url) || !url.startsWith('/')) continue;
     check(`${pagina} → ${url} no cuelga de la raíz`, false,
@@ -102,48 +113,95 @@ for(const pagina of PAGINAS){
 }
 
 // -------------------------------------------------------------------------
-console.log('\n3. Castellano e inglés cuentan lo mismo');
+console.log('\n3. Los cuatro idiomas cuentan lo mismo');
 
 function secciones(pagina){
   return [...html[pagina].matchAll(/<section id="([^"]+)"/g)].map(m => m[1]);
 }
+// El castellano es la referencia, como en la app: es el idioma en el que se
+// escribe la página y del que salen las traducciones.
 const es = secciones('index.html');
-const en = secciones('en/index.html');
-
 check('index.html tiene secciones', es.length > 0, 'ninguna');
-for(const id of es){
-  check(`en/index.html tiene la sección "${id}"`, en.includes(id));
+for(const { pagina } of PORTADAS.slice(1)){
+  const otras = secciones(pagina);
+  for(const id of es) check(`${pagina} tiene la sección "${id}"`, otras.includes(id));
+  for(const id of otras) check(`index.html tiene la sección "${id}" de ${pagina}`, es.includes(id));
+  check(`${pagina} lleva las secciones en el mismo orden`, es.join(',') === otras.join(','),
+        `es: ${es.join(',')} · ${pagina}: ${otras.join(',')}`);
 }
-for(const id of en){
-  check(`index.html tiene la sección "${id}"`, es.includes(id));
-}
-check('las secciones van en el mismo orden', es.join(',') === en.join(','),
-      `es: ${es.join(',')} · en: ${en.join(',')}`);
 
 // Cada página enseña las capturas de su idioma. Cruzarlas es el despiste
-// típico al copiar una sección de un archivo al otro.
-const capturasEs = (html['index.html'].match(/img\/capturas-en\//g) || []).length;
-const capturasEn = (html['en/index.html'].match(/img\/capturas\//g) || []).length;
-check('index.html no usa las capturas inglesas', capturasEs === 0, `${capturasEs} veces`);
-check('en/index.html no usa las castellanas', capturasEn === 0, `${capturasEn} veces`);
+// típico al copiar una sección de un archivo al otro, y ahora hay cuatro
+// carpetas que confundir en vez de dos.
+for(const { pagina, capturas } of PORTADAS){
+  const ajenas = PORTADAS.filter(p => p.capturas !== capturas)
+    // 'img/capturas' es prefijo de 'img/capturas-en': se compara con la barra
+    // final para que la castellana no parezca estar en todas.
+    .filter(p => (html[pagina].match(new RegExp(p.capturas + '/', 'g')) || []).length > 0)
+    .map(p => p.capturas);
+  check(`${pagina} solo usa ${capturas}/`, ajenas.length === 0, 'también usa ' + ajenas.join(', '));
+  const propias = (html[pagina].match(new RegExp(capturas + '/', 'g')) || []).length;
+  check(`${pagina} usa las suyas`, propias === 9, `${propias} veces`);
+}
 
 // -------------------------------------------------------------------------
 console.log('\n4. Lo que hace falta para que Google las entienda');
 
-for(const pagina of ['index.html', 'en/index.html']){
+for(const { pagina, lang } of PORTADAS){
   const f = html[pagina];
-  check(`${pagina} declara su idioma`, /<html lang="(es|en)">/.test(f));
+  check(`${pagina} declara su idioma`, new RegExp(`<html lang="${lang}">`).test(f));
   check(`${pagina} tiene <title>`, /<title>[^<]+<\/title>/.test(f));
   check(`${pagina} tiene description`, /name="description" content="[^"]+"/.test(f));
   check(`${pagina} tiene canonical`, /rel="canonical"/.test(f));
-  check(`${pagina} declara las dos alternativas de idioma`,
-        /hreflang="es"/.test(f) && /hreflang="en"/.test(f));
+  // Las cuatro alternativas en las cuatro páginas: si una se olvida de otra,
+  // Google sirve la portada de otro idioma y no hay error que lo delate.
+  for(const { lang: otro } of PORTADAS){
+    check(`${pagina} declara la alternativa "${otro}"`,
+          new RegExp(`hreflang="${otro}"[^>]*href="https://superstat.online/`).test(f));
+  }
 }
 
-// El sitemap tiene que nombrar las dos, y no se genera solo.
+// El sitemap tiene que nombrarlas todas, y no se genera solo.
 const mapa = leer('sitemap.xml');
 check('sitemap.xml nombra la portada castellana', mapa.includes('<loc>https://superstat.online/</loc>'));
-check('sitemap.xml nombra la inglesa', mapa.includes('<loc>https://superstat.online/en/</loc>'));
+for(const { lang } of PORTADAS.slice(1)){
+  check(`sitemap.xml nombra la portada "${lang}"`,
+        mapa.includes(`<loc>https://superstat.online/${lang}/</loc>`));
+}
+for(const p of PRIVACIDADES){
+  check(`sitemap.xml nombra ${p}`, mapa.includes(`<loc>https://superstat.online/${p}</loc>`));
+}
+
+// -------------------------------------------------------------------------
+console.log('\n4 bis. Los planes dicen lo mismo en los cuatro idiomas');
+
+// El precio se escribe a mano cuatro veces, una por portada. Un 3,49 que en
+// alemán diga 3,99 no rompe nada, no sale en ninguna consola y lo lee un
+// cliente: es exactamente el tipo de fallo para el que existe esta prueba. Se
+// compara el número y no la cadena entera porque cada idioma lo escribe a su
+// manera ("3,49 €" y "€3.49").
+const precios = new Set();
+for(const { pagina } of PORTADAS){
+  const f = html[pagina];
+  check(`${pagina} lleva el botón que baja a los planes`, /href="#planes"/.test(f));
+  check(`${pagina} tiene la sección de planes`, /<section id="planes">/.test(f));
+
+  const cifras = [...f.matchAll(/<span class="plan-cifra">([^<]+)<\/span>/g)].map(m => m[1]);
+  check(`${pagina} enseña los dos precios`, cifras.length === 2, cifras.join(' · '));
+  const pro = (cifras[1] || '').replace(/[^\d,.]/g, '').replace(',', '.');
+  if(pro) precios.add(pro);
+
+  // Y que no se quede sin la coletilla de impuestos, que es lo que convierte el
+  // precio en el precio de verdad.
+  const notas = [...f.matchAll(/<p class="plan-nota">([^<]+)<\/p>/g)].map(m => m[1]);
+  check(`${pagina} dice que los impuestos van aparte`, notas.length === 2 &&
+        /impuestos|taxes|steuern/i.test(notas[1]), notas.join(' · '));
+
+  const filas = (f.match(/<tr>/g) || []).length;
+  check(`${pagina} tiene la tabla comparativa entera`, filas === 14, `${filas} filas`);
+}
+check('las cuatro portadas dicen el mismo precio', precios.size === 1,
+      [...precios].join(' · '));
 
 // -------------------------------------------------------------------------
 console.log('\n5. La trampa del tamaño de las capturas');
@@ -176,7 +234,7 @@ for(const sel of ['.tira img', '.telefono img']){
 // vuelve a sobrar imagen que recortar.
 const reglaMarco = (css.match(/\.telefono\{[^}]*\}/) || [''])[0];
 check('.telefono no impone aspect-ratio', !/aspect-ratio/.test(reglaMarco), reglaMarco);
-for(const pagina of ['index.html', 'en/index.html']){
+for(const { pagina } of PORTADAS){
   const tira = (html[pagina].match(/<div class="tira">[\s\S]*?<\/div>/) || [''])[0];
   const imgs = tira.match(/<img[^>]*>/g) || [];
   check(`${pagina} tiene las ocho capturas`, imgs.length === 8, `${imgs.length}`);
@@ -191,26 +249,46 @@ for(const pagina of ['index.html', 'en/index.html']){
 }
 
 // -------------------------------------------------------------------------
-console.log('\n6. La política de privacidad, que está duplicada');
+console.log('\n6. Las políticas de privacidad, que están duplicadas');
 
-// privacidad.html vive aquí y, de momento, también en el repositorio de la app:
-// aquélla es la que sirve Vercel y a la que apunta hoy la ficha de Google Play.
-// Mientras las dos existan tienen que decir lo mismo, y no hay nada que avise si
-// se separan. La duplicación se acaba cuando Play Console apunte aquí.
-check('privacidad.html está en la raíz', fs.existsSync(path.join(RAIZ, 'privacidad.html')));
+// Las cuatro viven aquí y, de momento, también en el repositorio de la app:
+// aquéllas son las que sirve Vercel y a las que apunta hoy la ficha de Google
+// Play. Mientras las dos copias existan tienen que decir lo mismo, y no hay nada
+// que avise si se separan. La duplicación se acaba cuando Play Console apunte
+// aquí.
+for(const p of PRIVACIDADES){
+  check(`${p} está en la raíz`, fs.existsSync(path.join(RAIZ, p)));
+}
 
-// El ancla es la URL de eliminación de cuenta que se pega en Play Console.
+// El ancla es la URL de eliminación de cuenta que se pega en Play Console, y es
+// la misma en los cuatro idiomas para que esas URL sean intercambiables.
 // Renombrarla rompe algo que está escrito en un formulario de Google.
-check('privacidad.html conserva el ancla #borrar', /id="borrar"/.test(html['privacidad.html']));
+for(const p of PRIVACIDADES){
+  check(`${p} conserva el ancla #borrar`, /id="borrar"/.test(html[p]));
+}
 
-const otraCopia = path.resolve(RAIZ, process.env.ORIGEN || '../superStat', 'privacidad.html');
-if(fs.existsSync(otraCopia)){
+// Cada portada enlaza a la política de SU idioma. Mandar al inglés a la
+// castellana es lo que hacía la web antes de tener las cuatro, y no falla nada:
+// simplemente el lector se encuentra un documento legal en otro idioma.
+for(const { pagina, privacidad } of PORTADAS){
+  const suyos = destinos(pagina).filter(u => /privacidad[^"]*\.html/.test(u));
+  check(`${pagina} enlaza a ${privacidad}`,
+        suyos.length > 0 && suyos.every(u => u.endsWith(privacidad)),
+        suyos.join(', ') || 'no enlaza a ninguna');
+}
+
+const ORIGEN = path.resolve(RAIZ, process.env.ORIGEN || '../superStat');
+if(fs.existsSync(ORIGEN)){
   // El comentario de cabecera sí es distinto a propósito —el de aquí avisa de la
   // duplicación—, así que se compara del <html> en adelante.
   const cuerpo = t => t.slice(t.indexOf('<html'));
-  check('las dos copias dicen lo mismo',
-        cuerpo(html['privacidad.html']) === cuerpo(fs.readFileSync(otraCopia, 'utf8')),
-        'se han separado: cambia las dos o borra una');
+  for(const p of PRIVACIDADES){
+    const otraCopia = path.join(ORIGEN, p);
+    check(`las dos copias de ${p} dicen lo mismo`,
+          fs.existsSync(otraCopia) &&
+          cuerpo(html[p]) === cuerpo(fs.readFileSync(otraCopia, 'utf8')),
+          'se han separado: cambia las dos o borra una');
+  }
 } else {
   console.log('  --   el repositorio de la app no está al lado, no se comparan');
 }

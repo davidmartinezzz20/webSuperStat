@@ -1,0 +1,613 @@
+<!doctype html>
+<!--
+  superstat.online en français. Les autres versions sont ../index.html (castillan),
+  ../en/index.html et ../de/index.html, et toutes partagent ../css/web.css.
+
+  Mêmes règles que les autres : du HTML simple, sans build, sans framework et
+  sans polices de CDN. Les textes sont la face française de ce qui est déjà
+  écrit dans le dépôt de l'app — la fiche Play (docs/play.md) et les bios
+  Instagram (docs/instagram.md) — et le vocabulaire du dictionnaire français de
+  l'app elle-même (js/i18n.js) : « arrêt », « plus/minus », « effectif ».
+
+  Chaque section garde ici le même id que sur les autres pages. test/web.js les
+  compare et échoue dès que l'une s'écarte.
+-->
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#08090B">
+<title>SuperStat — Statistiques de handball</title>
+<meta name="description" content="Statistiques de handball en direct : tirs, arrêts et carte du terrain. Notez le match depuis le banc, sans réseau. Gratuit.">
+<link rel="canonical" href="https://superstat.online/fr/">
+<link rel="alternate" hreflang="es" href="https://superstat.online/">
+<link rel="alternate" hreflang="en" href="https://superstat.online/en/">
+<link rel="alternate" hreflang="fr" href="https://superstat.online/fr/">
+<link rel="alternate" hreflang="de" href="https://superstat.online/de/">
+<link rel="alternate" hreflang="x-default" href="https://superstat.online/">
+
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='7' fill='%23D9182B'/><rect x='6.5' y='17' width='5' height='8' rx='1.4' fill='%23fff'/><rect x='13.5' y='12.5' width='5' height='12.5' rx='1.4' fill='%23fff'/><rect x='20.5' y='7' width='5' height='18' rx='1.4' fill='%23fff'/></svg>">
+<link rel="apple-touch-icon" href="../img/apple-touch-icon.png">
+
+<meta property="og:type" content="website">
+<meta property="og:locale" content="fr_FR">
+<meta property="og:locale:alternate" content="es_ES">
+<meta property="og:locale:alternate" content="en_GB">
+<meta property="og:locale:alternate" content="de_DE">
+<meta property="og:url" content="https://superstat.online/fr/">
+<meta property="og:site_name" content="SuperStat">
+<meta property="og:title" content="SuperStat — Statistiques de handball">
+<meta property="og:description" content="Notez le match pendant qu'il se joue : au coup de sifflet final, la feuille est déjà faite. Fonctionne sans réseau.">
+<meta property="og:image" content="https://superstat.online/img/og.png">
+<meta name="twitter:card" content="summary_large_image">
+
+<link rel="stylesheet" href="../css/web.css">
+</head>
+<body>
+
+<header class="barra">
+  <div class="envoltura">
+    <div class="barra-izquierda">
+      <a class="marca" href="./" aria-label="SuperStat, accueil">
+        <svg viewBox="0 0 32 32" aria-hidden="true">
+          <rect class="tile" x="0" y="0" width="32" height="32" rx="7"/>
+          <rect class="bar" x="6.5" y="17" width="5" height="8" rx="1.4"/>
+          <rect class="bar" x="13.5" y="12.5" width="5" height="12.5" rx="1.4"/>
+          <rect class="bar" x="20.5" y="7" width="5" height="18" rx="1.4"/>
+        </svg>
+        <span class="marca-texto">Super<i>Stat</i></span>
+      </a>
+      <a class="boton secundario pequeno" href="#planes" aria-label="Voir les formules">Voir les formules</a>
+    </div>
+    <div class="barra-acciones">
+      <nav class="idiomas" aria-label="Langue">
+        <a href="../" hreflang="es">ES</a>
+        <a href="../en/" hreflang="en">EN</a>
+        <a href="./" aria-current="true" hreflang="fr">FR</a>
+        <a href="../de/" hreflang="de">DE</a>
+      </nav>
+      <a class="boton primario pequeno" href="https://super-stat.vercel.app/?lang=fr">Ouvrir l'app</a>
+    </div>
+  </div>
+</header>
+
+<main>
+
+  <div class="portada">
+    <div class="envoltura">
+      <div>
+        <h1>Statistiques de handball, <em>tir par tir</em>.</h1>
+        <p class="entradilla">
+          Vous notez le match pendant qu'il se joue, le téléphone à la main, et
+          au coup de sifflet final la feuille est déjà faite.
+        </p>
+        <div class="acciones">
+          <a class="boton primario" href="https://super-stat.vercel.app/?lang=fr">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"
+                 stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M8 5.5 18.5 12 8 18.5z" fill="currentColor" stroke-linejoin="round"/>
+            </svg>
+            Ouvrir l'app
+          </a>
+          <span class="pendiente">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"
+                 stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <circle cx="12" cy="12" r="8.2"/><path d="M12 7.4V12l3 1.8"/>
+            </svg>
+            Bientôt sur Google Play
+          </span>
+        </div>
+        <ul class="sellos">
+          <li>Gratuit</li>
+          <li>Sans achat intégré</li>
+          <li>Sans publicité</li>
+          <li>Fonctionne sans réseau</li>
+        </ul>
+      </div>
+      <div class="telefono">
+        <img src="../img/capturas-fr/01-partido-en-vivo.webp" width="540" height="960"
+             alt="L'écran de match en direct de SuperStat, avec les deux buts découpés en neuf zones et le score.">
+      </div>
+    </div>
+  </div>
+
+  <section id="durante">
+    <div class="envoltura">
+      <h2 class="titulo-seccion">Pendant le match</h2>
+      <p class="bajada">
+        Tout ce qui se passe sur le terrain tient sur un écran, pour ne pas
+        quitter le jeu des yeux pendant que vous notez.
+      </p>
+
+      <div class="rejilla">
+        <article class="tarjeta">
+          <div class="icono">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"
+                 stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <rect x="3" y="5.5" width="18" height="13" rx="1.4"/>
+              <path d="M9 5.5v13M15 5.5v13M3 9.8h18M3 14.2h18"/>
+            </svg>
+          </div>
+          <h3>Les deux buts</h3>
+          <p>
+            Le vôtre et celui de l'adversaire, découpés en neuf zones. Un appui
+            sur une zone est un but, deux appuis un arrêt, et des boutons à part
+            pour le hors cadre et le poteau.
+          </p>
+        </article>
+
+        <article class="tarjeta">
+          <div class="icono">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"
+                 stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M12 21s6.4-6 6.4-10.4A6.4 6.4 0 0 0 5.6 10.6C5.6 15 12 21 12 21z"/>
+              <circle cx="12" cy="10.4" r="2.3"/>
+            </svg>
+          </div>
+          <h3>Le point sur le terrain</h3>
+          <p>
+            Marquez d'un doigt l'endroit exact d'où part le tir, sur un demi-terrain
+            dessiné à l'échelle. Si vous préférez aller plus vite, désactivez-le.
+          </p>
+        </article>
+
+        <article class="tarjeta">
+          <div class="icono">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"
+                 stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <circle cx="12" cy="12.5" r="8"/><path d="M12 8v4.5l3 1.8M9.4 3h5.2"/>
+            </svg>
+          </div>
+          <h3>Chronomètre du match</h3>
+          <p>
+            Avec pause, et un bouton pour décider vous-même quand finit la
+            première mi-temps. Chaque saisie garde sa minute et sa période, sans
+            supposer qu'une mi-temps dure trente minutes.
+          </p>
+        </article>
+
+        <article class="tarjeta">
+          <div class="icono">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"
+                 stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <circle cx="12" cy="8.5" r="3.7"/><path d="M4.6 20a7.4 7.4 0 0 1 14.8 0"/>
+            </svg>
+          </div>
+          <h3>Le gardien en jeu</h3>
+          <p>
+            Demandé une seule fois puis conservé, pour que les buts encaissés
+            aient eux aussi un propriétaire et que le pourcentage d'arrêts veuille
+            dire quelque chose.
+          </p>
+        </article>
+
+        <article class="tarjeta">
+          <div class="icono">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"
+                 stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <rect x="4" y="5" width="16" height="15" rx="2.5"/>
+              <path d="M4 9.5h16M9 3.5v3M15 3.5v3M8 14h3"/>
+            </svg>
+          </div>
+          <h3>Ce qui n'est pas un tir</h3>
+          <p>
+            Saisie rapide des pertes de balle, des interceptions, des 2 minutes
+            et des cartons, avec les deux mêmes appuis.
+          </p>
+        </article>
+
+        <article class="tarjeta">
+          <div class="icono">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"
+                 stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M4 8h12l-2.6-2.6M20 16H8l2.6 2.6"/>
+            </svg>
+          </div>
+          <h3>Qui est sur le terrain</h3>
+          <p>
+            Chaque changement est noté, et c'est de là que sort le plus/minus de
+            chaque joueur : ce que fait le score pendant qu'il est sur le terrain.
+          </p>
+        </article>
+
+        <article class="tarjeta">
+          <div class="icono">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"
+                 stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M4 10h10.5a4.5 4.5 0 0 1 0 9H9M4 10l4-4M4 10l4 4"/>
+            </svg>
+          </div>
+          <h3>Annuler</h3>
+          <p>Au cas où le doigt glisse. La dernière saisie s'enlève, et voilà.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section id="despues">
+    <div class="envoltura">
+      <h2 class="titulo-seccion">Après le match</h2>
+      <p class="bajada">
+        La feuille sort de ce que vous avez noté. Il n'y a rien à rédiger
+        après coup.
+      </p>
+
+      <div class="rejilla">
+        <article class="tarjeta">
+          <div class="icono">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"
+                 stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M5 19V13M12 19V6M19 19v-9"/>
+            </svg>
+          </div>
+          <h3>Résultat et efficacité</h3>
+          <p>Avec la répartition des buts par zone de la cage.</p>
+        </article>
+
+        <article class="tarjeta">
+          <div class="icono">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"
+                 stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M4 16.5 9 11l3.4 3.2L20 6.5"/><path d="M15.5 6.5H20V11"/>
+            </svg>
+          </div>
+          <h3>Comment le score a évolué</h3>
+          <p>La physionomie du match, avec la meilleure série mise en avant.</p>
+        </article>
+
+        <article class="tarjeta">
+          <div class="icono">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"
+                 stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M7 4h10v5a5 5 0 0 1-10 0z"/><path d="M17 5.5h2.5V8a2.5 2.5 0 0 1-2.5 2.5M7 5.5H4.5V8A2.5 2.5 0 0 0 7 10.5"/>
+              <path d="M12 14v3.5M8.5 20h7"/>
+            </svg>
+          </div>
+          <h3>Buteurs, gardiens et plus/minus</h3>
+          <p>
+            Qui a marqué, qui a arrêté, et ce que faisait le score avec chaque
+            joueur sur le terrain.
+          </p>
+        </article>
+
+        <article class="tarjeta">
+          <div class="icono">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"
+                 stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M3 6.5 9 4.5l6 2 6-2v13l-6 2-6-2-6 2z"/><path d="M9 4.5v13M15 6.5v13"/>
+            </svg>
+          </div>
+          <h3>Carte des tirs</h3>
+          <p>Sur le terrain, filtrée par joueur et par période, avec carte de chaleur.</p>
+        </article>
+
+        <article class="tarjeta">
+          <div class="icono">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"
+                 stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <rect x="4" y="4" width="16" height="16" rx="2"/>
+              <path d="M4 9.3h16M4 14.6h16M9.3 4v16M14.6 4v16"/>
+            </svg>
+          </div>
+          <h3>D'où, et contre quelle zone</h3>
+          <p>
+            La zone de tir croisée avec la zone de la cage : le chiffre qui sert
+            vraiment à préparer un gardien.
+          </p>
+        </article>
+
+        <article class="tarjeta">
+          <div class="icono">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"
+                 stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M12 15.5V4m0 0L8.5 7.5M12 4l3.5 3.5"/>
+              <path d="M5.5 13v5.5a1.5 1.5 0 0 0 1.5 1.5h10a1.5 1.5 0 0 0 1.5-1.5V13"/>
+            </svg>
+          </div>
+          <h3>Exporter et partager</h3>
+          <p>Le match en CSV, ou partagé en image depuis le téléphone.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section id="capturas">
+    <div class="envoltura">
+      <h2 class="titulo-seccion">À quoi ça ressemble</h2>
+      <p class="bajada">
+        Les huit écrans que vous utiliserez le plus, tirés d'un vrai match noté
+        avec l'app.
+      </p>
+    </div>
+    <div class="envoltura">
+      <div class="tira">
+        <figure>
+          <img src="../img/capturas-fr/01-partido-en-vivo.webp" width="540" height="960" loading="lazy"
+               alt="Match en direct : les deux buts par zone et le score.">
+          <figcaption>Match en direct</figcaption>
+        </figure>
+        <figure>
+          <img src="../img/capturas-fr/02-zona-de-lanzamiento.webp" width="540" height="960" loading="lazy"
+               alt="Demi-terrain dessiné à l'échelle pour marquer d'où part le tir.">
+          <figcaption>Zone de tir</figcaption>
+        </figure>
+        <figure>
+          <img src="../img/capturas-fr/03-ficha-del-partido.webp" width="540" height="960" loading="lazy"
+               alt="Feuille de match avec le résultat et l'évolution du score.">
+          <figcaption>Feuille de match</figcaption>
+        </figure>
+        <figure>
+          <img src="../img/capturas-fr/04-mapa-de-tiros.webp" width="540" height="960" loading="lazy"
+               alt="Carte de chaleur des tirs sur le terrain.">
+          <figcaption>Carte des tirs</figcaption>
+        </figure>
+        <figure>
+          <img src="../img/capturas-fr/05-goleadores.webp" width="540" height="960" loading="lazy"
+               alt="Buteurs du match avec leurs pourcentages.">
+          <figcaption>Buteurs</figcaption>
+        </figure>
+        <figure>
+          <img src="../img/capturas-fr/06-temporada.webp" width="540" height="960" loading="lazy"
+               alt="Cumul de la saison avec le bilan de l'équipe.">
+          <figcaption>Saison</figcaption>
+        </figure>
+        <figure>
+          <img src="../img/capturas-fr/07-partidos-anteriores.webp" width="540" height="960" loading="lazy"
+               alt="Liste des matchs précédents avec leurs résultats.">
+          <figcaption>Matchs précédents</figcaption>
+        </figure>
+        <figure>
+          <img src="../img/capturas-fr/08-plantilla.webp" width="540" height="960" loading="lazy"
+               alt="Effectif de l'équipe avec numéros et postes.">
+          <figcaption>Effectif</figcaption>
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <section id="temporada">
+    <div class="envoltura">
+      <h2 class="titulo-seccion">Et toute la saison</h2>
+      <div class="destacado">
+        <div>
+          <p>
+            Chaque match enregistré s'additionne. L'équipe a son propre cumul,
+            sans ouvrir une saison de matchs un par un.
+          </p>
+          <p>
+            Plusieurs équipes, chacune avec son effectif, et les mêmes données sur
+            le téléphone et sur l'ordinateur.
+          </p>
+        </div>
+        <ul class="lista-limpia">
+          <li>Victoires, nuls et défaites</li>
+          <li>Buts marqués et encaissés par match</li>
+          <li>Buteurs de la saison</li>
+          <li>Arrêts par gardien</li>
+          <li>D'où vous tirez le mieux</li>
+          <li>Plus/minus cumulé par joueur</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section id="planes">
+    <div class="envoltura">
+      <h2 class="titulo-seccion">Formules</h2>
+      <p class="bajada">Commencez gratuitement, et restez-y. La formule payante ne déverrouille aucune statistique : vous les avez toutes dès le premier match. Elle ne lève que les deux plafonds.</p>
+
+      <div class="planes">
+        <article class="plan">
+          <h3>Formule Gratuite</h3>
+          <p class="plan-precio">
+            <span class="plan-cifra">0 €</span>
+            <span class="plan-periodo">pour toujours</span>
+          </p>
+          <p class="plan-nota">Sans carte et sans date de fin.</p>
+          <ul class="lista-limpia">
+          <li>1 équipe, avec son effectif</li>
+          <li>5 matchs enregistrés</li>
+          <li>Toutes les statistiques, sans rien retirer</li>
+          <li>Sans publicité et sans suivi</li>
+          </ul>
+          <a class="boton secundario" href="https://super-stat.vercel.app/?lang=fr">Ouvrir l'app</a>
+        </article>
+
+        <article class="plan mejor">
+          <span class="plan-cinta">7 jours offerts</span>
+          <h3>SuperStat Pro</h3>
+          <p class="plan-precio">
+            <span class="plan-cifra">3,49 €</span>
+            <span class="plan-periodo">par mois</span>
+          </p>
+          <p class="plan-nota">Hors taxes. Annulez quand vous voulez.</p>
+          <ul class="lista-limpia">
+          <li>Équipes sans limite, chacune avec son effectif</li>
+          <li>Matchs sans limite, avec leur carte de tirs et leur saison</li>
+          <li>Les mêmes données sur le téléphone et sur l’ordinateur, même sans réseau</li>
+          <li>Tout ce que fait la formule Gratuite, sans les deux plafonds</li>
+          </ul>
+          <a class="boton primario" href="https://super-stat.vercel.app/?lang=fr">Commencer l'essai de 7 jours</a>
+        </article>
+      </div>
+
+      <div class="tabla-envoltura">
+        <table class="tabla-planes">
+          <thead>
+            <tr>
+              <th scope="col">Ce que vous avez</th>
+              <th scope="col">Gratuite</th>
+              <th scope="col" class="col-pro">Pro</th>
+            </tr>
+          </thead>
+          <tbody>
+          <tr>
+            <th scope="row">Équipes</th>
+            <td>1</td>
+            <td class="col-pro">Sans limite</td>
+          </tr>
+          <tr>
+            <th scope="row">Matchs enregistrés</th>
+            <td>5</td>
+            <td class="col-pro">Sans limite</td>
+          </tr>
+          <tr>
+            <th scope="row">Saisie en direct : tirs, événements et chrono</th>
+            <td><span class="si" role="img" aria-label="Oui"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg></span></td>
+            <td class="col-pro"><span class="si" role="img" aria-label="Oui"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg></span></td>
+          </tr>
+          <tr>
+            <th scope="row">Le point de tir sur le terrain</th>
+            <td><span class="si" role="img" aria-label="Oui"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg></span></td>
+            <td class="col-pro"><span class="si" role="img" aria-label="Oui"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg></span></td>
+          </tr>
+          <tr>
+            <th scope="row">Carte des tirs et carte de chaleur</th>
+            <td><span class="si" role="img" aria-label="Oui"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg></span></td>
+            <td class="col-pro"><span class="si" role="img" aria-label="Oui"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg></span></td>
+          </tr>
+          <tr>
+            <th scope="row">Statistiques de la saison</th>
+            <td><span class="si" role="img" aria-label="Oui"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg></span></td>
+            <td class="col-pro"><span class="si" role="img" aria-label="Oui"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg></span></td>
+          </tr>
+          <tr>
+            <th scope="row">Plus/minus par joueur</th>
+            <td><span class="si" role="img" aria-label="Oui"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg></span></td>
+            <td class="col-pro"><span class="si" role="img" aria-label="Oui"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg></span></td>
+          </tr>
+          <tr>
+            <th scope="row">Export CSV et partage</th>
+            <td><span class="si" role="img" aria-label="Oui"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg></span></td>
+            <td class="col-pro"><span class="si" role="img" aria-label="Oui"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg></span></td>
+          </tr>
+          <tr>
+            <th scope="row">Fonctionne sans réseau</th>
+            <td><span class="si" role="img" aria-label="Oui"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg></span></td>
+            <td class="col-pro"><span class="si" role="img" aria-label="Oui"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg></span></td>
+          </tr>
+          <tr>
+            <th scope="row">Synchronisation entre vos appareils</th>
+            <td><span class="si" role="img" aria-label="Oui"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg></span></td>
+            <td class="col-pro"><span class="si" role="img" aria-label="Oui"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg></span></td>
+          </tr>
+          <tr>
+            <th scope="row">Quatre langues</th>
+            <td><span class="si" role="img" aria-label="Oui"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg></span></td>
+            <td class="col-pro"><span class="si" role="img" aria-label="Oui"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg></span></td>
+          </tr>
+          <tr>
+            <th scope="row">Sans publicité ni suivi</th>
+            <td><span class="si" role="img" aria-label="Oui"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg></span></td>
+            <td class="col-pro"><span class="si" role="img" aria-label="Oui"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg></span></td>
+          </tr>
+          <tr>
+            <th scope="row">Fait vivre le projet</th>
+            <td><span class="no" role="img" aria-label="Non">—</span></td>
+            <td class="col-pro"><span class="si" role="img" aria-label="Oui"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg></span></td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="plan-legal">Le paiement est géré par Stripe. SuperStat n’enregistre pas les données de votre carte.</p>
+    </div>
+  </section>
+
+  <section id="sin-cobertura">
+    <div class="envoltura">
+      <h2 class="titulo-seccion">Dans les gymnases, il n'y a pas de réseau</h2>
+      <div class="destacado">
+        <div>
+          <p>
+            L'app n'en a donc pas besoin. Elle s'ouvre et vous notez le match
+            quand même, et ce qui reste en attente se téléverse tout seul au
+            retour du réseau.
+          </p>
+          <p>
+            Si le téléphone ferme l'app en plein match, elle propose de reprendre
+            là où vous vous étiez arrêté.
+          </p>
+        </div>
+        <ul class="lista-limpia">
+          <li>S'ouvre sans connexion, même la première fois de la journée</li>
+          <li>Ce que vous notez est enregistré aussitôt sur l'appareil</li>
+          <li>Se synchronise tout seul au retour du réseau</li>
+          <li>S'installe sur l'écran d'accueil</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section id="datos">
+    <div class="envoltura">
+      <h2 class="titulo-seccion">Vos données sont à vous</h2>
+      <div class="destacado">
+        <div>
+          <p>
+            Un compte, avec Google ou avec une adresse e-mail et un mot de passe,
+            et les mêmes données sur le téléphone et sur l'ordinateur.
+          </p>
+          <p>
+            Sans publicité, sans analytique et sans suivi : chaque compte ne voit
+            que le sien. Vous pouvez exporter n'importe quel match, ou supprimer
+            ce que vous voulez quand vous voulez.
+          </p>
+          <p>
+            <a href="../privacidad-fr.html">Politique de confidentialité</a>
+          </p>
+        </div>
+        <ul class="lista-limpia">
+          <li>Sans publicité ni achat intégré</li>
+          <li>Sans analytique ni suivi</li>
+          <li>Chaque compte ne voit que ses équipes</li>
+          <li>Export en CSV quand vous voulez</li>
+          <li>Suppression de tout le compte depuis l'app</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section id="empezar" class="cierre">
+    <div class="envoltura">
+      <h2 class="titulo-seccion">Essayez-la au prochain match</h2>
+      <p class="bajada" style="margin-inline:auto">
+        Elle s'ouvre dans le navigateur, il n'y a rien à installer, et c'est
+        gratuit.
+      </p>
+      <div class="acciones">
+        <a class="boton primario" href="https://super-stat.vercel.app/?lang=fr">Ouvrir l'app</a>
+        <span class="pendiente">Bientôt sur Google Play</span>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="pie">
+  <div class="envoltura">
+    <a class="marca" href="./" aria-label="SuperStat, accueil">
+      <svg viewBox="0 0 32 32" aria-hidden="true">
+        <rect class="tile" x="0" y="0" width="32" height="32" rx="7"/>
+        <rect class="bar" x="6.5" y="17" width="5" height="8" rx="1.4"/>
+        <rect class="bar" x="13.5" y="12.5" width="5" height="12.5" rx="1.4"/>
+        <rect class="bar" x="20.5" y="7" width="5" height="18" rx="1.4"/>
+      </svg>
+      <span class="marca-texto">Super<i>Stat</i></span>
+    </a>
+    <nav class="enlaces-pie" aria-label="Pied de page">
+      <a href="https://super-stat.vercel.app/?lang=fr">Ouvrir l'app</a>
+      <a href="../privacidad-fr.html">Confidentialité</a>
+      <a href="mailto:opt1a.david.martinez@gmail.com">Contact</a>
+      <a href="../" hreflang="es">Español</a>
+      <a href="../en/" hreflang="en">English</a>
+      <a href="../de/" hreflang="de">Deutsch</a>
+    </nav>
+    <p class="nota-pie">
+      SuperStat est un carnet de statistiques de handball. Fait pour être
+      emporté sur le banc.
+    </p>
+  </div>
+</footer>
+
+</body>
+</html>

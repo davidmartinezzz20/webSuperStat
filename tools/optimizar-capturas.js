@@ -5,7 +5,8 @@
 // idioma. Eso es lo que pide Google Play, y es demasiado para una página web.
 // Esto las deja en WebP de 540×960 —la mitad de lado, que a 270 px de ancho en
 // pantalla sigue siendo el doble de píxeles de los que hacen falta— dentro de
-// `img/capturas/` e `img/capturas-en/`.
+// `img/capturas/`, `img/capturas-en/`, `-fr` y `-de`, una carpeta por idioma de
+// la web.
 //
 // Se ejecuta a mano, solo cuando las capturas cambien:
 //   ORIGEN=../superStat node tools/optimizar-capturas.js
@@ -26,7 +27,9 @@ const ORIGEN = path.resolve(RAIZ, process.env.ORIGEN || '../superStat');
 // son los mismos ocho de la ficha de Play, y el orden lo da el número.
 const JUEGOS = [
   { de: path.join(ORIGEN, 'play', 'capturas'),    a: path.join(RAIZ, 'img', 'capturas') },
-  { de: path.join(ORIGEN, 'play', 'capturas-en'), a: path.join(RAIZ, 'img', 'capturas-en') }
+  { de: path.join(ORIGEN, 'play', 'capturas-en'), a: path.join(RAIZ, 'img', 'capturas-en') },
+  { de: path.join(ORIGEN, 'play', 'capturas-fr'), a: path.join(RAIZ, 'img', 'capturas-fr') },
+  { de: path.join(ORIGEN, 'play', 'capturas-de'), a: path.join(RAIZ, 'img', 'capturas-de') }
 ];
 
 const ANCHO   = 540;
