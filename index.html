@@ -42,8 +42,52 @@
 <meta property="og:description" content="Anota el partido mientras se juega y al pitido final la ficha ya está hecha. Funciona sin cobertura.">
 <meta property="og:image" content="https://superstat.online/img/og.png">
 <meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:site" content="@superstatapp">
 
-<link rel="stylesheet" href="css/web.css?v=2">
+<!--
+  Datos estructurados. `sameAs` es por donde un buscador sabe que estos
+  perfiles y esta web son la misma marca; sin él, los enlaces del pie los lee
+  una persona pero no los ata a nada. Va en las cuatro portadas.
+
+  Las URL van absolutas a propósito, al revés que las de navegación: un dato
+  estructurado se lee fuera de la página y un relativo ahí no resuelve.
+
+  Las tres cuentas van en las cuatro páginas, aunque el pie de cada idioma
+  enseñe solo la suya: son de la misma marca, y declarar unas aquí y otras
+  allá con el mismo @id sería contradecirse.
+
+  Aquí NO va el precio. Ya se mantiene a mano en seis sitios (CLAUDE.md del
+  repositorio de la app); meterlo en las cuatro portadas serían cuatro más y
+  ninguna prueba mirando.
+-->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": "https://superstat.online/#org",
+      "name": "SuperStat",
+      "url": "https://superstat.online/",
+      "logo": "https://superstat.online/img/icon-512.png",
+      "sameAs": [
+        "https://www.instagram.com/superstat.es/",
+        "https://www.instagram.com/superstat.en/",
+        "https://x.com/superstatapp"
+      ]
+    },
+    {
+      "@type": "WebSite",
+      "name": "SuperStat",
+      "url": "https://superstat.online/",
+      "inLanguage": "es",
+      "publisher": { "@id": "https://superstat.online/#org" }
+    }
+  ]
+}
+</script>
+
+<link rel="stylesheet" href="css/web.css?v=3">
 </head>
 <body>
 
@@ -603,6 +647,31 @@
       <a href="en/" hreflang="en">English</a>
       <a href="fr/" hreflang="fr">Français</a>
       <a href="de/" hreflang="de">Deutsch</a>
+      <!--
+        Las redes. Hay dos cuentas de Instagram, una en castellano y otra en
+        inglés: aquí va la castellana, y en en/, fr/ y de/ la inglesa, porque
+        no hay cuenta en francés ni en alemán. La de X es una sola para los
+        cuatro idiomas.
+
+        «Instagram» y «X» no se traducen: son nombres de marca y se escriben
+        igual en los cuatro. Los iconos van en línea, como el resto de los de
+        la página, y el color lo manda css/web.css.
+      -->
+      <a href="https://www.instagram.com/superstat.es/" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"
+             stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <rect x="3.5" y="3.5" width="17" height="17" rx="5"/>
+          <circle cx="12" cy="12" r="4"/>
+          <circle cx="17.1" cy="6.9" r="1" fill="currentColor" stroke="none"/>
+        </svg>
+        Instagram
+      </a>
+      <a href="https://x.com/superstatapp" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <path fill="currentColor" d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+        </svg>
+        X
+      </a>
     </nav>
     <p class="nota-pie">
       SuperStat es una libreta de estadísticas de balonmano. Hecha para llevarla

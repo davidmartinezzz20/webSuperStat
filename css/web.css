@@ -317,8 +317,13 @@ footer.pie .envoltura{
   justify-content:space-between;
 }
 .enlaces-pie{display:flex;flex-wrap:wrap;gap:18px;font-size:14px;}
-.enlaces-pie a{color:var(--muted);}
+/* inline-flex y no inline: los dos últimos enlaces llevan icono delante, y sin
+   esto el SVG se sienta sobre la línea base y descuadra la fila entera. Los
+   que no tienen icono no se enteran. El tamaño lo fija aquí el contexto, como
+   en .icono y en .boton, no el propio SVG. */
+.enlaces-pie a{color:var(--muted);display:inline-flex;align-items:center;gap:6px;}
 .enlaces-pie a:hover{color:var(--text);}
+.enlaces-pie svg{width:16px;height:16px;flex:none;}
 .nota-pie{color:var(--muted);font-size:13px;margin:18px 0 0;width:100%;}
 
 /* ------------------------------------------------------------------- 404 */

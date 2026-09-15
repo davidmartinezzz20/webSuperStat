@@ -40,8 +40,53 @@
 <meta property="og:description" content="Notez le match pendant qu'il se joue : au coup de sifflet final, la feuille est déjà faite. Fonctionne sans réseau.">
 <meta property="og:image" content="https://superstat.online/img/og.png">
 <meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:site" content="@superstatapp">
 
-<link rel="stylesheet" href="../css/web.css?v=2">
+<!--
+  Données structurées. C'est par `sameAs` qu'un moteur de recherche sait que
+  ces profils et ce site sont la même marque ; sans lui, les liens du pied de
+  page se lisent très bien mais ne rattachent le site à rien. Le même bloc est
+  sur les quatre pages.
+
+  Les URL sont ici absolues, au contraire de celles de navigation : une donnée
+  structurée se lit hors de la page, où un chemin relatif ne résout rien.
+
+  Les trois comptes figurent sur les quatre pages, même si chaque pied n'en
+  montre qu'un : ils appartiennent à la même marque, et en déclarer certains
+  ici et d'autres ailleurs sous le même @id reviendrait à se contredire.
+
+  Pas de prix ici. Il se tient déjà à la main en six endroits (CLAUDE.md du
+  dépôt de l'app) ; quatre copies de plus sans aucun test pour les surveiller,
+  c'est ainsi que ça se désaccorde.
+-->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": "https://superstat.online/#org",
+      "name": "SuperStat",
+      "url": "https://superstat.online/",
+      "logo": "https://superstat.online/img/icon-512.png",
+      "sameAs": [
+        "https://www.instagram.com/superstat.es/",
+        "https://www.instagram.com/superstat.en/",
+        "https://x.com/superstatapp"
+      ]
+    },
+    {
+      "@type": "WebSite",
+      "name": "SuperStat",
+      "url": "https://superstat.online/fr/",
+      "inLanguage": "fr",
+      "publisher": { "@id": "https://superstat.online/#org" }
+    }
+  ]
+}
+</script>
+
+<link rel="stylesheet" href="../css/web.css?v=3">
 </head>
 <body>
 
@@ -601,6 +646,31 @@
       <a href="../" hreflang="es">Español</a>
       <a href="../en/" hreflang="en">English</a>
       <a href="../de/" hreflang="de">Deutsch</a>
+      <!--
+        Les réseaux. Il y a deux comptes Instagram, un en castillan et un en
+        anglais : cette page pointe vers l'anglais, comme de/, parce qu'il n'y
+        a de compte ni en français ni en allemand. Sur X, un seul compte pour
+        les quatre langues.
+
+        « Instagram » et « X » sont des noms de marque et s'écrivent pareil sur
+        les quatre pages. Les icônes sont en ligne, comme toutes les autres
+        ici, et la couleur vient de ../css/web.css.
+      -->
+      <a href="https://www.instagram.com/superstat.en/" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"
+             stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <rect x="3.5" y="3.5" width="17" height="17" rx="5"/>
+          <circle cx="12" cy="12" r="4"/>
+          <circle cx="17.1" cy="6.9" r="1" fill="currentColor" stroke="none"/>
+        </svg>
+        Instagram
+      </a>
+      <a href="https://x.com/superstatapp" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <path fill="currentColor" d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+        </svg>
+        X
+      </a>
     </nav>
     <p class="nota-pie">
       SuperStat est un carnet de statistiques de handball. Fait pour être

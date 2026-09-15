@@ -40,8 +40,52 @@
 <meta property="og:description" content="Log the match as it is played and the report is done by the final whistle. Works with no signal.">
 <meta property="og:image" content="https://superstat.online/img/og.png">
 <meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:site" content="@superstatapp">
 
-<link rel="stylesheet" href="../css/web.css?v=2">
+<!--
+  Structured data. `sameAs` is how a search engine knows these profiles and
+  this site are the same brand; without it the footer links read fine to a
+  person but tie the site to nothing. The same block is on all four pages.
+
+  URLs here are absolute, unlike the navigation ones: structured data is read
+  away from the page, where a relative path resolves to nothing.
+
+  All three accounts are listed on every page even though each footer shows
+  only its own: they belong to the same brand, and declaring some here and
+  others there under the same @id would be contradicting ourselves.
+
+  No price here. It is already kept by hand in six places (CLAUDE.md in the
+  app repository); four more copies with no test watching them is how it
+  starts to drift.
+-->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": "https://superstat.online/#org",
+      "name": "SuperStat",
+      "url": "https://superstat.online/",
+      "logo": "https://superstat.online/img/icon-512.png",
+      "sameAs": [
+        "https://www.instagram.com/superstat.es/",
+        "https://www.instagram.com/superstat.en/",
+        "https://x.com/superstatapp"
+      ]
+    },
+    {
+      "@type": "WebSite",
+      "name": "SuperStat",
+      "url": "https://superstat.online/en/",
+      "inLanguage": "en",
+      "publisher": { "@id": "https://superstat.online/#org" }
+    }
+  ]
+}
+</script>
+
+<link rel="stylesheet" href="../css/web.css?v=3">
 </head>
 <body>
 
@@ -599,6 +643,31 @@
       <a href="../" hreflang="es">Español</a>
       <a href="../fr/" hreflang="fr">Français</a>
       <a href="../de/" hreflang="de">Deutsch</a>
+      <!--
+        The social accounts. There are two Instagram accounts, one in Spanish
+        and one in English: this page links the English one, and so do fr/ and
+        de/, because there is no French or German account. X is a single
+        account for all four languages.
+
+        "Instagram" and "X" are brand names and stay as they are in all four
+        pages. The icons are inline, like every other icon here, and the colour
+        comes from ../css/web.css.
+      -->
+      <a href="https://www.instagram.com/superstat.en/" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"
+             stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <rect x="3.5" y="3.5" width="17" height="17" rx="5"/>
+          <circle cx="12" cy="12" r="4"/>
+          <circle cx="17.1" cy="6.9" r="1" fill="currentColor" stroke="none"/>
+        </svg>
+        Instagram
+      </a>
+      <a href="https://x.com/superstatapp" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <path fill="currentColor" d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+        </svg>
+        X
+      </a>
     </nav>
     <p class="nota-pie">
       SuperStat is a handball stats notebook. Built to be taken to the bench.

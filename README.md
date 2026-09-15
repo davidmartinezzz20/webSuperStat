@@ -93,10 +93,25 @@ además con lo que cobra Stripe y con `PRO_PRICE` en `js/config.js` de la app
 | Los eslóganes, en los dos idiomas | `docs/instagram.md` |
 | El vocabulario de cada idioma (*save*, *arrêt*, *Parade*) | `js/i18n.js` |
 | Lo que da el plan Pro y lo que limita el Gratis | `js/i18n.js` (`paywall.*`, `limit.*`) |
+| Los nombres de las cuentas de redes | `docs/instagram.md` |
 
 Si allí se reescribe la descripción de la ficha de Play, conviene traer el
 cambio aquí; son el mismo mensaje contado dos veces y quedan desparejados sin
 que nadie se entere.
+
+**Las redes están en dos sitios de cada portada**, y los dos tienen que decir lo
+mismo: los enlaces del pie, que lee una persona, y el `sameAs` del bloque
+`application/ld+json` del `<head>`, que es por donde un buscador ata los
+perfiles a esta marca. Sin el segundo, los enlaces del pie no posicionan nada.
+
+Hay **dos cuentas de Instagram y una de X**: `superstat.es` la castellana,
+`superstat.en` la inglesa y `superstatapp` en X. Las portadas francesa y alemana
+enlazan la inglesa, porque no hay cuenta en esos idiomas. El `sameAs`, en
+cambio, nombra las tres en las cuatro páginas: son de la misma marca y llevan el
+mismo `@id`, así que declarar unas en una página y otras en otra sería
+contradecirse. `test/web.js` (bloque *4 ter*) comprueba las dos cosas, y es lo
+único que las sujeta: el bloque de paridad de idiomas compara `<section id>` y
+el pie no es una sección.
 
 **Los colores y la tipografía son los de la app**, copiados de su
 `css/styles.css`: el mismo negro `#08090B`, el mismo rojo `#D9182B`, la misma
