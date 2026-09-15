@@ -69,6 +69,15 @@ castellano no rompe nada y no se ve. La tabla `PORTADAS` de `test/web.js` es la
 lista de la que sale todo lo demás; añadir un idioma es añadir una fila ahí,
 sus dos archivos y su carpeta de capturas.
 
+**El precio está escrito cuatro veces**, una por portada, en la sección
+`#planes` a la que baja el botón de la cabecera. No hay plantilla que lo
+centralice —aquí no hay build—, así que `test/web.js` compara el número de las
+cuatro y falla si una se despareja: un 3,49 que en alemán diga 3,99 no rompe
+nada, no sale en ninguna consola y lo lee un cliente. Tiene que coincidir
+además con lo que cobra Stripe y con `PRO_PRICE` en `js/config.js` de la app
+(`docs/suscripcion.md`), y los topes del plan Gratis de la tabla, con
+`FREE_TEAMS` y `FREE_MATCHES` en `js/app.js`.
+
 **Los textos no se inventan.** Salen ya escritos del repositorio de la app:
 
 | Qué | De dónde |
@@ -76,6 +85,7 @@ sus dos archivos y su carpeta de capturas.
 | Descripción corta y larga, correo de contacto | `docs/play.md` |
 | Los eslóganes, en los dos idiomas | `docs/instagram.md` |
 | El vocabulario de cada idioma (*save*, *arrêt*, *Parade*) | `js/i18n.js` |
+| Lo que da el plan Pro y lo que limita el Gratis | `js/i18n.js` (`paywall.*`, `limit.*`) |
 
 Si allí se reescribe la descripción de la ficha de Play, conviene traer el
 cambio aquí; son el mismo mensaje contado dos veces y quedan desparejados sin

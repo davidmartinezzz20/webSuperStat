@@ -74,6 +74,9 @@ header.barra .envoltura{
   display:flex;align-items:center;justify-content:space-between;
   gap:12px;padding-block:12px;
 }
+/* A la izquierda, la marca y el botón que baja a los planes; a la derecha, el
+   idioma y el botón de abrir la app. */
+.barra-izquierda{display:flex;align-items:center;gap:12px;}
 .barra-acciones{display:flex;align-items:center;gap:10px;}
 
 /* Cambio de idioma: dos letras, la activa marcada. */
@@ -160,6 +163,9 @@ header.barra .envoltura{
 
 /* --------------------------------------------------------------- secciones */
 section{padding:64px 0;border-top:1px solid var(--line);}
+/* La cabecera es pegajosa: sin esto, el ancla deja el título justo debajo de
+   ella y lo tapa. */
+section[id]{scroll-margin-top:72px;}
 .titulo-seccion{font-size:clamp(25px,3.4vw,34px);letter-spacing:-0.03em;}
 .bajada{color:var(--muted);margin:10px 0 0;max-width:52ch;}
 
@@ -224,6 +230,77 @@ section{padding:64px 0;border-top:1px solid var(--line);}
 }
 .lista-limpia li:last-child{margin-bottom:0;}
 
+/* ------------------------------------------------------------------ planes */
+/* Las dos tarjetas de plan y la tabla comparativa. Lo que dicen sale de la
+   pantalla de Pro de la app (paywall.* en js/i18n.js) y de los dos topes del
+   plan Gratis (FREE_TEAMS y FREE_MATCHES en js/app.js): si allí cambian, aquí
+   también. El precio se escribe a mano en las cuatro portadas y test/web.js
+   comprueba que las cuatro dicen el mismo. */
+.planes{
+  display:grid;grid-template-columns:1fr 1fr;gap:16px;
+  margin-top:34px;align-items:start;
+}
+.plan{
+  position:relative;
+  background:var(--panel);border:1px solid var(--line);
+  border-radius:var(--radius-lg);padding:26px;
+}
+/* El de pago se separa del otro con el rojo de la marca, no con tamaño: las
+   dos tarjetas miden lo mismo y la de Pro lleva un degradado que se apaga a
+   media tarjeta, como el halo de la portada. */
+.plan.mejor{
+  border-color:rgba(217,24,43,0.55);
+  background:
+    linear-gradient(180deg, rgba(217,24,43,0.13), rgba(20,22,25,0) 200px),
+    var(--panel);
+}
+.plan h3{font-size:19px;}
+.plan-precio{display:flex;align-items:baseline;gap:7px;margin:18px 0 5px;}
+.plan-cifra{
+  font-size:clamp(34px,4.6vw,44px);font-weight:700;
+  letter-spacing:-0.035em;line-height:1;
+}
+.plan-periodo{color:var(--muted);font-size:15px;}
+.plan-nota{color:var(--muted);font-size:13.5px;margin:0 0 22px;}
+.plan .lista-limpia{margin-bottom:24px;}
+.plan .boton{width:100%;}
+.plan-cinta{
+  position:absolute;top:-11px;right:22px;
+  background:var(--brand);color:#fff;
+  font-size:12px;font-weight:700;line-height:1;
+  padding:6px 12px;border-radius:var(--radius-pill);
+}
+
+/* La tabla es el único sitio de la página, con la tira de capturas, que puede
+   desbordar a lo ancho: en móvil se desplaza dentro de su marco en vez de
+   ensanchar el cuerpo. */
+.tabla-envoltura{
+  margin-top:16px;overflow-x:auto;
+  border:1px solid var(--line);border-radius:var(--radius-lg);
+  background:var(--panel);
+}
+.tabla-planes{width:100%;min-width:520px;border-collapse:collapse;font-size:15px;}
+.tabla-planes th,.tabla-planes td{
+  padding:13px 18px;text-align:left;border-bottom:1px solid var(--line);
+}
+.tabla-planes thead th{
+  font-size:12px;font-weight:700;color:var(--muted);
+  text-transform:uppercase;letter-spacing:0.07em;
+}
+/* Las dos columnas de plan van centradas también en la cabecera, o el nombre
+   del plan no cae sobre sus propias marcas. */
+.tabla-planes thead th + th{text-align:center;}
+.tabla-planes tbody th{font-weight:500;color:var(--soft);}
+.tabla-planes td{text-align:center;width:140px;color:var(--muted);}
+.tabla-planes tbody tr:last-child th,.tabla-planes tbody tr:last-child td{border-bottom:0;}
+/* La columna de pago, marcada de arriba abajo para que se siga con la vista
+   sin volver a la cabecera. */
+.col-pro{background:rgba(217,24,43,0.07);color:var(--text);}
+thead .col-pro{color:var(--brand-2);}
+.si{color:var(--goal);}
+.si svg{width:19px;height:19px;margin:0 auto;}
+.plan-legal{color:var(--muted);font-size:13px;margin:18px 0 0;}
+
 /* ------------------------------------------------------------------- cierre */
 .cierre{text-align:center;}
 .cierre .acciones{justify-content:center;}
@@ -250,6 +327,7 @@ footer.pie .envoltura{
 /* ------------------------------------------------------------- pantallas */
 @media (max-width:900px){
   .portada{padding:52px 0 48px;}
+  .planes{grid-template-columns:1fr;gap:22px;}
   .portada .envoltura{grid-template-columns:1fr;gap:38px;}
   /* En una columna el móvil deja de ser la mitad de la portada y pasa a ser
      una muestra: centrado y sin comerse la pantalla. */
@@ -261,6 +339,18 @@ footer.pie .envoltura{
   .envoltura{padding:0 16px;}
   .acciones .boton, .acciones .pendiente{width:100%;}
   .tira figure{width:196px;}
+  /* En la cabecera de un móvil no caben la marca, dos botones y el idioma: el
+     wordmark se va y se queda el cuadro, que es lo que hace de icono. Los dos
+     botones se aprietan, pero siguen diciendo lo que son. */
+  .marca-texto{display:none;}
+  .barra-izquierda{gap:8px;}
+  header.barra .envoltura{gap:8px;}
+  header.barra .boton.pequeno{padding:8px 11px;font-size:13px;}
+  /* Con cuatro idiomas y dos botones, la cabecera no cabe en 390 px: las
+     píldoras de idioma se aprietan, que es lo que menos se echa de menos. */
+  .idiomas a{padding:4px 7px;font-size:12px;}
+  .plan{padding:22px;}
+  .tabla-planes th,.tabla-planes td{padding:11px 13px;}
 }
 
 /* Quien pide menos movimiento no ve el desplazamiento suave del ancla. */

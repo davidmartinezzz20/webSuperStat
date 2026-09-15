@@ -173,6 +173,37 @@ for(const p of PRIVACIDADES){
 }
 
 // -------------------------------------------------------------------------
+console.log('\n4 bis. Los planes dicen lo mismo en los cuatro idiomas');
+
+// El precio se escribe a mano cuatro veces, una por portada. Un 3,49 que en
+// alemán diga 3,99 no rompe nada, no sale en ninguna consola y lo lee un
+// cliente: es exactamente el tipo de fallo para el que existe esta prueba. Se
+// compara el número y no la cadena entera porque cada idioma lo escribe a su
+// manera ("3,49 €" y "€3.49").
+const precios = new Set();
+for(const { pagina } of PORTADAS){
+  const f = html[pagina];
+  check(`${pagina} lleva el botón que baja a los planes`, /href="#planes"/.test(f));
+  check(`${pagina} tiene la sección de planes`, /<section id="planes">/.test(f));
+
+  const cifras = [...f.matchAll(/<span class="plan-cifra">([^<]+)<\/span>/g)].map(m => m[1]);
+  check(`${pagina} enseña los dos precios`, cifras.length === 2, cifras.join(' · '));
+  const pro = (cifras[1] || '').replace(/[^\d,.]/g, '').replace(',', '.');
+  if(pro) precios.add(pro);
+
+  // Y que no se quede sin la coletilla de impuestos, que es lo que convierte el
+  // precio en el precio de verdad.
+  const notas = [...f.matchAll(/<p class="plan-nota">([^<]+)<\/p>/g)].map(m => m[1]);
+  check(`${pagina} dice que los impuestos van aparte`, notas.length === 2 &&
+        /impuestos|taxes|steuern/i.test(notas[1]), notas.join(' · '));
+
+  const filas = (f.match(/<tr>/g) || []).length;
+  check(`${pagina} tiene la tabla comparativa entera`, filas === 14, `${filas} filas`);
+}
+check('las cuatro portadas dicen el mismo precio', precios.size === 1,
+      [...precios].join(' · '));
+
+// -------------------------------------------------------------------------
 console.log('\n5. La trampa del tamaño de las capturas');
 
 // Las capturas llevan width y height en el HTML para que el navegador reserve

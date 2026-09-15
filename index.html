@@ -49,15 +49,18 @@
 
 <header class="barra">
   <div class="envoltura">
-    <a class="marca" href="./" aria-label="SuperStat, inicio">
-      <svg viewBox="0 0 32 32" aria-hidden="true">
-        <rect class="tile" x="0" y="0" width="32" height="32" rx="7"/>
-        <rect class="bar" x="6.5" y="17" width="5" height="8" rx="1.4"/>
-        <rect class="bar" x="13.5" y="12.5" width="5" height="12.5" rx="1.4"/>
-        <rect class="bar" x="20.5" y="7" width="5" height="18" rx="1.4"/>
-      </svg>
-      <span class="marca-texto">Super<i>Stat</i></span>
-    </a>
+    <div class="barra-izquierda">
+      <a class="marca" href="./" aria-label="SuperStat, inicio">
+        <svg viewBox="0 0 32 32" aria-hidden="true">
+          <rect class="tile" x="0" y="0" width="32" height="32" rx="7"/>
+          <rect class="bar" x="6.5" y="17" width="5" height="8" rx="1.4"/>
+          <rect class="bar" x="13.5" y="12.5" width="5" height="12.5" rx="1.4"/>
+          <rect class="bar" x="20.5" y="7" width="5" height="18" rx="1.4"/>
+        </svg>
+        <span class="marca-texto">Super<i>Stat</i></span>
+      </a>
+      <a class="boton secundario pequeno" href="#planes" aria-label="Ver los planes">Ver planes</a>
+    </div>
     <div class="barra-acciones">
       <nav class="idiomas" aria-label="Idioma">
         <a href="./" aria-current="true" hreflang="es">ES</a>
@@ -389,6 +392,128 @@
           <li>Más/menos acumulado por jugador</li>
         </ul>
       </div>
+    </div>
+  </section>
+
+  <section id="planes">
+    <div class="envoltura">
+      <h2 class="titulo-seccion">Planes</h2>
+      <p class="bajada">Empieza gratis y sigue gratis. El plan de pago no desbloquea estadísticas: las tienes todas desde el primer partido. Lo único que quita son los dos topes.</p>
+
+      <div class="planes">
+        <article class="plan">
+          <h3>Plan Gratis</h3>
+          <p class="plan-precio">
+            <span class="plan-cifra">0 €</span>
+            <span class="plan-periodo">para siempre</span>
+          </p>
+          <p class="plan-nota">Sin tarjeta y sin caducidad.</p>
+          <ul class="lista-limpia">
+          <li>1 equipo, con su plantilla</li>
+          <li>5 partidos guardados</li>
+          <li>Todas las estadísticas, sin recortes</li>
+          <li>Sin anuncios y sin seguimiento</li>
+          </ul>
+          <a class="boton secundario" href="https://super-stat.vercel.app">Abrir la app</a>
+        </article>
+
+        <article class="plan mejor">
+          <span class="plan-cinta">7 días gratis</span>
+          <h3>SuperStat Pro</h3>
+          <p class="plan-precio">
+            <span class="plan-cifra">3,49 €</span>
+            <span class="plan-periodo">al mes</span>
+          </p>
+          <p class="plan-nota">Impuestos aparte. Cancela cuando quieras.</p>
+          <ul class="lista-limpia">
+          <li>Equipos sin límite, cada uno con su plantilla</li>
+          <li>Partidos sin límite, con su mapa de tiros y su temporada</li>
+          <li>Los mismos datos en el móvil y en el ordenador, también sin cobertura</li>
+          <li>Todo lo del plan Gratis, sin los dos topes</li>
+          </ul>
+          <a class="boton primario" href="https://super-stat.vercel.app">Empezar la prueba de 7 días</a>
+        </article>
+      </div>
+
+      <div class="tabla-envoltura">
+        <table class="tabla-planes">
+          <thead>
+            <tr>
+              <th scope="col">Qué llevas</th>
+              <th scope="col">Gratis</th>
+              <th scope="col" class="col-pro">Pro</th>
+            </tr>
+          </thead>
+          <tbody>
+          <tr>
+            <th scope="row">Equipos</th>
+            <td>1</td>
+            <td class="col-pro">Sin límite</td>
+          </tr>
+          <tr>
+            <th scope="row">Partidos guardados</th>
+            <td>5</td>
+            <td class="col-pro">Sin límite</td>
+          </tr>
+          <tr>
+            <th scope="row">Anotar en vivo: tiros, eventos y reloj</th>
+            <td><span class="si" role="img" aria-label="Sí"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg></span></td>
+            <td class="col-pro"><span class="si" role="img" aria-label="Sí"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg></span></td>
+          </tr>
+          <tr>
+            <th scope="row">Punto de lanzamiento sobre la pista</th>
+            <td><span class="si" role="img" aria-label="Sí"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg></span></td>
+            <td class="col-pro"><span class="si" role="img" aria-label="Sí"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg></span></td>
+          </tr>
+          <tr>
+            <th scope="row">Mapa de tiros y mapa de calor</th>
+            <td><span class="si" role="img" aria-label="Sí"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg></span></td>
+            <td class="col-pro"><span class="si" role="img" aria-label="Sí"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg></span></td>
+          </tr>
+          <tr>
+            <th scope="row">Estadísticas de temporada</th>
+            <td><span class="si" role="img" aria-label="Sí"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg></span></td>
+            <td class="col-pro"><span class="si" role="img" aria-label="Sí"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg></span></td>
+          </tr>
+          <tr>
+            <th scope="row">Más/menos por jugador</th>
+            <td><span class="si" role="img" aria-label="Sí"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg></span></td>
+            <td class="col-pro"><span class="si" role="img" aria-label="Sí"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg></span></td>
+          </tr>
+          <tr>
+            <th scope="row">Exportar a CSV y compartir</th>
+            <td><span class="si" role="img" aria-label="Sí"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg></span></td>
+            <td class="col-pro"><span class="si" role="img" aria-label="Sí"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg></span></td>
+          </tr>
+          <tr>
+            <th scope="row">Funciona sin cobertura</th>
+            <td><span class="si" role="img" aria-label="Sí"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg></span></td>
+            <td class="col-pro"><span class="si" role="img" aria-label="Sí"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg></span></td>
+          </tr>
+          <tr>
+            <th scope="row">Sincronización entre dispositivos</th>
+            <td><span class="si" role="img" aria-label="Sí"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg></span></td>
+            <td class="col-pro"><span class="si" role="img" aria-label="Sí"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg></span></td>
+          </tr>
+          <tr>
+            <th scope="row">Cuatro idiomas</th>
+            <td><span class="si" role="img" aria-label="Sí"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg></span></td>
+            <td class="col-pro"><span class="si" role="img" aria-label="Sí"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg></span></td>
+          </tr>
+          <tr>
+            <th scope="row">Sin anuncios ni seguimiento</th>
+            <td><span class="si" role="img" aria-label="Sí"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg></span></td>
+            <td class="col-pro"><span class="si" role="img" aria-label="Sí"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg></span></td>
+          </tr>
+          <tr>
+            <th scope="row">Sostiene el proyecto</th>
+            <td><span class="no" role="img" aria-label="No">—</span></td>
+            <td class="col-pro"><span class="si" role="img" aria-label="Sí"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg></span></td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="plan-legal">El pago lo gestiona Stripe. SuperStat no guarda los datos de tu tarjeta.</p>
     </div>
   </section>
 
