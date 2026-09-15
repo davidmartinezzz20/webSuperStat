@@ -102,6 +102,28 @@ for(const { pagina } of PORTADAS){
 }
 
 // -------------------------------------------------------------------------
+console.log('\n1 ter. La hoja de estilos lleva versión, y la misma en todas');
+
+// GitHub Pages sirve el CSS con caché, así que un cambio de estilos no llega a
+// quien ya ha entrado antes: el navegador se queda con el de ayer y pinta el
+// HTML nuevo con reglas viejas. Pasó, y no se ve como un fallo —la página no
+// está rota, está mal—, así que el enlace lleva ?v=N y se sube el número al
+// tocar css/web.css. Es lo mismo que VERSION en el sw.js de la app.
+//
+// Y tiene que ser el mismo número en las cinco páginas: si una se queda atrás,
+// vuelve a servir el CSS viejo a quien entre por ella.
+const versiones = new Map();
+for(const pagina of [...PORTADAS.map(p => p.pagina), '404.html']){
+  const m = html[pagina].match(/href="[^"]*css\/web\.css(\?v=(\d+))?"/);
+  check(`${pagina} pide el CSS con versión`, !!(m && m[2]),
+        m ? m[0] : 'no enlaza css/web.css');
+  if(m && m[2]) versiones.set(pagina, m[2]);
+}
+check('las cinco páginas piden la misma versión del CSS',
+      new Set(versiones.values()).size === 1,
+      [...versiones].map(([p, v]) => `${p}=${v}`).join(' · '));
+
+// -------------------------------------------------------------------------
 console.log('\n2. Las anclas internas llevan a un id que existe');
 
 for(const pagina of PAGINAS){

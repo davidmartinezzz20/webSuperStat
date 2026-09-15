@@ -69,6 +69,13 @@ castellano no rompe nada y no se ve. La tabla `PORTADAS` de `test/web.js` es la
 lista de la que sale todo lo demás; añadir un idioma es añadir una fila ahí,
 sus dos archivos y su carpeta de capturas.
 
+**Al tocar `css/web.css` hay que subir su versión** en el enlace de las cinco
+páginas: `href="css/web.css?v=2"` → `?v=3`. GitHub Pages sirve el CSS con caché,
+así que sin eso quien ya haya entrado antes se queda con las reglas de ayer y ve
+el HTML nuevo pintado con ellas: no parece roto, parece mal hecho. Pasó con la
+sección de planes. Es lo mismo que `VERSION` en el `sw.js` de la app, y
+`test/web.js` comprueba que las cinco páginas piden la misma.
+
 **El precio está escrito cuatro veces**, una por portada, en la sección
 `#planes` a la que baja el botón de la cabecera. No hay plantilla que lo
 centralice —aquí no hay build—, así que `test/web.js` compara el número de las
