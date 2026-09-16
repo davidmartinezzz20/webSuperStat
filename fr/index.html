@@ -55,9 +55,19 @@
   montre qu'un : ils appartiennent à la même marque, et en déclarer certains
   ici et d'autres ailleurs sous le même @id reviendrait à se contredire.
 
-  Pas de prix ici. Il se tient déjà à la main en six endroits (CLAUDE.md du
-  dépôt de l'app) ; quatre copies de plus sans aucun test pour les surveiller,
-  c'est ainsi que ça se désaccorde.
+  Le troisième nœud, c'est l'app elle-même. Il porte le même @id que les
+  données structurées de index.html dans le dépôt de l'app : les deux pages
+  parlent d'une seule app, pas de deux, et c'est l'@id qui le dit.
+
+  Le prix, lui, a bien sa place ici, et c'est la seule copie dont personne n'a
+  à se souvenir : le bloc *4 ter* de test/web.js le compare à celui qu'affiche
+  la carte de cette même page, impossible donc de les désaccorder sans faire
+  échouer le test. Dans l'app il ne peut pas figurer — ce serait la règle
+  3.1.1 d'Apple — d'où sa place de ce côté-ci.
+
+  Ni notes ni avis tant qu'il n'y en a pas de vrais : les inventer, c'est du
+  spam de données structurées. Sans eux, pas de résultat enrichi d'app ; ce
+  que l'on gagne, c'est un moteur qui comprend de quoi il s'agit.
 -->
 <script type="application/ld+json">
 {
@@ -81,6 +91,46 @@
       "url": "https://superstat.online/fr/",
       "inLanguage": "fr",
       "publisher": { "@id": "https://superstat.online/#org" }
+    },
+    {
+      "@type": "SoftwareApplication",
+      "@id": "https://superstat.online/#app",
+      "name": "SuperStat",
+      "url": "https://super-stat.vercel.app/",
+      "description": "Statistiques de handball en direct : tirs, arrêts et carte du terrain. Notez le match depuis le banc, sans réseau. Gratuit.",
+      "applicationCategory": "SportsApplication",
+      "operatingSystem": "Web",
+      "browserRequirements": "Nécessite un navigateur avec JavaScript",
+      "inLanguage": ["es", "en", "fr", "de"],
+      "isAccessibleForFree": true,
+      "image": "https://superstat.online/img/og.png",
+      "screenshot": "https://superstat.online/img/capturas-fr/01-partido-en-vivo.webp",
+      "publisher": { "@id": "https://superstat.online/#org" },
+      "offers": [
+        {
+          "@type": "Offer",
+          "name": "Formule Gratuite",
+          "price": "0",
+          "priceCurrency": "EUR",
+          "availability": "https://schema.org/InStock",
+          "url": "https://super-stat.vercel.app/"
+        },
+        {
+          "@type": "Offer",
+          "name": "SuperStat Pro",
+          "price": "3.49",
+          "priceCurrency": "EUR",
+          "availability": "https://schema.org/InStock",
+          "url": "https://superstat.online/fr/#planes",
+          "priceSpecification": {
+            "@type": "UnitPriceSpecification",
+            "price": "3.49",
+            "priceCurrency": "EUR",
+            "valueAddedTaxIncluded": false,
+            "referenceQuantity": { "@type": "QuantitativeValue", "value": 1, "unitCode": "MON" }
+          }
+        }
+      ]
     }
   ]
 }

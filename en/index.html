@@ -54,9 +54,19 @@
   only its own: they belong to the same brand, and declaring some here and
   others there under the same @id would be contradicting ourselves.
 
-  No price here. It is already kept by hand in six places (CLAUDE.md in the
-  app repository); four more copies with no test watching them is how it
-  starts to drift.
+  The third node is the app itself. It carries the same @id as the structured
+  data in index.html over in the app repository: the two pages describe one
+  app, not two, and the @id is what says so.
+
+  The price does belong here, and it is the one copy nobody has to remember:
+  block *4 ter* of test/web.js compares it against the price this same page
+  shows on its plan card, so the two cannot drift apart without failing. It
+  cannot go in the app — there it would be Apple's guideline 3.1.1 — which is
+  why it lives on this side.
+
+  No ratings and no reviews until there are real ones: making them up is
+  structured-data spam. Without them there will be no app rich result; what
+  this buys is a search engine that understands what this is.
 -->
 <script type="application/ld+json">
 {
@@ -80,6 +90,46 @@
       "url": "https://superstat.online/en/",
       "inLanguage": "en",
       "publisher": { "@id": "https://superstat.online/#org" }
+    },
+    {
+      "@type": "SoftwareApplication",
+      "@id": "https://superstat.online/#app",
+      "name": "SuperStat",
+      "url": "https://super-stat.vercel.app/",
+      "description": "Live handball stats: shots, saves and a map of the court. Log the match from the bench, no signal needed. Free.",
+      "applicationCategory": "SportsApplication",
+      "operatingSystem": "Web",
+      "browserRequirements": "Requires a browser with JavaScript",
+      "inLanguage": ["es", "en", "fr", "de"],
+      "isAccessibleForFree": true,
+      "image": "https://superstat.online/img/og.png",
+      "screenshot": "https://superstat.online/img/capturas-en/01-partido-en-vivo.webp",
+      "publisher": { "@id": "https://superstat.online/#org" },
+      "offers": [
+        {
+          "@type": "Offer",
+          "name": "Free plan",
+          "price": "0",
+          "priceCurrency": "EUR",
+          "availability": "https://schema.org/InStock",
+          "url": "https://super-stat.vercel.app/"
+        },
+        {
+          "@type": "Offer",
+          "name": "SuperStat Pro",
+          "price": "3.49",
+          "priceCurrency": "EUR",
+          "availability": "https://schema.org/InStock",
+          "url": "https://superstat.online/en/#planes",
+          "priceSpecification": {
+            "@type": "UnitPriceSpecification",
+            "price": "3.49",
+            "priceCurrency": "EUR",
+            "valueAddedTaxIncluded": false,
+            "referenceQuantity": { "@type": "QuantitativeValue", "value": 1, "unitCode": "MON" }
+          }
+        }
+      ]
     }
   ]
 }

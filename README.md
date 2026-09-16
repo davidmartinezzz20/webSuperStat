@@ -85,6 +85,13 @@ además con lo que cobra Stripe y con `PRO_PRICE` en `js/config.js` de la app
 (`docs/suscripcion.md`), y los topes del plan Gratis de la tabla, con
 `FREE_TEAMS` y `FREE_MATCHES` en `js/app.js`.
 
+Dentro de cada portada está **dos veces**: la tarjeta que se lee y el `offers`
+de sus datos estructurados, que va con punto y sin símbolo (`"3.49"`) porque no
+lo lee nadie. La segunda no es otra copia que recordar: la misma prueba compara
+las dos de cada página entre sí, así que cambiar la tarjeta y dejarse los datos
+falla en el acto. En la app ese precio no puede aparecer —sería la guía 3.1.1
+de Apple— y por eso vive de este lado.
+
 **Los textos no se inventan.** Salen ya escritos del repositorio de la app:
 
 | Qué | De dónde |
@@ -112,6 +119,18 @@ mismo `@id`, así que declarar unas en una página y otras en otra sería
 contradecirse. `test/web.js` (bloque *4 ter*) comprueba las dos cosas, y es lo
 único que las sujeta: el bloque de paridad de idiomas compara `<section id>` y
 el pie no es una sección.
+
+**El `@graph` tiene tres nodos**: la marca (`Organization`), la página
+(`WebSite`, el único que cambia de idioma en idioma) y la app
+(`SoftwareApplication`, que es la que dice qué es esto y cuánto vale). El de la
+app lleva el `@id` `https://superstat.online/#app`, **el mismo que los datos
+estructurados de `index.html` en el repositorio de la app**: son dos páginas
+hablando de una app, no dos apps, y el `@id` es lo que lo dice. Si allí cambia,
+aquí también. De ese nodo cambia por idioma lo que se lee —la descripción, los
+requisitos, la captura y el nombre y el destino de cada oferta— y nada más; el
+resto tiene que ser idéntico en las cuatro, y `test/web.js` lo compara quitando
+lo primero. Sin valoraciones: no hay reseñas de verdad, e inventarlas es spam
+estructurado, así que no habrá resultado enriquecido de app hasta que las haya.
 
 **Los colores y la tipografía son los de la app**, copiados de su
 `css/styles.css`: el mismo negro `#08090B`, el mismo rojo `#D9182B`, la misma
