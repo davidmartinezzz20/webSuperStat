@@ -5,20 +5,22 @@ página a la que llega quien busca la app: cuenta qué hace, la enseña y lleva 
 abrirla. La app en sí vive en otro repositorio,
 [superStat](https://github.com/davidmartinezzz20/superStat).
 
-Cuatro portadas —castellano, inglés, francés y alemán— y nada más: **HTML
-plano, sin build, sin framework y sin fuentes de CDN**, la misma regla que sigue
-la app. Se publica con **GitHub Pages**: lo que hay en el repositorio es
-exactamente lo que se sirve, y desplegar es hacer push.
+Cuatro portadas —castellano, inglés, francés y alemán—, un blog con las mismas
+cuatro, y nada más: **HTML plano, sin build, sin framework y sin fuentes de
+CDN**, la misma regla que sigue la app. Se publica con **GitHub Pages**: lo que
+hay en el repositorio es exactamente lo que se sirve, y desplegar es hacer push.
 
 ```
 index.html          castellano
 en/index.html       inglés
 fr/index.html       francés
 de/index.html       alemán
+blog/               el índice del blog y un artículo por carpeta, y lo mismo en
+                    en/blog/, fr/blog/ y de/blog/
 privacidad.html     la política de privacidad, y privacidad-en/-fr/-de.html las
                     otras tres. Páginas sueltas, con sus estilos dentro
 404.html            la página de error, en los cuatro idiomas
-css/web.css         los estilos de las cuatro portadas
+css/web.css         los estilos de las portadas y del blog
 img/               iconos, la imagen para redes y las capturas, una carpeta por idioma
 robots.txt  sitemap.xml
 CNAME               el dominio. Lo escribe GitHub al configurar Pages; no borrarlo
@@ -69,12 +71,15 @@ castellano no rompe nada y no se ve. La tabla `PORTADAS` de `test/web.js` es la
 lista de la que sale todo lo demás; añadir un idioma es añadir una fila ahí,
 sus dos archivos y su carpeta de capturas.
 
-**Al tocar `css/web.css` hay que subir su versión** en el enlace de las cinco
-páginas: `href="css/web.css?v=2"` → `?v=3`. GitHub Pages sirve el CSS con caché,
+**Al tocar `css/web.css` hay que subir su versión** en el enlace de **todas** las
+páginas que lo piden —hoy trece: las cuatro portadas, `404.html` y las ocho del
+blog—: `href="css/web.css?v=3"` → `?v=4`. GitHub Pages sirve el CSS con caché,
 así que sin eso quien ya haya entrado antes se queda con las reglas de ayer y ve
 el HTML nuevo pintado con ellas: no parece roto, parece mal hecho. Pasó con la
-sección de planes. Es lo mismo que `VERSION` en el `sw.js` de la app, y
-`test/web.js` comprueba que las cinco páginas piden la misma.
+sección de planes. Es lo mismo que `VERSION` en el `sw.js` de la app.
+`test/web.js` no lleva la lista escrita —la sacaba a mano y se quedó corta al
+aparecer el blog—: recorre las páginas que enlazan la hoja, comprueba aparte que
+las que tienen que estar están, y falla si una pide otra versión.
 
 **El precio está escrito cuatro veces**, una por portada, en la sección
 `#planes` a la que baja el botón de la cabecera. No hay plantilla que lo
@@ -150,6 +155,54 @@ URI. Contando la app, el dibujo vive en seis sitios y todos se mantienen a mano:
 6. el favicon de esas cinco páginas
 
 Si cambia el dibujo, hay que tocarlos todos y volver a generar los iconos.
+
+## El blog
+
+Está para posicionar: una portada responde a quien ya busca «SuperStat», y un
+artículo responde a quien busca «cómo llevar la estadística de un partido de
+balonmano», que es mucha más gente y todavía no sabe que esto existe.
+
+```
+blog/index.html                                    el índice, castellano
+blog/<slug>/index.html                             un artículo por carpeta
+en/blog/  fr/blog/  de/blog/                       lo mismo en los otros tres
+```
+
+Carpeta con `index.html` dentro, igual que `en/`, `fr/` y `de/`: Pages la sirve
+como su índice y la URL queda sin extensión. Se llega desde la cabecera y desde
+el pie de las cuatro portadas, y `test/web.js` comprueba que los dos enlaces
+están en las cuatro.
+
+**El slug va traducido, y no es un capricho**: `/blog/acta-balonmano-sin-conexion/`
+pero `/en/blog/handball-match-stats-offline/`. Es el motivo entero de tener
+blog: cada idioma posiciona por las palabras que se buscan en ese idioma. El
+precio es que la URL de un artículo **no se deduce** de la de otro cambiando el
+prefijo, así que las cuatro están escritas —en el `hreflang` de cada página, en
+`sitemap.xml` y en la tabla `SLUGS` de `test/web.js`— y hay que casarlas a mano.
+
+**Añadir un artículo son cuatro archivos, cuatro `<url>` y una línea de prueba:**
+
+1. `blog/<slug-es>/index.html` y los tres equivalentes, copiando el `head` y el
+   pie de un artículo que ya esté. Ojo a la profundidad de los `../`: un
+   artículo en castellano cuelga a dos carpetas de la raíz y uno en inglés a
+   tres.
+2. Su tarjeta en los cuatro índices.
+3. Sus cuatro `<url>` en `sitemap.xml`, con las cinco alternativas de idioma.
+4. Su fila en `SLUGS` (`test/web.js`), de la que sale todo el bloque *7*.
+
+**Los cuatro tienen que contar lo mismo.** Como un artículo no tiene
+`<section id>` que comparar, el bloque *7* compara su esqueleto: los mismos
+`<h2>` y los mismos puntos en cada lista, contados dentro de `<main>`. Es lo que
+caza una traducción a la que le faltan dos viñetas, que no rompe nada y no sale
+en ninguna consola.
+
+**Aquí no se escribe precio.** La app y sus dos ofertas las declaran las cuatro
+portadas y solo ellas; si el blog las repitiera, el 3,49 pasaría de cuatro
+copias a mantener a mano a muchas más. Los datos estructurados de una página del
+blog llevan el `Organization` de siempre (el mismo `@id`, el mismo `sameAs`) más
+un `Blog` o un `BlogPosting`, y ningún `SoftwareApplication`. La prueba lo
+comprueba. Lo que sí puede nombrar el texto son los topes del plan gratis —un
+equipo y cinco partidos—, que son `FREE_TEAMS` y `FREE_MATCHES` en la app.
 
 ## Las capturas
 

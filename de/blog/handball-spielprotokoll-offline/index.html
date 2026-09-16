@@ -1,0 +1,279 @@
+<!doctype html>
+<!--
+  „Das Spielprotokoll im Handball offline führen", auf Deutsch. Die anderen
+  drei sind /blog/acta-balonmano-sin-conexion/,
+  en/blog/handball-match-stats-offline/ und
+  fr/blog/feuille-de-match-handball-hors-ligne/.
+
+  Der Slug ist in jeder Sprache übersetzt, und genau darum geht es beim Blog:
+  Jeder positioniert sich über die Wörter, die in seiner Sprache gesucht
+  werden. Zusammengehalten werden die vier vom hreflang oben und von den <url>
+  im Sitemap.
+
+  Alle vier müssen dasselbe sagen: dieselben <h2> und dieselben Punkte in jeder
+  Liste. test/web.js zählt sie.
+-->
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#08090B">
+<title>Das Spielprotokoll im Handball offline führen (Leitfaden für Trainer)</title>
+<meta name="description" content="Praktischer Leitfaden, um Spielprotokoll und Statistik eines Handballspiels von der Bank aus zu führen — ohne WLAN, ohne mobile Daten und ohne dass etwas verloren geht.">
+<link rel="canonical" href="https://superstat.online/de/blog/handball-spielprotokoll-offline/">
+<link rel="alternate" hreflang="es" href="https://superstat.online/blog/acta-balonmano-sin-conexion/">
+<link rel="alternate" hreflang="en" href="https://superstat.online/en/blog/handball-match-stats-offline/">
+<link rel="alternate" hreflang="fr" href="https://superstat.online/fr/blog/feuille-de-match-handball-hors-ligne/">
+<link rel="alternate" hreflang="de" href="https://superstat.online/de/blog/handball-spielprotokoll-offline/">
+<link rel="alternate" hreflang="x-default" href="https://superstat.online/blog/acta-balonmano-sin-conexion/">
+
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='7' fill='%23D9182B'/><rect x='6.5' y='17' width='5' height='8' rx='1.4' fill='%23fff'/><rect x='13.5' y='12.5' width='5' height='12.5' rx='1.4' fill='%23fff'/><rect x='20.5' y='7' width='5' height='18' rx='1.4' fill='%23fff'/></svg>">
+<link rel="apple-touch-icon" href="../../../img/apple-touch-icon.png">
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="de_DE">
+<meta property="og:locale:alternate" content="es_ES">
+<meta property="og:locale:alternate" content="en_GB">
+<meta property="og:locale:alternate" content="fr_FR">
+<meta property="og:url" content="https://superstat.online/de/blog/handball-spielprotokoll-offline/">
+<meta property="og:site_name" content="SuperStat">
+<meta property="og:title" content="Das Spielprotokoll im Handball offline führen (Leitfaden für Trainer)">
+<meta property="og:description" content="In der Halle gibt es kein WLAN, und das Spiel wartet nicht. Wie die ganze Auswertung ohne Empfang aufs Handy passt.">
+<meta property="og:image" content="https://superstat.online/img/og.png">
+<meta property="article:published_time" content="2026-09-16">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:site" content="@superstatapp">
+
+<!--
+  Strukturierte Daten. Das BlogPosting hängt am Blog-Knoten seiner Sprache und
+  an derselben Marke wie alles andere (#org). Die Brotkrümel stehen ebenfalls
+  als Daten drin: Das ist es, was eine Suchmaschine „superstat.online › Blog"
+  unter dem Titel anzeigen lässt statt der nackten URL.
+
+  Die URLs sind mit Absicht absolut, anders als die der Navigation: Ein
+  strukturiertes Datum wird außerhalb der Seite gelesen, und eine relative URL
+  löst dort nicht auf.
+-->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": "https://superstat.online/#org",
+      "name": "SuperStat",
+      "url": "https://superstat.online/",
+      "logo": "https://superstat.online/img/icon-512.png",
+      "sameAs": [
+        "https://www.instagram.com/superstat.es/",
+        "https://www.instagram.com/superstat.en/",
+        "https://x.com/superstatapp"
+      ]
+    },
+    {
+      "@type": "BlogPosting",
+      "@id": "https://superstat.online/de/blog/handball-spielprotokoll-offline/#post",
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://superstat.online/de/blog/handball-spielprotokoll-offline/"
+      },
+      "headline": "Das Spielprotokoll im Handball offline führen",
+      "description": "Praktischer Leitfaden, um Spielprotokoll und Statistik eines Handballspiels von der Bank aus zu führen — ohne WLAN, ohne mobile Daten und ohne dass etwas verloren geht.",
+      "url": "https://superstat.online/de/blog/handball-spielprotokoll-offline/",
+      "inLanguage": "de",
+      "datePublished": "2026-09-16",
+      "dateModified": "2026-09-16",
+      "image": "https://superstat.online/img/og.png",
+      "author": {
+        "@id": "https://superstat.online/#org"
+      },
+      "publisher": {
+        "@id": "https://superstat.online/#org"
+      },
+      "isPartOf": {
+        "@id": "https://superstat.online/de/blog/#blog"
+      }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Startseite",
+          "item": "https://superstat.online/de/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Blog",
+          "item": "https://superstat.online/de/blog/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "Das Spielprotokoll im Handball offline führen"
+        }
+      ]
+    }
+  ]
+}
+</script>
+
+<link rel="stylesheet" href="../../../css/web.css?v=4">
+</head>
+<body>
+
+<header class="barra">
+  <div class="envoltura">
+    <div class="barra-izquierda">
+      <a class="marca" href="../../" aria-label="SuperStat, Startseite">
+        <svg viewBox="0 0 32 32" aria-hidden="true">
+          <rect class="tile" x="0" y="0" width="32" height="32" rx="7"/>
+          <rect class="bar" x="6.5" y="17" width="5" height="8" rx="1.4"/>
+          <rect class="bar" x="13.5" y="12.5" width="5" height="12.5" rx="1.4"/>
+          <rect class="bar" x="20.5" y="7" width="5" height="18" rx="1.4"/>
+        </svg>
+        <span class="marca-texto">Super<i>Stat</i></span>
+      </a>
+      <a class="boton secundario pequeno" href="../">Blog</a>
+    </div>
+    <div class="barra-acciones">
+      <nav class="idiomas" aria-label="Sprache">
+        <a href="../../../blog/acta-balonmano-sin-conexion/" hreflang="es">ES</a>
+        <a href="../../../en/blog/handball-match-stats-offline/" hreflang="en">EN</a>
+        <a href="../../../fr/blog/feuille-de-match-handball-hors-ligne/" hreflang="fr">FR</a>
+        <a href="./" aria-current="true" hreflang="de">DE</a>
+      </nav>
+      <a class="boton primario pequeno" href="https://super-stat.vercel.app/?lang=de">App öffnen</a>
+    </div>
+  </div>
+</header>
+
+<main>
+
+  <div class="envoltura">
+
+    <nav class="migas" aria-label="Brotkrümelnavigation">
+      <a href="../../">Startseite</a>
+      <span aria-hidden="true">›</span>
+      <a href="../">Blog</a>
+    </nav>
+
+    <article class="articulo">
+
+      <div class="articulo-cabecera">
+        <h1>Das Spielprotokoll im Handball offline führen</h1>
+        <p class="articulo-fecha"><time datetime="2026-09-16">16. September 2026</time></p>
+      </div>
+
+      <div class="prosa">
+        <p>Wer schon einmal die Statistik eines Handballspiels geführt hat, kennt das Problem: In der Halle gibt es kein WLAN, das Handy verliert den Empfang, sobald man durch die Tür geht, und das Spiel wartet nicht, bis er wieder da ist. Also war Papier immer die naheliegende Lösung — schnell zur Hand, aber langsam ordentlich auszufüllen und, wenn das Spiel hitzig wird, schnell liegen gelassen.</p>
+        <p>Dieser Leitfaden geht durch, was sich während eines Spiels zu erfassen lohnt, warum Papier nicht mehr reicht, sobald man mehr als das Ergebnis herausholen will, und wie das vom Handy aus geht, auch ohne einen einzigen Balken Empfang.</p>
+
+        <h2>Was man während des Spiels erfasst (über das Ergebnis hinaus)</h2>
+        <p>Das Endergebnis sagt wenig. Was wirklich hilft, das nächste Training oder die nächste Runde vorzubereiten, ist feiner:</p>
+        <ul>
+          <li><strong>Würfe aufs Tor</strong>, mit ihrem Ausgang —Tor, Parade oder vorbei— und der genauen Zone, aus der geworfen wird.</li>
+          <li><strong>Paraden des Torwarts</strong>, nach Torzone, um zu wissen, wo er stark ist und wo es zu arbeiten gilt.</li>
+          <li><strong>Ballverluste</strong>, um zu sehen, wie viele jeder Spieler Spiel für Spiel produziert.</li>
+          <li><strong>Zeitstrafen</strong>, um die Disziplin der Mannschaft im Blick zu behalten.</li>
+          <li><strong>Die Position auf dem Feld</strong> bei jedem Wurf, woraus mit der Zeit eine Heatmap pro Spieler und pro Saison wird.</li>
+        </ul>
+        <p>Nichts davon ersetzt das offizielle Spielprotokoll, das der Mannschaftsverantwortliche oder der Schiedsrichter für den Verband ausfüllt — das ist das Dokument, das Ergebnis und Strafen gegenüber dem Wettbewerb beglaubigt. Dies hier ist die eigene Aufzeichnung des Trainerteams: die Daten, die die Mannschaft zum Besserwerden braucht, nicht die, die das Regelwerk verlangt.</p>
+
+        <h2>Warum Papier nicht mehr reicht</h2>
+        <p>Auf Papier lässt sich fast alles davon notieren, aber sobald man es wirklich nutzen will, tauchen drei Probleme auf:</p>
+        <ol>
+          <li><strong>Zeit.</strong> Wurfzone, Ausgang und Spieler von Hand mitzuschreiben, während das Spiel läuft, zwingt zur Wahl zwischen dem Spiel und dem Blatt.</li>
+          <li><strong>Übertragen.</strong> Was auf der Tribüne notiert wurde, nützt nichts, bis es jemand in eine Tabelle tippt — meist Tage später, wenn ein Teil des Zusammenhangs (und der Lust) schon weg ist.</li>
+          <li><strong>Saisons vergleichen.</strong> Die Statistik von 20 Spielen von Hand zu addieren, um die Entwicklung eines Spielers zu sehen, geht einmal. Jede Woche eher nicht.</li>
+        </ol>
+
+        <h2>Wie es vom Handy aus geht, ohne Empfang</h2>
+        <p>Der Punkt ist nicht, Papier durch eine Tabelle auf dem Handy zu ersetzen —das Zeitproblem ist genau dasselbe—. Der Punkt ist eine App, die dafür gemacht ist, bei laufendem Spiel mit dem Handy in der Hand bedient zu werden, und die keinen Empfang braucht:</p>
+        <ol>
+          <li><strong>Sie öffnen das Spiel vor dem Anwurf.</strong> Offline, ohne Warten.</li>
+          <li><strong>Sie erfassen mit Tipps, nicht mit der Tastatur.</strong> Ein Tipp für die Art der Aktion (Wurf, Parade, Ballverlust, Zeitstrafe), einer für die Zone auf dem Feld- oder Tordiagramm. Während des Spiels wird nichts geschrieben.</li>
+          <li><strong>Sie können rückgängig machen.</strong> Bei der falschen Zone oder dem falschen Spieler verhindert eine Rückgängig-Taste, dass ein Versehen für immer drinsteht.</li>
+          <li><strong>Alles wird auf dem Handy gespeichert.</strong> Ohne WLAN, ohne mobile Daten, ohne auf den Empfang in der Halle angewiesen zu sein.</li>
+          <li><strong>Mit dem Schlusspfiff ist die Auswertung fertig.</strong> Ergebnis, Verlauf des Spielstands, Statistik pro Spieler und Wurfkarte, bereit für die Kabine oder den Heimweg.</li>
+          <li><strong>Sie synchronisiert sich von selbst, sobald Empfang da ist.</strong> Nichts zum Hochladen merken, nichts irgendwohin übertragen.</li>
+        </ol>
+        <p>Genau das löst <a href="../../">SuperStat</a>: eine kostenlose App, gemacht, um von der Bank aus ohne Empfang bedient zu werden, die jeden Tipp in strukturierte Statistik verwandelt — und nicht in eine Datei, die hinterher jemand sortieren muss.</p>
+
+        <h2>Was mit den Daten nach dem Spiel passiert</h2>
+        <p>Sobald mehrere Spiele erfasst sind, zählt die einzelne Auswertung weniger als die Summe:</p>
+        <ul>
+          <li><strong>Saisonstatistik</strong> pro Spieler —Würfe, Quote, Paraden— ohne von Hand zu addieren.</li>
+          <li><strong>Eine Heatmap</strong>, woher jeder Spieler wirft und wo er trifft, nützlich fürs Einzeltraining wie fürs Vorbereiten des Gegners.</li>
+          <li><strong>Der Verlauf des Spielstands</strong> von Spiel zu Spiel, um Muster zu erkennen (bricht die Mannschaft in der zweiten Halbzeit ein? kommt sie am Ende immer zurück?).</li>
+          <li><strong>CSV-Export</strong>, falls der Verein diese Daten mit einem anderen Werkzeug zusammenführen will.</li>
+        </ul>
+
+        <h2>Für wen das ist</h2>
+        <p>Vor allem für Trainer und Statistiker im Jugend- und Amateurbereich, wo es weder einen eigenen Analysten noch Budget für professionelle Scouting-Software gibt, aber sehr wohl Lust darauf, mehr zu wissen als das Ergebnis. Und für Vereine und Landesverbände, die die Begleitung ihrer Mannschaften digitalisieren wollen, ohne jemandem ein kompliziertes Werkzeug beibringen zu müssen.</p>
+      </div>
+
+      <aside class="cierre-articulo">
+        <p><strong>SuperStat kostenlos ausprobieren</strong> auf <a href="../../">superstat.online</a> — eine Mannschaft und fünf gespeicherte Spiele ohne Kosten, und es funktioniert vom ersten Spiel an ohne Empfang.</p>
+        <div class="acciones">
+          <a class="boton primario" href="https://super-stat.vercel.app/?lang=de">App öffnen</a>
+          <a class="boton secundario" href="../">Zurück zum Blog</a>
+        </div>
+      </aside>
+
+    </article>
+
+  </div>
+
+</main>
+
+<footer class="pie">
+  <div class="envoltura">
+    <a class="marca" href="../../" aria-label="SuperStat, Startseite">
+      <svg viewBox="0 0 32 32" aria-hidden="true">
+        <rect class="tile" x="0" y="0" width="32" height="32" rx="7"/>
+        <rect class="bar" x="6.5" y="17" width="5" height="8" rx="1.4"/>
+        <rect class="bar" x="13.5" y="12.5" width="5" height="12.5" rx="1.4"/>
+        <rect class="bar" x="20.5" y="7" width="5" height="18" rx="1.4"/>
+      </svg>
+      <span class="marca-texto">Super<i>Stat</i></span>
+    </a>
+    <nav class="enlaces-pie" aria-label="Fußzeile">
+      <a href="https://super-stat.vercel.app/?lang=de">App öffnen</a>
+      <a href="../../../privacidad-de.html">Datenschutz</a>
+      <a href="mailto:superstat.hello@gmail.com">Kontakt</a>
+      <a href="../../../blog/acta-balonmano-sin-conexion/" hreflang="es">Español</a>
+      <a href="../../../en/blog/handball-match-stats-offline/" hreflang="en">English</a>
+      <a href="../../../fr/blog/feuille-de-match-handball-hors-ligne/" hreflang="fr">Français</a>
+      <!--
+        Die sozialen Netze, dieselben wie im Fuß der Startseite: das englische
+        Instagram-Konto und das eine X-Konto. Die Icons sind inline, die Farbe
+        kommt aus css/web.css.
+      -->
+      <a href="https://www.instagram.com/superstat.en/" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"
+             stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <rect x="3.5" y="3.5" width="17" height="17" rx="5"/>
+          <circle cx="12" cy="12" r="4"/>
+          <circle cx="17.1" cy="6.9" r="1" fill="currentColor" stroke="none"/>
+        </svg>
+        Instagram
+      </a>
+      <a href="https://x.com/superstatapp" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <path fill="currentColor" d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+        </svg>
+        X
+      </a>
+    </nav>
+    <p class="nota-pie">
+      SuperStat ist ein Notizbuch für Handballstatistik. Gemacht, um mit auf die
+      Bank zu kommen.
+    </p>
+  </div>
+</footer>
+
+</body>
+</html>

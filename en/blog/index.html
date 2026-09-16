@@ -1,0 +1,194 @@
+<!doctype html>
+<!--
+  The blog index, in English. The other three are /blog/, fr/blog/ and
+  de/blog/, and all four share css/web.css with the landing pages.
+
+  One post is four files —one per language, each with its own slug— plus their
+  four <url> entries in sitemap.xml and a row in the BLOG table of test/web.js.
+  That test compares the four languages against each other, just as it already
+  does with the landing pages: if a translation falls short, it fails.
+
+  No price is written here. The app and its two offers are declared on the four
+  landing pages and only there; repeating them would open one more copy of the
+  3.49 to keep in sync by hand.
+-->
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#08090B">
+<title>Blog · SuperStat — handball stats</title>
+<meta name="description" content="Practical guides for handball coaches and statisticians: what to log during a match, how to keep the match sheet from the bench and what to do with the data afterwards.">
+<link rel="canonical" href="https://superstat.online/en/blog/">
+<link rel="alternate" hreflang="es" href="https://superstat.online/blog/">
+<link rel="alternate" hreflang="en" href="https://superstat.online/en/blog/">
+<link rel="alternate" hreflang="fr" href="https://superstat.online/fr/blog/">
+<link rel="alternate" hreflang="de" href="https://superstat.online/de/blog/">
+<link rel="alternate" hreflang="x-default" href="https://superstat.online/blog/">
+
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='7' fill='%23D9182B'/><rect x='6.5' y='17' width='5' height='8' rx='1.4' fill='%23fff'/><rect x='13.5' y='12.5' width='5' height='12.5' rx='1.4' fill='%23fff'/><rect x='20.5' y='7' width='5' height='18' rx='1.4' fill='%23fff'/></svg>">
+<link rel="apple-touch-icon" href="../../img/apple-touch-icon.png">
+
+<meta property="og:type" content="website">
+<meta property="og:locale" content="en_GB">
+<meta property="og:locale:alternate" content="es_ES">
+<meta property="og:locale:alternate" content="fr_FR">
+<meta property="og:locale:alternate" content="de_DE">
+<meta property="og:url" content="https://superstat.online/en/blog/">
+<meta property="og:site_name" content="SuperStat">
+<meta property="og:title" content="Blog · SuperStat — handball stats">
+<meta property="og:description" content="Handball guides for whoever keeps the team stats.">
+<meta property="og:image" content="https://superstat.online/img/og.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:site" content="@superstatapp">
+
+<!--
+  Structured data. The Organization node is the one from the landing pages,
+  with the same @id: it is the same brand, and declaring different profiles
+  under that @id would be contradicting them. What is new is the Blog node, one
+  per language.
+
+  No SoftwareApplication: the app is declared by the landing pages, and with it
+  the price. Repeating it here would mean saying the same thing twice in two
+  places that are kept in sync by hand.
+-->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": "https://superstat.online/#org",
+      "name": "SuperStat",
+      "url": "https://superstat.online/",
+      "logo": "https://superstat.online/img/icon-512.png",
+      "sameAs": [
+        "https://www.instagram.com/superstat.es/",
+        "https://www.instagram.com/superstat.en/",
+        "https://x.com/superstatapp"
+      ]
+    },
+    {
+      "@type": "Blog",
+      "@id": "https://superstat.online/en/blog/#blog",
+      "name": "The SuperStat blog",
+      "url": "https://superstat.online/en/blog/",
+      "description": "Practical guides for handball coaches and statisticians: what to log during a match, how to keep the match sheet from the bench and what to do with the data afterwards.",
+      "inLanguage": "en",
+      "publisher": {
+        "@id": "https://superstat.online/#org"
+      },
+      "blogPost": [
+        {
+          "@type": "BlogPosting",
+          "@id": "https://superstat.online/en/blog/handball-match-stats-offline/#post",
+          "headline": "How to keep a handball match sheet offline",
+          "url": "https://superstat.online/en/blog/handball-match-stats-offline/",
+          "datePublished": "2026-09-16",
+          "inLanguage": "en"
+        }
+      ]
+    }
+  ]
+}
+</script>
+
+<link rel="stylesheet" href="../../css/web.css?v=4">
+</head>
+<body>
+
+<header class="barra">
+  <div class="envoltura">
+    <div class="barra-izquierda">
+      <a class="marca" href="../" aria-label="SuperStat, home">
+        <svg viewBox="0 0 32 32" aria-hidden="true">
+          <rect class="tile" x="0" y="0" width="32" height="32" rx="7"/>
+          <rect class="bar" x="6.5" y="17" width="5" height="8" rx="1.4"/>
+          <rect class="bar" x="13.5" y="12.5" width="5" height="12.5" rx="1.4"/>
+          <rect class="bar" x="20.5" y="7" width="5" height="18" rx="1.4"/>
+        </svg>
+        <span class="marca-texto">Super<i>Stat</i></span>
+      </a>
+      <a class="boton secundario pequeno" href="./">Blog</a>
+    </div>
+    <div class="barra-acciones">
+      <nav class="idiomas" aria-label="Language">
+        <a href="../../blog/" hreflang="es">ES</a>
+        <a href="./" aria-current="true" hreflang="en">EN</a>
+        <a href="../../fr/blog/" hreflang="fr">FR</a>
+        <a href="../../de/blog/" hreflang="de">DE</a>
+      </nav>
+      <a class="boton primario pequeno" href="https://super-stat.vercel.app/?lang=en">Open the app</a>
+    </div>
+  </div>
+</header>
+
+<main>
+
+  <div class="portada portada-blog">
+    <div class="envoltura">
+      <h1>The SuperStat blog</h1>
+      <p class="entradilla">Handball guides for whoever keeps the team stats: what to log during the match, how to do it from the bench and what the data is good for afterwards.</p>
+    </div>
+  </div>
+
+  <div class="envoltura">
+    <ul class="lista-entradas">
+      <li class="entrada">
+        <p class="entrada-fecha"><time datetime="2026-09-16">16 September 2026</time></p>
+        <h2><a href="handball-match-stats-offline/">How to keep a handball match sheet offline</a></h2>
+        <p class="entrada-resumen">The sports hall has no wifi and the match will not wait. What is worth logging, why paper falls short and how to keep the whole report on your phone without a single bar of signal.</p>
+        <p class="entrada-mas"><a href="handball-match-stats-offline/">Read the article <span aria-hidden="true">→</span></a></p>
+      </li>
+    </ul>
+  </div>
+
+</main>
+
+<footer class="pie">
+  <div class="envoltura">
+    <a class="marca" href="../" aria-label="SuperStat, home">
+      <svg viewBox="0 0 32 32" aria-hidden="true">
+        <rect class="tile" x="0" y="0" width="32" height="32" rx="7"/>
+        <rect class="bar" x="6.5" y="17" width="5" height="8" rx="1.4"/>
+        <rect class="bar" x="13.5" y="12.5" width="5" height="12.5" rx="1.4"/>
+        <rect class="bar" x="20.5" y="7" width="5" height="18" rx="1.4"/>
+      </svg>
+      <span class="marca-texto">Super<i>Stat</i></span>
+    </a>
+    <nav class="enlaces-pie" aria-label="Footer">
+      <a href="https://super-stat.vercel.app/?lang=en">Open the app</a>
+      <a href="../../privacidad-en.html">Privacy</a>
+      <a href="mailto:superstat.hello@gmail.com">Contact</a>
+      <a href="../../blog/" hreflang="es">Español</a>
+      <a href="../../fr/blog/" hreflang="fr">Français</a>
+      <a href="../../de/blog/" hreflang="de">Deutsch</a>
+      <!--
+        The social accounts, the same ones as in the landing page footer: the
+        English Instagram account and the single X account. The icons are
+        inline and the colour comes from css/web.css.
+      -->
+      <a href="https://www.instagram.com/superstat.en/" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"
+             stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <rect x="3.5" y="3.5" width="17" height="17" rx="5"/>
+          <circle cx="12" cy="12" r="4"/>
+          <circle cx="17.1" cy="6.9" r="1" fill="currentColor" stroke="none"/>
+        </svg>
+        Instagram
+      </a>
+      <a href="https://x.com/superstatapp" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <path fill="currentColor" d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+        </svg>
+        X
+      </a>
+    </nav>
+    <p class="nota-pie">
+      SuperStat is a handball stats notebook. Built to be taken to the bench.
+    </p>
+  </div>
+</footer>
+
+</body>
+</html>
