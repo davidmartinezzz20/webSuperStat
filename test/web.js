@@ -170,8 +170,10 @@ for(const { pagina, capturas } of PORTADAS){
     .filter(p => (html[pagina].match(new RegExp(p.capturas + '/', 'g')) || []).length > 0)
     .map(p => p.capturas);
   check(`${pagina} solo usa ${capturas}/`, ajenas.length === 0, 'también usa ' + ajenas.join(', '));
+  // Diez y no nueve: las ocho de la tira, la del marco del móvil que se repite
+  // y la del `screenshot` de los datos estructurados, que también es la suya.
   const propias = (html[pagina].match(new RegExp(capturas + '/', 'g')) || []).length;
-  check(`${pagina} usa las suyas`, propias === 9, `${propias} veces`);
+  check(`${pagina} usa las suyas`, propias === 10, `${propias} veces`);
 }
 
 // -------------------------------------------------------------------------
@@ -211,6 +213,9 @@ console.log('\n4 bis. Los planes dicen lo mismo en los cuatro idiomas');
 // compara el número y no la cadena entera porque cada idioma lo escribe a su
 // manera ("3,49 €" y "€3.49").
 const precios = new Set();
+// Y guardado por página, porque el bloque de abajo lo compara con el que dicen
+// los datos estructurados de esa misma portada.
+const preciosPorPagina = new Map();
 for(const { pagina } of PORTADAS){
   const f = html[pagina];
   check(`${pagina} lleva el botón que baja a los planes`, /href="#planes"/.test(f));
@@ -219,7 +224,7 @@ for(const { pagina } of PORTADAS){
   const cifras = [...f.matchAll(/<span class="plan-cifra">([^<]+)<\/span>/g)].map(m => m[1]);
   check(`${pagina} enseña los dos precios`, cifras.length === 2, cifras.join(' · '));
   const pro = (cifras[1] || '').replace(/[^\d,.]/g, '').replace(',', '.');
-  if(pro) precios.add(pro);
+  if(pro){ precios.add(pro); preciosPorPagina.set(pagina, pro); }
 
   // Y que no se quede sin la coletilla de impuestos, que es lo que convierte el
   // precio en el precio de verdad.
@@ -234,7 +239,7 @@ check('las cuatro portadas dicen el mismo precio', precios.size === 1,
       [...precios].join(' · '));
 
 // -------------------------------------------------------------------------
-console.log('\n4 ter. Las redes, en el pie y en los datos estructurados');
+console.log('\n4 ter. Las redes y la app, en los datos estructurados');
 
 // Los enlaces del pie son la mitad visible de esto; la otra es el sameAs del
 // JSON-LD, que es por donde un buscador ata los perfiles a esta marca y la
@@ -244,8 +249,9 @@ console.log('\n4 ter. Las redes, en el pie y en los datos estructurados');
 // lado —o sin cuenta— pasaría entera sin que fallara nada.
 const PERFILES = [IG_ES, IG_EN, EQUIS];
 const perfilesPorPagina = new Map();
+const appPorPagina = new Map();
 
-for(const { pagina, lang, instagram } of PORTADAS){
+for(const { pagina, lang, instagram, capturas } of PORTADAS){
   const f = html[pagina];
   const pie = (f.match(/<nav class="enlaces-pie"[\s\S]*?<\/nav>/) || [''])[0];
 
@@ -289,6 +295,58 @@ for(const { pagina, lang, instagram } of PORTADAS){
   check(`${pagina} declara el WebSite de su idioma`,
         !!sitio && sitio.inLanguage === lang && sitio.url === url,
         sitio ? `${sitio.inLanguage} · ${sitio.url}` : 'no hay WebSite');
+
+  // El tercer nodo es la app. Su @id es el mismo que el de los datos
+  // estructurados de index.html en el repositorio de la app: las dos páginas
+  // hablan de una app y no de dos, y quien lo dice es el @id.
+  const app = grafo.find(n => n['@type'] === 'SoftwareApplication');
+  check(`${pagina} declara la app con el @id de siempre`,
+        !!app && app['@id'] === 'https://superstat.online/#app',
+        app ? app['@id'] : 'no hay SoftwareApplication');
+  if(!app) continue;
+
+  check(`${pagina} dice de qué va la app`, typeof app.description === 'string' &&
+        app.description.length > 0, app.description);
+  check(`${pagina} cuelga la app de la misma marca`,
+        !!app.publisher && app.publisher['@id'] === (org || {})['@id'],
+        app.publisher && app.publisher['@id']);
+  check(`${pagina} enseña una captura de su idioma`,
+        typeof app.screenshot === 'string' && app.screenshot.includes(capturas + '/'),
+        app.screenshot);
+
+  // Y el precio. Aquí está escrito una segunda vez dentro de la misma página, y
+  // ésa es justo la copia que se puede quedar atrás al cambiar la tarjeta: se
+  // compara con la de arriba (4 bis) en vez de con una constante, para que las
+  // dos tengan que moverse a la vez. En los datos va con punto y sin símbolo,
+  // porque no es un texto que lea nadie.
+  const ofertas = app.offers || [];
+  check(`${pagina} declara las dos ofertas`, ofertas.length === 2, `${ofertas.length}`);
+  const gratis = ofertas[0] || {}, pro = ofertas[1] || {};
+  check(`${pagina} declara el plan gratis a cero`, gratis.price === '0', gratis.price);
+  check(`${pagina} declara el mismo precio que enseña su tarjeta`,
+        pro.price === preciosPorPagina.get(pagina),
+        `datos: ${pro.price} · tarjeta: ${preciosPorPagina.get(pagina)}`);
+  check(`${pagina} declara las dos ofertas en euros`,
+        gratis.priceCurrency === 'EUR' && pro.priceCurrency === 'EUR',
+        `${gratis.priceCurrency} · ${pro.priceCurrency}`);
+  // Lo mismo que la coletilla "Impuestos aparte" de la tarjeta, pero en dato.
+  check(`${pagina} dice en los datos que los impuestos van aparte`,
+        !!pro.priceSpecification &&
+        pro.priceSpecification.valueAddedTaxIncluded === false,
+        JSON.stringify(pro.priceSpecification));
+  check(`${pagina} lleva la oferta de pago a sus propios planes`,
+        pro.url === `${url}#planes`, pro.url);
+
+  // Lo que no depende del idioma tiene que ser idéntico en las cuatro: si una
+  // dijera otra categoría o otro precio, estarían contradiciéndose sobre la
+  // misma entidad, igual que pasaría con los perfiles. Lo que sí cambia de una
+  // a otra, y por eso se quita antes de comparar, es lo que se lee: la
+  // descripción, lo que hace falta para abrirla, la captura de su idioma y el
+  // nombre y el destino de cada oferta.
+  const esqueleto = JSON.parse(JSON.stringify(app));
+  for(const campo of ['description', 'browserRequirements', 'screenshot']) delete esqueleto[campo];
+  (esqueleto.offers || []).forEach(o => { delete o.name; delete o.url; });
+  appPorPagina.set(pagina, JSON.stringify(esqueleto));
 }
 
 // Las cuatro hablan de la misma marca con el mismo @id: si una declarara otros
@@ -296,6 +354,12 @@ for(const { pagina, lang, instagram } of PORTADAS){
 check('las cuatro portadas declaran los mismos perfiles',
       new Set(perfilesPorPagina.values()).size === 1,
       [...perfilesPorPagina].map(([p, s]) => `${p}: ${s}`).join(' | '));
+const modelo = appPorPagina.get('index.html');
+check('las cuatro portadas describen la misma app',
+      appPorPagina.size === PORTADAS.length &&
+      new Set(appPorPagina.values()).size === 1,
+      [...appPorPagina].filter(([p, a]) => a !== modelo)
+        .map(([p, a]) => `${p}: ${a}`).join(' | ') || `solo ${appPorPagina.size} portadas`);
 
 // -------------------------------------------------------------------------
 console.log('\n5. La trampa del tamaño de las capturas');

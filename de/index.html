@@ -57,9 +57,20 @@
   eigenes zeigt: sie gehören derselben Marke, und unter demselben @id hier die
   einen und dort die anderen zu nennen hieße, sich selbst zu widersprechen.
 
-  Kein Preis hier. Er wird schon an sechs Stellen von Hand gepflegt (CLAUDE.md
-  im Repository der App); vier weitere Kopien, auf die keine Prüfung schaut,
-  sind genau der Anfang vom Auseinanderlaufen.
+  Der dritte Knoten ist die App selbst. Er trägt dieselbe @id wie die
+  strukturierten Daten in index.html im Repository der App: die beiden Seiten
+  sprechen von einer App, nicht von zweien, und die @id ist es, die das sagt.
+
+  Der Preis gehört sehr wohl hierher, und es ist die eine Kopie, an die niemand
+  denken muss: Block *4 ter* von test/web.js vergleicht ihn mit dem, den die
+  Tarifkarte derselben Seite zeigt — auseinanderlaufen können die beiden also
+  nicht, ohne dass die Prüfung fehlschlägt. In der App darf er nicht stehen,
+  dort wäre es Apples Richtlinie 3.1.1; deshalb steht er auf dieser Seite.
+
+  Keine Bewertungen und keine Rezensionen, solange es keine echten gibt: sie zu
+  erfinden ist Spam mit strukturierten Daten. Ohne sie gibt es kein
+  Rich-Result für Apps; was bleibt, ist eine Suchmaschine, die versteht, was
+  das hier ist.
 -->
 <script type="application/ld+json">
 {
@@ -83,6 +94,46 @@
       "url": "https://superstat.online/de/",
       "inLanguage": "de",
       "publisher": { "@id": "https://superstat.online/#org" }
+    },
+    {
+      "@type": "SoftwareApplication",
+      "@id": "https://superstat.online/#app",
+      "name": "SuperStat",
+      "url": "https://super-stat.vercel.app/",
+      "description": "Handballstatistik in Echtzeit: Würfe, Paraden und Feldkarte. Erfasse das Spiel von der Bank aus, ganz ohne Empfang. Kostenlos.",
+      "applicationCategory": "SportsApplication",
+      "operatingSystem": "Web",
+      "browserRequirements": "Erfordert einen Browser mit JavaScript",
+      "inLanguage": ["es", "en", "fr", "de"],
+      "isAccessibleForFree": true,
+      "image": "https://superstat.online/img/og.png",
+      "screenshot": "https://superstat.online/img/capturas-de/01-partido-en-vivo.webp",
+      "publisher": { "@id": "https://superstat.online/#org" },
+      "offers": [
+        {
+          "@type": "Offer",
+          "name": "Gratis-Tarif",
+          "price": "0",
+          "priceCurrency": "EUR",
+          "availability": "https://schema.org/InStock",
+          "url": "https://super-stat.vercel.app/"
+        },
+        {
+          "@type": "Offer",
+          "name": "SuperStat Pro",
+          "price": "3.49",
+          "priceCurrency": "EUR",
+          "availability": "https://schema.org/InStock",
+          "url": "https://superstat.online/de/#planes",
+          "priceSpecification": {
+            "@type": "UnitPriceSpecification",
+            "price": "3.49",
+            "priceCurrency": "EUR",
+            "valueAddedTaxIncluded": false,
+            "referenceQuantity": { "@type": "QuantitativeValue", "value": 1, "unitCode": "MON" }
+          }
+        }
+      ]
     }
   ]
 }
