@@ -334,6 +334,81 @@ footer.pie .envoltura{
 .centrada h1{font-size:clamp(28px,5vw,44px);letter-spacing:-0.03em;}
 .centrada p{color:var(--muted);margin:0;}
 
+/* ------------------------------------------------------------------- blog */
+/* El índice y los artículos. Reaprovechan la cabecera, el pie, .envoltura y
+   los botones de las portadas; lo de aquí es solo lo que aquéllas no tienen:
+   una columna de lectura y las tarjetas del índice.
+
+   El blog no usa <section>, así que tampoco hereda sus 64 px y su línea de
+   arriba: el aire lo pone cada bloque. */
+/* El índice reaprovecha de .portada el halo rojo del fondo, pero no su rejilla:
+   allí son dos columnas porque a la derecha va el marco del móvil, y aquí no
+   hay nada que poner al lado. Sin este display:block el titular se queda a la
+   izquierda y la entradilla en la columna de 300 px de la derecha. */
+.portada-blog{padding:56px 0 34px;}
+.portada-blog .envoltura{display:block;}
+.portada-blog h1{font-size:clamp(28px,4.4vw,42px);line-height:1.1;letter-spacing:-0.03em;}
+.portada-blog .entradilla{margin-top:14px;max-width:56ch;}
+
+.lista-entradas{margin:0;padding:0 0 64px;list-style:none;display:grid;gap:14px;}
+.entrada{
+  background:var(--panel);border:1px solid var(--line);
+  border-radius:var(--radius-lg);padding:24px;
+}
+.entrada-fecha{
+  color:var(--muted);font-size:13px;margin:0 0 8px;
+  text-transform:uppercase;letter-spacing:0.06em;
+}
+.entrada h2{font-size:clamp(19px,2.4vw,23px);}
+/* El título de la tarjeta va en el color del texto y no en el rojo de enlace:
+   la tarjeta entera se lee como un bloque, y el rojo se guarda para el «Leer
+   el artículo» de abajo, que es la acción. */
+.entrada h2 a{color:var(--text);}
+.entrada h2 a:hover{color:var(--brand-2);text-decoration:none;}
+.entrada-resumen{color:var(--muted);margin:10px 0 0;max-width:62ch;}
+.entrada-mas{margin:16px 0 0;font-size:15px;font-weight:600;}
+
+/* Las migas. Van de verdad y no de adorno: desde la mitad de un artículo son
+   el único camino de vuelta al índice, y el mismo recorrido está otra vez en
+   el BreadcrumbList del JSON-LD de esa página. */
+.migas{
+  display:flex;flex-wrap:wrap;align-items:center;gap:8px;
+  padding:26px 0 0;color:var(--muted);font-size:14px;
+}
+.migas a{color:var(--muted);}
+.migas a:hover{color:var(--text);}
+
+.articulo{padding:0 0 64px;}
+.articulo-cabecera{padding:22px 0 26px;border-bottom:1px solid var(--line);}
+.articulo-cabecera h1{
+  font-size:clamp(27px,4.2vw,40px);letter-spacing:-0.03em;max-width:15em;
+}
+.articulo-fecha{color:var(--muted);font-size:14px;margin:14px 0 0;}
+
+/* La columna de lectura. 68ch es lo que se lee cómodo: más ancha y el ojo
+   pierde el renglón al saltar de línea, que es justo lo que no puede pasar en
+   el único sitio de la web donde hay que leer seguido. */
+.prosa{max-width:68ch;padding-top:34px;}
+.prosa p{color:var(--soft);margin:0 0 18px;}
+.prosa h2{font-size:clamp(20px,2.6vw,25px);letter-spacing:-0.025em;margin:38px 0 12px;}
+.prosa ul,.prosa ol{margin:0 0 18px;padding-left:22px;color:var(--soft);}
+.prosa li{margin-bottom:10px;}
+.prosa li:last-child{margin-bottom:0;}
+.prosa li::marker{color:var(--muted);}
+.prosa strong{color:var(--text);}
+/* Los enlaces de dentro del texto sí van subrayados, al revés que los del
+   resto de la web: en un párrafo largo el color solo no basta para verlos. */
+.prosa a{text-decoration:underline;text-underline-offset:3px;}
+
+/* El cierre del artículo: el mismo panel que .destacado, pero en una columna,
+   porque aquí no hay dos cosas que enfrentar sino una llamada. */
+.cierre-articulo{
+  background:var(--panel);border:1px solid var(--line);
+  border-radius:var(--radius-lg);padding:26px;margin-top:40px;max-width:68ch;
+}
+.cierre-articulo p{margin:0;color:var(--soft);}
+.cierre-articulo .acciones{margin-top:20px;}
+
 /* ------------------------------------------------------------- pantallas */
 @media (max-width:900px){
   .portada{padding:52px 0 48px;}
@@ -344,6 +419,9 @@ footer.pie .envoltura{
   .telefono{max-width:250px;margin:0 auto;}
   .destacado{grid-template-columns:1fr;gap:22px;padding:24px;}
   section{padding:52px 0;}
+  .portada-blog{padding:44px 0 28px;}
+  .lista-entradas{padding-bottom:52px;}
+  .articulo{padding-bottom:52px;}
 }
 @media (max-width:480px){
   .envoltura{padding:0 16px;}
@@ -373,6 +451,14 @@ footer.pie .envoltura{
   .tabla-planes td{width:66px;}
   .tabla-planes thead th{font-size:11px;letter-spacing:0.05em;}
   .si svg{width:17px;height:17px;}
+  /* En la cabecera de una portada ya hay marca, botón de planes, cuatro
+     idiomas y «Abrir la app»: el enlace al blog es el quinto y no cabe. Se va
+     éste y no el de los planes porque al blog se llega igual por el pie, y a
+     los planes solo desde aquí. En las páginas del blog no hay botón de
+     planes, así que allí el suyo se queda. */
+  .barra-izquierda .a-blog{display:none;}
+  .entrada{padding:20px;}
+  .cierre-articulo{padding:22px;}
 }
 
 /* En una pantalla de 320 px (un iPhone SE de los primeros) ni con las etiquetas

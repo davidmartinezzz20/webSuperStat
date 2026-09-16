@@ -1,0 +1,194 @@
+<!doctype html>
+<!--
+  El índice del blog, en castellano. Los otros tres son en/blog/, fr/blog/ y
+  de/blog/, y los cuatro comparten css/web.css con las portadas.
+
+  Un artículo son cuatro archivos —uno por idioma, cada uno con su slug—, más
+  sus cuatro <url> en sitemap.xml y una fila en la tabla BLOG de test/web.js.
+  Esa prueba compara los cuatro idiomas entre sí, igual que ya hace con las
+  portadas: si una traducción se queda corta, falla.
+
+  Aquí no se escribe precio. La app y sus dos ofertas las declaran las cuatro
+  portadas y solo ellas; repetirlas abriría otra copia del 3,49 que mantener a
+  mano.
+-->
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#08090B">
+<title>Blog · SuperStat — estadísticas de balonmano</title>
+<meta name="description" content="Guías prácticas para entrenadores y estadísticos de balonmano: qué anotar durante un partido, cómo llevar el acta desde la banda y qué hacer con los datos después.">
+<link rel="canonical" href="https://superstat.online/blog/">
+<link rel="alternate" hreflang="es" href="https://superstat.online/blog/">
+<link rel="alternate" hreflang="en" href="https://superstat.online/en/blog/">
+<link rel="alternate" hreflang="fr" href="https://superstat.online/fr/blog/">
+<link rel="alternate" hreflang="de" href="https://superstat.online/de/blog/">
+<link rel="alternate" hreflang="x-default" href="https://superstat.online/blog/">
+
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='7' fill='%23D9182B'/><rect x='6.5' y='17' width='5' height='8' rx='1.4' fill='%23fff'/><rect x='13.5' y='12.5' width='5' height='12.5' rx='1.4' fill='%23fff'/><rect x='20.5' y='7' width='5' height='18' rx='1.4' fill='%23fff'/></svg>">
+<link rel="apple-touch-icon" href="../img/apple-touch-icon.png">
+
+<meta property="og:type" content="website">
+<meta property="og:locale" content="es_ES">
+<meta property="og:locale:alternate" content="en_GB">
+<meta property="og:locale:alternate" content="fr_FR">
+<meta property="og:locale:alternate" content="de_DE">
+<meta property="og:url" content="https://superstat.online/blog/">
+<meta property="og:site_name" content="SuperStat">
+<meta property="og:title" content="Blog · SuperStat — estadísticas de balonmano">
+<meta property="og:description" content="Guías de balonmano para quien lleva la estadística del equipo.">
+<meta property="og:image" content="https://superstat.online/img/og.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:site" content="@superstatapp">
+
+<!--
+  Datos estructurados. El Organization es el mismo de las portadas y con el
+  mismo @id: es la misma marca, y declarar otros perfiles con ese @id sería
+  contradecirse. Lo nuevo es el nodo Blog, uno por idioma.
+
+  Sin SoftwareApplication: la app la declaran las portadas, y con ella el
+  precio. Repetirla aquí sería decir lo mismo dos veces en dos sitios que se
+  mantienen a mano por separado.
+-->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": "https://superstat.online/#org",
+      "name": "SuperStat",
+      "url": "https://superstat.online/",
+      "logo": "https://superstat.online/img/icon-512.png",
+      "sameAs": [
+        "https://www.instagram.com/superstat.es/",
+        "https://www.instagram.com/superstat.en/",
+        "https://x.com/superstatapp"
+      ]
+    },
+    {
+      "@type": "Blog",
+      "@id": "https://superstat.online/blog/#blog",
+      "name": "El blog de SuperStat",
+      "url": "https://superstat.online/blog/",
+      "description": "Guías prácticas para entrenadores y estadísticos de balonmano: qué anotar durante un partido, cómo llevar el acta desde la banda y qué hacer con los datos después.",
+      "inLanguage": "es",
+      "publisher": {
+        "@id": "https://superstat.online/#org"
+      },
+      "blogPost": [
+        {
+          "@type": "BlogPosting",
+          "@id": "https://superstat.online/blog/acta-balonmano-sin-conexion/#post",
+          "headline": "Cómo llevar el acta de un partido de balonmano sin conexión",
+          "url": "https://superstat.online/blog/acta-balonmano-sin-conexion/",
+          "datePublished": "2026-09-16",
+          "inLanguage": "es"
+        }
+      ]
+    }
+  ]
+}
+</script>
+
+<link rel="stylesheet" href="../css/web.css?v=4">
+</head>
+<body>
+
+<header class="barra">
+  <div class="envoltura">
+    <div class="barra-izquierda">
+      <a class="marca" href="../" aria-label="SuperStat, inicio">
+        <svg viewBox="0 0 32 32" aria-hidden="true">
+          <rect class="tile" x="0" y="0" width="32" height="32" rx="7"/>
+          <rect class="bar" x="6.5" y="17" width="5" height="8" rx="1.4"/>
+          <rect class="bar" x="13.5" y="12.5" width="5" height="12.5" rx="1.4"/>
+          <rect class="bar" x="20.5" y="7" width="5" height="18" rx="1.4"/>
+        </svg>
+        <span class="marca-texto">Super<i>Stat</i></span>
+      </a>
+      <a class="boton secundario pequeno" href="./">Blog</a>
+    </div>
+    <div class="barra-acciones">
+      <nav class="idiomas" aria-label="Idioma">
+        <a href="./" aria-current="true" hreflang="es">ES</a>
+        <a href="../en/blog/" hreflang="en">EN</a>
+        <a href="../fr/blog/" hreflang="fr">FR</a>
+        <a href="../de/blog/" hreflang="de">DE</a>
+      </nav>
+      <a class="boton primario pequeno" href="https://super-stat.vercel.app">Abrir la app</a>
+    </div>
+  </div>
+</header>
+
+<main>
+
+  <div class="portada portada-blog">
+    <div class="envoltura">
+      <h1>El blog de SuperStat</h1>
+      <p class="entradilla">Guías de balonmano para quien lleva la estadística del equipo: qué anotar durante el partido, cómo hacerlo desde la banda y qué sacar de los datos después.</p>
+    </div>
+  </div>
+
+  <div class="envoltura">
+    <ul class="lista-entradas">
+      <li class="entrada">
+        <p class="entrada-fecha"><time datetime="2026-09-16">16 de septiembre de 2026</time></p>
+        <h2><a href="acta-balonmano-sin-conexion/">Cómo llevar el acta de un partido de balonmano sin conexión</a></h2>
+        <p class="entrada-resumen">El pabellón no tiene wifi y el partido no espera. Qué merece la pena anotar, por qué el papel se queda corto y cómo llevar la ficha entera desde el móvil sin una barra de cobertura.</p>
+        <p class="entrada-mas"><a href="acta-balonmano-sin-conexion/">Leer el artículo <span aria-hidden="true">→</span></a></p>
+      </li>
+    </ul>
+  </div>
+
+</main>
+
+<footer class="pie">
+  <div class="envoltura">
+    <a class="marca" href="../" aria-label="SuperStat, inicio">
+      <svg viewBox="0 0 32 32" aria-hidden="true">
+        <rect class="tile" x="0" y="0" width="32" height="32" rx="7"/>
+        <rect class="bar" x="6.5" y="17" width="5" height="8" rx="1.4"/>
+        <rect class="bar" x="13.5" y="12.5" width="5" height="12.5" rx="1.4"/>
+        <rect class="bar" x="20.5" y="7" width="5" height="18" rx="1.4"/>
+      </svg>
+      <span class="marca-texto">Super<i>Stat</i></span>
+    </a>
+    <nav class="enlaces-pie" aria-label="Pie">
+      <a href="https://super-stat.vercel.app">Abrir la app</a>
+      <a href="../privacidad.html">Privacidad</a>
+      <a href="mailto:superstat.hello@gmail.com">Contacto</a>
+      <a href="../en/blog/" hreflang="en">English</a>
+      <a href="../fr/blog/" hreflang="fr">Français</a>
+      <a href="../de/blog/" hreflang="de">Deutsch</a>
+      <!--
+        Las redes, las mismas del pie de la portada: la cuenta castellana de
+        Instagram y la única de X. Los iconos van en línea y el color lo manda
+        css/web.css.
+      -->
+      <a href="https://www.instagram.com/superstat.es/" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"
+             stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <rect x="3.5" y="3.5" width="17" height="17" rx="5"/>
+          <circle cx="12" cy="12" r="4"/>
+          <circle cx="17.1" cy="6.9" r="1" fill="currentColor" stroke="none"/>
+        </svg>
+        Instagram
+      </a>
+      <a href="https://x.com/superstatapp" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <path fill="currentColor" d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+        </svg>
+        X
+      </a>
+    </nav>
+    <p class="nota-pie">
+      SuperStat es una libreta de estadísticas de balonmano. Hecha para llevarla
+      a la banda.
+    </p>
+  </div>
+</footer>
+
+</body>
+</html>

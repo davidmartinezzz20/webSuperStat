@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Las cuatro portadas, cada una declarando a las otras tres como alternativa
-     de idioma, y las cuatro políticas de privacidad.
+<!-- Las cuatro portadas, los cuatro índices del blog, los cuatro idiomas de
+     cada artículo y las cuatro políticas de privacidad, cada una declarando a
+     las otras tres como alternativa de idioma.
+     Del blog, ojo: el slug va traducido, así que las alternativas de un
+     artículo no se sacan cambiando el prefijo de idioma — hay que escribirlas.
      Si se añade una página hay que añadirla aquí: no se genera sola. -->
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
         xmlns:xhtml="http://www.w3.org/1999/xhtml">
@@ -35,6 +38,70 @@
     <xhtml:link rel="alternate" hreflang="fr" href="https://superstat.online/fr/"/>
     <xhtml:link rel="alternate" hreflang="de" href="https://superstat.online/de/"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://superstat.online/"/>
+  </url>
+  <url>
+    <loc>https://superstat.online/blog/</loc>
+    <xhtml:link rel="alternate" hreflang="es" href="https://superstat.online/blog/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://superstat.online/en/blog/"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://superstat.online/fr/blog/"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://superstat.online/de/blog/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://superstat.online/blog/"/>
+  </url>
+  <url>
+    <loc>https://superstat.online/en/blog/</loc>
+    <xhtml:link rel="alternate" hreflang="es" href="https://superstat.online/blog/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://superstat.online/en/blog/"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://superstat.online/fr/blog/"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://superstat.online/de/blog/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://superstat.online/blog/"/>
+  </url>
+  <url>
+    <loc>https://superstat.online/fr/blog/</loc>
+    <xhtml:link rel="alternate" hreflang="es" href="https://superstat.online/blog/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://superstat.online/en/blog/"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://superstat.online/fr/blog/"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://superstat.online/de/blog/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://superstat.online/blog/"/>
+  </url>
+  <url>
+    <loc>https://superstat.online/de/blog/</loc>
+    <xhtml:link rel="alternate" hreflang="es" href="https://superstat.online/blog/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://superstat.online/en/blog/"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://superstat.online/fr/blog/"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://superstat.online/de/blog/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://superstat.online/blog/"/>
+  </url>
+  <url>
+    <loc>https://superstat.online/blog/acta-balonmano-sin-conexion/</loc>
+    <xhtml:link rel="alternate" hreflang="es" href="https://superstat.online/blog/acta-balonmano-sin-conexion/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://superstat.online/en/blog/handball-match-stats-offline/"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://superstat.online/fr/blog/feuille-de-match-handball-hors-ligne/"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://superstat.online/de/blog/handball-spielprotokoll-offline/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://superstat.online/blog/acta-balonmano-sin-conexion/"/>
+  </url>
+  <url>
+    <loc>https://superstat.online/en/blog/handball-match-stats-offline/</loc>
+    <xhtml:link rel="alternate" hreflang="es" href="https://superstat.online/blog/acta-balonmano-sin-conexion/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://superstat.online/en/blog/handball-match-stats-offline/"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://superstat.online/fr/blog/feuille-de-match-handball-hors-ligne/"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://superstat.online/de/blog/handball-spielprotokoll-offline/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://superstat.online/blog/acta-balonmano-sin-conexion/"/>
+  </url>
+  <url>
+    <loc>https://superstat.online/fr/blog/feuille-de-match-handball-hors-ligne/</loc>
+    <xhtml:link rel="alternate" hreflang="es" href="https://superstat.online/blog/acta-balonmano-sin-conexion/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://superstat.online/en/blog/handball-match-stats-offline/"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://superstat.online/fr/blog/feuille-de-match-handball-hors-ligne/"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://superstat.online/de/blog/handball-spielprotokoll-offline/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://superstat.online/blog/acta-balonmano-sin-conexion/"/>
+  </url>
+  <url>
+    <loc>https://superstat.online/de/blog/handball-spielprotokoll-offline/</loc>
+    <xhtml:link rel="alternate" hreflang="es" href="https://superstat.online/blog/acta-balonmano-sin-conexion/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://superstat.online/en/blog/handball-match-stats-offline/"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://superstat.online/fr/blog/feuille-de-match-handball-hors-ligne/"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://superstat.online/de/blog/handball-spielprotokoll-offline/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://superstat.online/blog/acta-balonmano-sin-conexion/"/>
   </url>
   <url>
     <loc>https://superstat.online/privacidad.html</loc>

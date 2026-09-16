@@ -44,7 +44,39 @@ const PORTADAS = [
   { pagina:'de/index.html', lang:'de', capturas:'img/capturas-de', privacidad:'privacidad-de.html', instagram:IG_EN }
 ];
 const PRIVACIDADES = PORTADAS.map(p => p.privacidad);
-const PAGINAS = [...PORTADAS.map(p => p.pagina), '404.html', ...PRIVACIDADES];
+
+const SITIO = 'https://superstat.online/';
+
+// El blog. El slug va traducido en cada idioma —es todo el motivo de tener
+// blog: cada uno posiciona por las palabras que se buscan en su idioma—, y de
+// ahí sale la única regla incómoda de esta tabla: la URL de un artículo NO se
+// deduce de la de otro cambiando el prefijo, hay que escribir las cuatro.
+//
+// Añadir un artículo es añadir su fila aquí, sus cuatro archivos y sus cuatro
+// <url> en sitemap.xml. Todo lo que comprueba el bloque 7 sale de esta tabla,
+// igual que lo de las portadas sale de PORTADAS.
+const SLUGS = {
+  es: 'acta-balonmano-sin-conexion',
+  en: 'handball-match-stats-offline',
+  fr: 'feuille-de-match-handball-hors-ligne',
+  de: 'handball-spielprotokoll-offline'
+};
+const BLOG = PORTADAS.map(({ lang, privacidad, instagram }) => {
+  // El castellano cuelga de la raíz y los otros tres de su carpeta, igual que
+  // las portadas.
+  const base = lang === 'es' ? '' : lang + '/';
+  return {
+    lang, privacidad, instagram,
+    indice:     base + 'blog/index.html',
+    entrada:    base + 'blog/' + SLUGS[lang] + '/index.html',
+    urlIndice:  SITIO + base + 'blog/',
+    urlEntrada: SITIO + base + 'blog/' + SLUGS[lang] + '/'
+  };
+});
+const ES = BLOG.find(b => b.lang === 'es');
+const BLOGS = [...BLOG.map(b => b.indice), ...BLOG.map(b => b.entrada)];
+
+const PAGINAS = [...PORTADAS.map(p => p.pagina), '404.html', ...PRIVACIDADES, ...BLOGS];
 const html = {};
 for(const p of PAGINAS) html[p] = leer(p);
 
@@ -87,7 +119,7 @@ for(const pagina of PAGINAS){
 }
 
 // -------------------------------------------------------------------------
-console.log('\n1 bis. Las dos portadas enlazan en relativo');
+console.log('\n1 bis. Las portadas y el blog enlazan en relativo');
 
 // Los enlaces de navegación van en relativo ('en/', '../') y no colgando de la
 // raíz ('/en/'). Con el dominio puesto da igual, pero GitHub Pages sirve el
@@ -99,7 +131,11 @@ console.log('\n1 bis. Las dos portadas enlazan en relativo');
 // cualquiera, así que no tiene una carpeta desde la que contar y necesita la
 // ruta absoluta. Solo queda bien en el dominio de verdad. Las privacidad*.html
 // también: son páginas sueltas de la raíz y solo se enlazan entre ellas.
-for(const { pagina } of PORTADAS){
+//
+// El blog sí entra, y es donde más fácil es equivocarse: un artículo cuelga a
+// tres carpetas de la raíz (en/blog/<slug>/) y necesita tres '../' para llegar
+// al CSS. Escribir '/css/' allí funciona en el dominio y rompe en github.io.
+for(const pagina of [...PORTADAS.map(p => p.pagina), ...BLOGS]){
   for(const url of destinos(pagina)){
     if(FUERA.test(url) || !url.startsWith('/')) continue;
     check(`${pagina} → ${url} no cuelga de la raíz`, false,
@@ -118,16 +154,28 @@ console.log('\n1 ter. La hoja de estilos lleva versión, y la misma en todas');
 // está rota, está mal—, así que el enlace lleva ?v=N y se sube el número al
 // tocar css/web.css. Es lo mismo que VERSION en el sw.js de la app.
 //
-// Y tiene que ser el mismo número en las cinco páginas: si una se queda atrás,
-// vuelve a servir el CSS viejo a quien entre por ella.
+// Y tiene que ser el mismo número en todas: si una se queda atrás, vuelve a
+// servir el CSS viejo a quien entre por ella.
+//
+// La lista no se escribe a mano —lo era, y se quedó corta el día que apareció
+// el blog—: son las páginas que de hecho enlazan la hoja. Debajo se comprueba
+// aparte que las que tienen que estar están, para que una que dejara de pedir
+// el CSS no se librara de la comparación desapareciendo de la lista.
+//
+// Se busca el href y no el nombre a secas: privacidad.html nombra css/web.css
+// en un comentario, precisamente para decir que no lo usa.
+const CON_CSS = PAGINAS.filter(p => /href="[^"]*css\/web\.css/.test(html[p]));
+for(const pagina of [...PORTADAS.map(p => p.pagina), '404.html', ...BLOGS]){
+  check(`${pagina} enlaza la hoja de estilos`, CON_CSS.includes(pagina));
+}
 const versiones = new Map();
-for(const pagina of [...PORTADAS.map(p => p.pagina), '404.html']){
+for(const pagina of CON_CSS){
   const m = html[pagina].match(/href="[^"]*css\/web\.css(\?v=(\d+))?"/);
   check(`${pagina} pide el CSS con versión`, !!(m && m[2]),
         m ? m[0] : 'no enlaza css/web.css');
   if(m && m[2]) versiones.set(pagina, m[2]);
 }
-check('las cinco páginas piden la misma versión del CSS',
+check(`las ${CON_CSS.length} páginas piden la misma versión del CSS`,
       new Set(versiones.values()).size === 1,
       [...versiones].map(([p, v]) => `${p}=${v}`).join(' · '));
 
@@ -202,6 +250,13 @@ for(const { lang } of PORTADAS.slice(1)){
 }
 for(const p of PRIVACIDADES){
   check(`sitemap.xml nombra ${p}`, mapa.includes(`<loc>https://superstat.online/${p}</loc>`));
+}
+// Y las ocho del blog. Una página que no está en el sitemap no deja de existir,
+// simplemente tarda meses en aparecer en un buscador, que para un blog es no
+// existir.
+for(const b of BLOG){
+  check(`sitemap.xml nombra el blog "${b.lang}"`, mapa.includes(`<loc>${b.urlIndice}</loc>`));
+  check(`sitemap.xml nombra el artículo "${b.lang}"`, mapa.includes(`<loc>${b.urlEntrada}</loc>`));
 }
 
 // -------------------------------------------------------------------------
@@ -428,7 +483,14 @@ for(const p of PRIVACIDADES){
 // Cada portada enlaza a la política de SU idioma. Mandar al inglés a la
 // castellana es lo que hacía la web antes de tener las cuatro, y no falla nada:
 // simplemente el lector se encuentra un documento legal en otro idioma.
-for(const { pagina, privacidad } of PORTADAS){
+// Las páginas del blog llevan el mismo pie que su portada, así que arrastran el
+// mismo despiste: copiar el pie del castellano a en/blog/ y mandar al lector
+// inglés a un documento legal en otro idioma.
+const CON_PIE = [
+  ...PORTADAS.map(p => [p.pagina, p.privacidad]),
+  ...BLOG.flatMap(b => [[b.indice, b.privacidad], [b.entrada, b.privacidad]])
+];
+for(const [pagina, privacidad] of CON_PIE){
   const suyos = destinos(pagina).filter(u => /privacidad[^"]*\.html/.test(u));
   check(`${pagina} enlaza a ${privacidad}`,
         suyos.length > 0 && suyos.every(u => u.endsWith(privacidad)),
@@ -449,6 +511,151 @@ if(fs.existsSync(ORIGEN)){
   }
 } else {
   console.log('  --   el repositorio de la app no está al lado, no se comparan');
+}
+
+// -------------------------------------------------------------------------
+console.log('\n7. El blog dice lo mismo en los cuatro idiomas');
+
+// Es el bloque 3 otra vez, con dos diferencias. Un artículo no tiene <section>
+// que comparar —es texto seguido—, así que lo que se compara es su esqueleto:
+// los mismos <h2> y los mismos puntos en cada lista. Y el slug va traducido, así
+// que la URL de un idioma no se deduce de la de otro: las cuatro están escritas
+// en SLUGS y hay que casarlas con el hreflang de cada página.
+//
+// Lo que caza esto es una traducción a la que le faltan dos viñetas de una
+// lista: no rompe nada, no sale en ninguna consola, y el lector alemán se lleva
+// un artículo más pobre que el castellano sin que nadie se entere.
+// Se cuenta dentro de <main> y sin comentarios: la cabecera de estos archivos
+// nombra «<h2>» al explicar esta misma regla, y contarlo daría seis titulares
+// donde hay cinco. Fuera de <main> quedan además la cabecera y el pie, que son
+// iguales en los cuatro y no dicen nada del artículo.
+const cuerpo = pagina => (html[pagina].match(/<main>[\s\S]*<\/main>/) || [''])[0]
+  .replace(/<!--[\s\S]*?-->/g, '');
+const cuenta = (pagina, etiqueta) =>
+  (cuerpo(pagina).match(new RegExp('<' + etiqueta + '[ >]', 'g')) || []).length;
+
+const grafoDe = pagina => {
+  const bloque = (html[pagina].match(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/) || [])[1];
+  try { return JSON.parse(bloque || '')['@graph'] || []; } catch(e){ return null; }
+};
+// La marca de las portadas, para comparar con ella la de cada página del blog.
+const orgPortada = JSON.stringify((grafoDe('index.html') || []).find(n => n['@type'] === 'Organization'));
+
+const formaIndice = new Map(), formaEntrada = new Map(), fechas = new Set();
+
+for(const b of BLOG){
+  for(const [pagina, url, esIndice] of [[b.indice, b.urlIndice, true],
+                                        [b.entrada, b.urlEntrada, false]]){
+    const f = html[pagina];
+
+    check(`${pagina} declara su idioma`, new RegExp(`<html lang="${b.lang}">`).test(f));
+    check(`${pagina} tiene <title>`, /<title>[^<]+<\/title>/.test(f));
+    check(`${pagina} tiene description`, /name="description" content="[^"]+"/.test(f));
+    check(`${pagina} tiene un solo <h1>`, cuenta(pagina, 'h1') === 1, `${cuenta(pagina, 'h1')}`);
+    check(`${pagina} apunta su canonical a ${url}`,
+          f.includes(`<link rel="canonical" href="${url}">`));
+    // El canonical y el og:url tienen que decir lo mismo: si se separan, lo que
+    // se comparte en una red apunta a una URL y el buscador indexa otra.
+    check(`${pagina} dice lo mismo en og:url`,
+          f.includes(`<meta property="og:url" content="${url}">`));
+
+    // Las cuatro alternativas, cruzando índice con índice y artículo con
+    // artículo. Un hreflang que apunte del artículo inglés al índice castellano
+    // no falla en ningún sitio y deshace el emparejamiento entero.
+    for(const otro of BLOG){
+      const destino = esIndice ? otro.urlIndice : otro.urlEntrada;
+      check(`${pagina} declara la alternativa "${otro.lang}"`,
+            f.includes(`hreflang="${otro.lang}" href="${destino}"`));
+    }
+    check(`${pagina} declara x-default`,
+          f.includes(`hreflang="x-default" href="${esIndice ? ES.urlIndice : ES.urlEntrada}"`));
+
+    // El pie, igual que en las portadas (bloque 4 ter): su Instagram y solo el
+    // suyo, y las dos redes en pestaña nueva.
+    const pie = (f.match(/<nav class="enlaces-pie"[\s\S]*?<\/nav>/) || [''])[0];
+    const suyas = [...pie.matchAll(/href="(https:\/\/www\.instagram\.com\/[^"]+)"/g)].map(m => m[1]);
+    check(`${pagina} enlaza su Instagram y solo el suyo`,
+          suyas.length === 1 && suyas[0] === b.instagram, suyas.join(', ') || 'ninguno');
+    const nuevaPestana = pie.match(/<a[^>]*target="_blank"[^>]*>/g) || [];
+    check(`${pagina} abre las dos redes en pestaña nueva con rel="noopener"`,
+          nuevaPestana.length === 2 && nuevaPestana.every(a => /rel="noopener"/.test(a)),
+          `${nuevaPestana.length} enlaces con target="_blank"`);
+
+    // Los datos estructurados. Otra vez se parsean de verdad: una coma de más
+    // descarta el bloque entero y en silencio.
+    const grafo = grafoDe(pagina);
+    check(`${pagina} lleva datos estructurados que parsean`, grafo !== null,
+          'JSON inválido o sin bloque application/ld+json');
+    if(!grafo) continue;
+    check(`${pagina} habla de la misma marca que las portadas`,
+          JSON.stringify(grafo.find(n => n['@type'] === 'Organization')) === orgPortada,
+          'su Organization no es el de index.html');
+    // Ni la app ni el precio: los declaran las cuatro portadas y solo ellas. Si
+    // el blog los repitiera, el 3,49 pasaría de cuatro copias a doce, y esta
+    // prueba compara las de las portadas entre sí pero no sabría de las otras.
+    check(`${pagina} no vuelve a declarar la app`,
+          !grafo.some(n => n['@type'] === 'SoftwareApplication'));
+    check(`${pagina} no escribe ningún precio`,
+          !/"offers"|"price"|3,49\s*€|€\s*3\.49/.test(f));
+  }
+
+  // El índice enlaza SU artículo y no el de otro idioma. Copiar la tarjeta de
+  // una página a otra y dejarse el slug manda al lector francés al artículo
+  // castellano, y como el archivo existe, el bloque 1 no lo ve.
+  check(`${b.indice} enlaza su artículo`,
+        html[b.indice].includes(`href="${SLUGS[b.lang]}/"`), 'no lo enlaza');
+  const ajenos = BLOG.filter(o => o.lang !== b.lang && html[b.indice].includes(SLUGS[o.lang]))
+                     .map(o => o.lang);
+  check(`${b.indice} no enlaza el artículo de otro idioma`, ajenos.length === 0,
+        'también nombra ' + ajenos.join(', '));
+
+  // El nodo Blog del índice y el BlogPosting del artículo, cada uno con su
+  // idioma y su URL, y el artículo colgando del blog que le toca.
+  const nodoBlog = (grafoDe(b.indice) || []).find(n => n['@type'] === 'Blog');
+  check(`${b.indice} declara el Blog de su idioma`,
+        !!nodoBlog && nodoBlog.inLanguage === b.lang && nodoBlog.url === b.urlIndice,
+        nodoBlog ? `${nodoBlog.inLanguage} · ${nodoBlog.url}` : 'no hay nodo Blog');
+
+  const post = (grafoDe(b.entrada) || []).find(n => n['@type'] === 'BlogPosting');
+  check(`${b.entrada} declara su BlogPosting`, !!post, 'no hay BlogPosting');
+  if(post){
+    check(`${b.entrada} lo declara en su idioma y con su URL`,
+          post.inLanguage === b.lang && post.url === b.urlEntrada,
+          `${post.inLanguage} · ${post.url}`);
+    check(`${b.entrada} lo cuelga del blog de su idioma`,
+          !!post.isPartOf && post.isPartOf['@id'] === b.urlIndice + '#blog',
+          post.isPartOf && post.isPartOf['@id']);
+    fechas.add(post.datePublished);
+  }
+
+  // Y el esqueleto, que es lo que compara los cuatro entre sí.
+  const forma = pagina => ['h2', 'p', 'ul', 'ol', 'li']
+    .map(e => `${e}:${cuenta(pagina, e)}`).join(' ');
+  formaIndice.set(b.indice, forma(b.indice));
+  formaEntrada.set(b.entrada, forma(b.entrada));
+}
+
+check('los cuatro artículos se publican el mismo día', fechas.size === 1,
+      [...fechas].join(' · '));
+const modeloIndice = formaIndice.get(ES.indice);
+check('los cuatro índices del blog enseñan lo mismo',
+      new Set(formaIndice.values()).size === 1,
+      [...formaIndice].filter(([, f]) => f !== modeloIndice)
+        .map(([p, f]) => `${p}: ${f}`).join(' | '));
+const modeloEntrada = formaEntrada.get(ES.entrada);
+check('los cuatro artículos tienen el mismo esqueleto',
+      new Set(formaEntrada.values()).size === 1,
+      [...formaEntrada].filter(([, f]) => f !== modeloEntrada)
+        .map(([p, f]) => `${p}: ${f}`).join(' | ') + ` · es: ${modeloEntrada}`);
+
+// Y que se llegue al blog desde las cuatro portadas, por los dos sitios: la
+// cabecera y el pie. Un blog al que no enlaza la portada no hereda nada de lo
+// que ésta haya ganado, que es la mitad de por qué se monta dentro del dominio
+// en vez de en otro sitio.
+for(const { pagina } of PORTADAS){
+  const aBlog = destinos(pagina).filter(u => u === 'blog/');
+  check(`${pagina} enlaza el blog desde la cabecera y desde el pie`,
+        aBlog.length === 2, `${aBlog.length} enlaces a blog/`);
 }
 
 console.log(`\n${pasadas} comprobaciones pasadas, ${fallos} fallidas`);
